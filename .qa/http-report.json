@@ -1,0 +1,62 @@
+[
+  {
+    "path": "/",
+    "status": 200,
+    "contentType": "text/html; charset=utf-8",
+    "bytes": 68938
+  },
+  {
+    "path": "/cake-world",
+    "status": 200,
+    "contentType": "text/html; charset=utf-8",
+    "bytes": 98717
+  },
+  {
+    "path": "/menu",
+    "status": 200,
+    "contentType": "text/html; charset=utf-8",
+    "bytes": 15645
+  },
+  {
+    "path": "/images/logo.jpg",
+    "status": 200,
+    "contentType": "image/jpeg",
+    "bytes": 2474
+  },
+  {
+    "path": "/images/hero.jpg",
+    "status": 200,
+    "contentType": "image/jpeg",
+    "bytes": 86248
+  },
+  {
+    "path": "/images/red-velvet.jpg",
+    "status": 200,
+    "contentType": "image/jpeg",
+    "bytes": 10047
+  },
+  {
+    "path": "/images/chocolate.jpg",
+    "status": 200,
+    "contentType": "image/jpeg",
+    "bytes": 8181
+  },
+  {
+    "path": "/images/berry.jpg",
+    "status": 200,
+    "contentType": "image/jpeg",
+    "bytes": 8779
+  },
+  {
+    "path": "/images/cake-placeholder.svg",
+    "status": 200,
+    "contentType": "image/svg+xml",
+    "bytes": 568
+  },
+  {
+    "path": "/_next/image?url=%2Fimages%2Fhero.jpg&w=640&q=75",
+    "status": 404,
+    "contentType": "text/html; charset=utf-8",
+    "bytes": 16496
+  }
+]

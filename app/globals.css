@@ -1,0 +1,567 @@
+﻿@import "../styles/tailwind.css";
+
+/* Base styles matching Google Stitch */
+html {
+  scroll-behavior: smooth;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  color: #1c1c18;
+  background-color: #FDF9F3;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Ensure GSAP pin spacers in dark sections stay rich maroon */
+.pin-spacer {
+  background-color: #9A1C20 !important;
+}
+
+/* Keyframes & Animation for Ribbon Marquee */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: 200%;
+  animation: marquee 25s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Chilled mist keyframe drift */
+@keyframes mistFlow {
+  0% { transform: translateX(-10%) translateY(0); opacity: 0.25; }
+  50% { transform: translateX(5%) translateY(-4px); opacity: 0.45; }
+  100% { transform: translateX(-10%) translateY(0); opacity: 0.25; }
+}
+
+.animate-mist {
+  animation: mistFlow 12s ease-in-out infinite;
+}
+
+/* ==========================================================================
+   Section depth layers — background / foreground decorative drift.
+   The section content stays in the midground (relative z-10), so these
+   low-opacity accents never cover text or intercept interaction.
+   ========================================================================== */
+@keyframes pbSectionBgDrift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(1.5%, -1.2%, 0) scale(1.035); }
+}
+@keyframes pbSectionFgDrift {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  25% { transform: translate3d(6px, -8px, 0); }
+  50% { transform: translate3d(-4px, 5px, 0); }
+  75% { transform: translate3d(5px, 6px, 0); }
+}
+[data-section-layers],
+[data-layer="decor"] {
+  overflow: clip;
+}
+.section-layer--bg {
+  animation: pbSectionBgDrift 26s ease-in-out infinite;
+}
+.section-layer--fg {
+  animation: pbSectionFgDrift 6.5s ease-in-out infinite;
+}
+/* Section-owned GSAP foregrounds must not fight the ambient CSS keyframes. */
+.section-layer--fg[data-parallax-controlled] {
+  animation: none;
+}
+/* Global off switch from lib/parallax-config.ts. */
+html[data-parallax-off] .section-layer--bg,
+html[data-parallax-off] .section-layer--fg {
+  animation: none;
+  will-change: auto;
+}
+/* Only layers that actually move get a compositor hint. */
+.section-layer--bg,
+.section-layer--fg,
+[data-parallax-decor],
+[data-parallax-layer] {
+  will-change: transform;
+}
+
+@keyframes pbBob {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -6px, 0); }
+}
+.pb-bob {
+  animation: pbBob 5s ease-in-out infinite;
+}
+
+/* Optional scrubbed clip reveal (e.g. Story image inset 8% -> 0%). */
+:is([data-clip], [data-parallax-clip]) {
+  clip-path: inset(var(--pb-parallax-clip, 0%));
+}
+
+/* Vitrine sibling dimming on hover */
+.vitrine-shelf:hover .cake-card {
+  opacity: 0.48;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.vitrine-shelf .cake-card:hover {
+  opacity: 1 !important;
+  transform: translateY(-8px) scale(1.08);
+  z-index: 30;
+}
+
+.cake-card.is-selected {
+  opacity: 1 !important;
+}
+
+/* Gold button shimmer shine */
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shimmer::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(60deg, transparent, rgba(253, 242, 216, 0.35), transparent);
+  transform: rotate(25deg);
+  transition: all 0.75s ease;
+}
+
+.btn-shimmer:hover::after {
+  left: 120%;
+}
+
+/* Scrollbar utilities */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #E3A04B #180a0f;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #180a0f;
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #C9A34E;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #E3A04B;
+}
+
+/* ==========================================================================
+   Motion system — tokens mirror lib/motion.ts
+   ========================================================================== */
+:root {
+  --motion-fast: 180ms;
+  --motion-base: 320ms;
+  --motion-slow: 620ms;
+  --motion-reveal: 720ms;
+  --motion-entrance: 900ms;
+  --motion-route: 420ms;
+  --motion-ease: cubic-bezier(.2, .7, .2, 1);
+  --motion-ease-emph: cubic-bezier(.2, .8, .2, 1);
+  --motion-stagger: 90ms;
+  --motion-lift: -5px;
+  --motion-shadow: 0 20px 44px -20px rgba(28, 5, 11, .45);
+  --pb-scroll: 0;
+}
+
+@keyframes pbDrop {
+  from { opacity: 0; transform: translate3d(0, -18px, 0); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes pbRise {
+  from { opacity: 0; transform: translate3d(0, 26px, 0); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes pbRiseRight {
+  from { opacity: 0; transform: translate3d(34px, 16px, 0) scale(.97); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes pbRouteIn {
+  from { opacity: 0; transform: translate3d(0, 12px, 0); }
+  to { opacity: 1; }
+}
+@keyframes pbFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes pbShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+@keyframes pbGlow {
+  0%, 100% { opacity: .45; }
+  50% { opacity: .72; }
+}
+@keyframes pbFloat {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -9px, 0); }
+}
+@keyframes pbIngredientFloat {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(-1.5deg); }
+  50% { transform: translate3d(0, -12px, 0) rotate(2deg); }
+}
+.ingredient-float {
+  animation-name: pbIngredientFloat;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+  will-change: transform;
+}
+@keyframes pbHeroDrift {
+  0%, 100% { transform: scale(1) translate3d(0, 0, 0); }
+  50% { transform: scale(1.02) translate3d(0, -6px, 0); }
+}
+html[data-js-motion] .hero-product-drift {
+  animation: pbHeroDrift 12s var(--motion-ease) infinite;
+  will-change: transform;
+}
+
+/* --- Route transition: remounts per navigation via app/template.tsx --- */
+.route-transition {
+  animation: pbRouteIn var(--motion-route) var(--motion-ease);
+}
+
+/* --- Initial entrance (only armed when JS is present) --- */
+html[data-js-motion] [data-enter] {
+  animation-duration: var(--motion-entrance);
+  animation-timing-function: var(--motion-ease);
+  animation-fill-mode: both;
+}
+html[data-js-motion] [data-enter="topbar"] {
+  animation-name: pbDrop;
+  animation-duration: var(--motion-base);
+}
+html[data-js-motion] [data-enter="header"] {
+  animation-name: pbDrop;
+  animation-duration: var(--motion-slow);
+  animation-delay: 60ms;
+}
+html[data-js-motion] [data-enter="copy"] > * {
+  opacity: 0;
+  animation: pbRise var(--motion-entrance) var(--motion-ease) both;
+  animation-delay: calc(120ms + var(--i, 0) * var(--motion-stagger));
+}
+html[data-js-motion] [data-enter="copy"] > :nth-child(1) { --i: 0; }
+html[data-js-motion] [data-enter="copy"] > :nth-child(2) { --i: 1; }
+html[data-js-motion] [data-enter="copy"] > :nth-child(3) { --i: 2; }
+html[data-js-motion] [data-enter="copy"] > :nth-child(4) { --i: 3; }
+html[data-js-motion] [data-enter="copy"] > :nth-child(5) { --i: 4; }
+html[data-js-motion] [data-enter="copy"] > :nth-child(6) { --i: 5; }
+html[data-js-motion] [data-enter="visual"] {
+  animation-name: pbRiseRight;
+  animation-delay: 260ms;
+}
+html[data-js-motion] [data-enter="visual"] [data-float] {
+  animation: pbFloat 7s ease-in-out 1.6s infinite;
+}
+
+/* --- Legacy hero glow drift ------------------------------------------------
+   Kept only for the old `data-parallax="up"` glows. Numeric `data-parallax`
+   values are owned by the GSAP system and must not receive a CSS transform. */
+html[data-js-motion] [data-parallax="up"] {
+  transform: translate3d(0, calc(var(--pb-scroll) * -.045px), 0);
+  animation: pbGlow 9s ease-in-out infinite;
+  animation-delay: -4s;
+}
+
+/* Parallax lives on individual transform properties so it composes with the
+   `transform` used by reveals, hover states and component animations. */
+@media (prefers-reduced-motion: no-preference) {
+  :is([data-parallax], [data-parallax-depth]):not([data-parallax="up"]) {
+    translate:
+      calc(var(--tw-translate-x, 0px) + var(--pb-parallax-x, 0px))
+      calc(var(--tw-translate-y, 0px) + var(--pb-parallax-y, 0px));
+    scale:
+      calc(var(--tw-scale-x, 1) * var(--pb-parallax-scale, 1))
+      calc(var(--tw-scale-y, 1) * var(--pb-parallax-scale, 1));
+    rotate: calc(var(--tw-rotate, 0deg) + var(--pb-parallax-rotate, 0deg));
+  }
+}
+
+:is([data-parallax], [data-parallax-depth])[data-fade] {
+  opacity: var(--pb-parallax-opacity, 1);
+}
+
+/* --- Reusable scroll reveal (one observer, staggered via nth-child) --- */
+html[data-js-motion] [data-reveal],
+html[data-js-motion] [data-reveal-group] > * {
+  opacity: 0;
+  transform: translate3d(0, 24px, 0);
+  transition:
+    opacity var(--motion-reveal) var(--motion-ease),
+    transform var(--motion-reveal) var(--motion-ease);
+  transition-delay: calc(var(--i, 0) * var(--motion-stagger));
+}
+html[data-js-motion] [data-reveal="fade"] { transform: none; }
+html[data-js-motion] [data-reveal="left"] { transform: translate3d(-26px, 0, 0); }
+html[data-js-motion] [data-reveal="right"] { transform: translate3d(26px, 0, 0); }
+html[data-js-motion] [data-reveal="scale"] { transform: scale(.96); }
+html[data-js-motion] [data-reveal].is-visible,
+html[data-js-motion] [data-reveal-group].is-visible > * {
+  opacity: 1;
+  transform: none;
+}
+html[data-js-motion] [data-reveal-group] > :nth-child(1) { --i: 0; }
+html[data-js-motion] [data-reveal-group] > :nth-child(2) { --i: 1; }
+html[data-js-motion] [data-reveal-group] > :nth-child(3) { --i: 2; }
+html[data-js-motion] [data-reveal-group] > :nth-child(4) { --i: 3; }
+html[data-js-motion] [data-reveal-group] > :nth-child(5) { --i: 4; }
+html[data-js-motion] [data-reveal-group] > :nth-child(6) { --i: 5; }
+html[data-js-motion] [data-reveal-group] > :nth-child(7) { --i: 6; }
+html[data-js-motion] [data-reveal-group] > :nth-child(8) { --i: 7; }
+
+/* --- Sticky header --- */
+[data-sticky-header] {
+  transition:
+    background-color var(--motion-base) var(--motion-ease),
+    box-shadow var(--motion-base) var(--motion-ease),
+    border-color var(--motion-base) var(--motion-ease);
+}
+html[data-scrolled] [data-sticky-header] {
+  background-color: rgba(253, 242, 216, .97);
+  box-shadow: 0 10px 34px -16px rgba(28, 5, 11, .42);
+}
+
+/* --- Navigation links and indicators --- */
+.nav-link { position: relative; }
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--motion-base) var(--motion-ease);
+}
+.nav-link:hover::after,
+.nav-link[data-active-section]::after,
+.nav-link[aria-current]::after {
+  transform: scaleX(1);
+}
+
+/* --- Buttons and interactive elements --- */
+a, button {
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    color var(--motion-fast) var(--motion-ease),
+    background-color var(--motion-base) var(--motion-ease),
+    border-color var(--motion-base) var(--motion-ease),
+    box-shadow var(--motion-base) var(--motion-ease),
+    transform var(--motion-base) var(--motion-ease);
+}
+a:active, button:active { transform: scale(.97); }
+button:disabled, [aria-disabled="true"] { opacity: .55; cursor: not-allowed; transform: none; }
+a svg, button svg, a .material-symbols-outlined, button .material-symbols-outlined {
+  transition: transform var(--motion-base) var(--motion-ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  a:hover svg, a:hover .material-symbols-outlined,
+  button:hover svg, button:hover .material-symbols-outlined {
+    transform: translate3d(3px, 0, 0);
+  }
+  [data-lift]:hover {
+    transform: translate3d(0, var(--motion-lift), 0);
+    box-shadow: var(--motion-shadow);
+  }
+  [data-tilt]:hover {
+    transform: perspective(1000px) rotateX(1.1deg) rotateY(-1.1deg) translate3d(0, -2px, 0);
+  }
+}
+
+/* --- Cards and images --- */
+[data-hover-card] {
+  transition:
+    transform var(--motion-slow) var(--motion-ease),
+    box-shadow var(--motion-slow) var(--motion-ease),
+    border-color var(--motion-base) var(--motion-ease);
+}
+[data-hover-card] img,
+[data-hover-card] [data-zoom] {
+  transition: transform 700ms var(--motion-ease);
+}
+@media (hover: hover) and (pointer: fine) {
+  [data-hover-card]:hover {
+    transform: translate3d(0, var(--motion-lift), 0);
+    box-shadow: var(--motion-shadow);
+  }
+  [data-hover-card]:hover img,
+  [data-hover-card]:hover [data-zoom] { transform: scale(1.055); }
+}
+
+/* --- Form controls: focus, error and success feedback --- */
+input, select, textarea {
+  transition:
+    border-color var(--motion-base) var(--motion-ease),
+    box-shadow var(--motion-base) var(--motion-ease),
+    background-color var(--motion-base) var(--motion-ease),
+    color var(--motion-fast) var(--motion-ease);
+}
+input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid #C9A34E;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(201, 163, 78, .18);
+}
+input[aria-invalid="true"], select[aria-invalid="true"], textarea[aria-invalid="true"], [role="alert"] {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 4px rgba(220, 38, 38, .14);
+}
+.status {
+  transition: color var(--motion-base) var(--motion-ease), opacity var(--motion-base) var(--motion-ease);
+}
+.status[data-state="error"] { color: #b91c1c; animation: pbShake 320ms var(--motion-ease) both; }
+.status[data-state="success"] { color: #047857; animation: pbRise 340ms var(--motion-ease) both; }
+
+/* --- Mobile drawer --- */
+[data-mobile-drawer] {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate3d(0, -14px, 0) scale(.99);
+  transition:
+    opacity var(--motion-base) var(--motion-ease),
+    transform var(--motion-slow) var(--motion-ease),
+    visibility 0s linear var(--motion-slow);
+  will-change: opacity, transform;
+}
+[data-mobile-drawer][data-open="true"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: none;
+  transition-delay: 0s;
+}
+[data-mobile-drawer] a {
+  opacity: 0;
+  transform: translate3d(0, 12px, 0);
+  transition: opacity var(--motion-base) var(--motion-ease), transform var(--motion-base) var(--motion-ease);
+}
+[data-mobile-drawer][data-open="true"] a {
+  opacity: 1;
+  transform: none;
+  transition-delay: calc(80ms + var(--i, 0) * 55ms);
+}
+[data-mobile-drawer] a:nth-of-type(1) { --i: 0; }
+[data-mobile-drawer] a:nth-of-type(2) { --i: 1; }
+[data-mobile-drawer] a:nth-of-type(3) { --i: 2; }
+[data-mobile-drawer] a:nth-of-type(4) { --i: 3; }
+[data-mobile-drawer] a:nth-of-type(5) { --i: 4; }
+[data-mobile-drawer] a:nth-of-type(6) { --i: 5; }
+[data-mobile-drawer] a:nth-of-type(7) { --i: 6; }
+
+/* --- Marquee polish --- */
+@keyframes pbSpin { to { transform: rotate(360deg); } }
+.animate-spin-slow { animation: pbSpin 18s linear infinite; }
+.animate-marquee { animation-duration: 32s; }
+:where(div):has(> .animate-marquee) {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+/* --- Count-up values should not shift their container --- */
+[data-countup] { font-variant-numeric: tabular-nums; display: inline-block; }
+
+/* --- If JS motion fails to initialise, never leave content hidden --- */
+html[data-motion-failsafe] [data-enter],
+html[data-motion-failsafe] [data-enter] > *,
+html[data-motion-failsafe] [data-reveal],
+html[data-motion-failsafe] [data-reveal-group] > * {
+  opacity: 1 !important;
+  transform: none !important;
+  animation: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+  html[data-js-motion] [data-enter],
+  html[data-js-motion] [data-enter] > *,
+  html[data-js-motion] [data-reveal],
+  html[data-js-motion] [data-reveal-group] > *,
+  html[data-js-motion] [data-parallax] {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+  .animate-marquee,
+  .animate-mist,
+  .section-layer--bg,
+  .section-layer--fg,
+  .animate-spin-slow,
+  .hero-product-drift,
+  .ingredient-float,
+  .btn-shimmer::after,
+  .vitrine-shelf:hover .cake-card,
+  .vitrine-shelf .cake-card:hover {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+:root {
+  --site-inset: 20px;
+  --site-width: 80rem;
+  scroll-padding-top: 5rem;
+}
+
+/* The Lenis anchor handler passes the live header height as its offset. */
+html[data-lenis-anchors] {
+  scroll-padding-top: 0;
+}
+
+.site-shell {
+  width: 100%;
+  max-width: var(--site-width);
+  margin-inline: auto;
+  padding-inline: var(--site-inset);
+}
+
+.site-gutter {
+  padding-inline: max(var(--site-inset), calc((100% - var(--site-width)) / 2 + var(--site-inset)));
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --site-inset: 32px;
+    scroll-padding-top: 6rem;
+  }
+}

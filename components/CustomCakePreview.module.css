@@ -1,0 +1,100 @@
+.stage {
+  display: grid;
+  place-items: end center;
+  width: min(100%, 17rem);
+  min-height: 8.5rem;
+  margin-inline: auto;
+  padding: .4rem 0 .25rem;
+  background: radial-gradient(ellipse at center 60%, #e5d5b5 0%, transparent 68%);
+}
+
+.cake {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: var(--cake-width);
+  transition: width 220ms ease;
+}
+
+.tier {
+  position: relative;
+  display: grid;
+  place-items: end center;
+  height: clamp(1.75rem, 4vw, 2.55rem);
+  margin-bottom: -.12rem;
+  border-radius: 50% 50% 24% 24% / 27% 27% 24% 24%;
+  background: linear-gradient(0deg, var(--shade) 5%, var(--trim) 9% 13%, var(--shade) 16% 32%, var(--filling) 33% 40%, var(--icing) 45%, var(--shade) 77%, var(--icing) 79%);
+  box-shadow: inset -.35rem -.15rem .6rem #2e09083d, 0 .12rem .2rem #5c03023d;
+}
+
+.tier[data-shape="Square"] {
+  border-radius: 8% / 14%;
+}
+
+.tier[data-shape="Heart"] {
+  border-radius: 0;
+  clip-path: polygon(50% 17%, 62% 5%, 77% 0, 90% 5%, 98% 16%, 100% 30%, 96% 47%, 85% 66%, 50% 100%, 15% 66%, 4% 47%, 0 30%, 2% 16%, 10% 5%, 23% 0, 38% 5%);
+}
+
+.message {
+  position: relative;
+  z-index: 5;
+  align-self: center;
+  display: -webkit-box;
+  max-width: 92%;
+  margin: 0 0 .1rem;
+  padding: .12rem .45rem;
+  overflow: hidden;
+  border-radius: .4rem;
+  background: rgba(46, 9, 8, .75);
+  color: #fff9ea;
+  font: 700 .8rem/1.15 Georgia, serif;
+  text-align: center;
+  text-shadow: 0 1px 2px #2e0908;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.topper {
+  position: relative;
+  z-index: 4;
+  margin-bottom: -.15rem;
+  color: #5c0302;
+  font: 700 .68rem/1.2 Georgia, serif;
+  white-space: nowrap;
+}
+
+.topper span {
+  display: block;
+  padding: .12rem .35rem;
+  border-radius: .4rem;
+  background: #e7b65d;
+}
+
+.plate {
+  width: 108%;
+  height: .45rem;
+  border: 1px solid #bd914c;
+  border-radius: 50%;
+  background: #ebc884;
+  box-shadow: 0 .2rem .3rem #5c03022e;
+}
+
+@media (min-width: 1024px) {
+  .stage {
+    min-height: 12rem;
+  }
+
+  .tier {
+    height: 2.9rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cake {
+    transition: none;
+  }
+}

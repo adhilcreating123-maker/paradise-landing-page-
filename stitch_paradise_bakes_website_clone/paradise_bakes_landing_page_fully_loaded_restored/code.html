@@ -1,0 +1,709 @@
+<!DOCTYPE html><html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Paradise Bakes &amp; Patisserie — Kozhikode</title>
+<!-- Google Fonts: Playfair Display + Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS v3 with Forms & Container-Queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "brand-wine": "#1C050B",
+            "brand-maroon": "#5C0302",
+            "brand-maroon-dark": "#3B0813",
+            "brand-gold": "#C9A34E",
+            "brand-gold-light": "#F2E4C9",
+            "brand-cream": "#FDF9F3",
+            "primary": "#5C0302",
+            "secondary": "#C9A34E",
+          },
+          fontFamily: {
+            serif: ["Playfair Display", "serif"],
+            sans: ["Inter", "sans-serif"],
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    @keyframes marquee {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-50%); }
+    }
+    .animate-marquee {
+      display: flex;
+      width: 200%;
+      animation: marquee 25s linear infinite;
+    }
+    .animate-marquee:hover {
+      animation-play-state: paused;
+    }
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-brand-cream text-[#1c1c18] font-sans antialiased selection:bg-[#C9A34E] selection:text-white">
+<!-- 1. TOP BAR -->
+<div class="bg-[#5C0302] text-xs font-medium tracking-wider text-[#FDF2D8] py-2.5 px-6 border-b border-[#CA8B4A]/30">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-2 text-center md:text-left">
+<div class="flex items-center gap-2">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-[#E3A04B] animate-pulse"></span>
+<span>LIFE AT PARADISE ARTISANAL PATISSERIE &amp; CAFE • FRESH DAILY BAKES</span>
+</div>
+<div class="text-[#d7c1c4] tracking-widest text-[11px] uppercase font-semibold hidden lg:block">
+        KULANGARAPEEDIKA • OLAVANNA • KATTUKULANGARA
+      </div>
+<div class="text-[#E3A04B] font-medium flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px]">schedule</span>
+<span>OPENING HOURS: 10:00 AM - 12:00 PM</span>
+</div>
+</div>
+</div>
+<!-- 2. NAVIGATION BAR -->
+<header class="sticky top-0 z-50 bg-[#FDF2D8]/95 backdrop-blur-md border-b border-[#CA8B4A]/30 transition-all">
+<div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+<!-- Logo -->
+<a class="flex items-center gap-3 group" href="#">
+<img alt="Paradise Bakes Logo" class="h-12 w-auto object-contain transition-transform group-hover:scale-105 duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDjtMyLuJAMudAi6V10AukPj5Uvu8-GYn-vlSJo_BfXIPp5VpendcUI1IoWgGLV8ZNB5vljXiN4Gco1FJTCO-OgDQNHN5xW5AcIxjNQj_EBWffCkjw-fBgnhOoijcuaxLEssnNXWDtWNHcL2nwNzW57l0-phPGPYwZDJg4nVsO3h2IRoAocEJv0u5oKT54b11uI7nko3EmN8mjxfd3eh27I-Y1OyiTmY8o8t6WU7ezVIN-LiXZ8a1V">
+<div class="hidden sm:block text-left">
+<span class="block font-serif text-lg font-bold text-[#5C0302] tracking-wide leading-tight">PARADISE BAKES</span>
+<span class="block text-[10px] uppercase font-semibold tracking-widest text-[#735c00]">turn moments into memories</span>
+</div>
+</a>
+<!-- Navigation links -->
+<nav class="hidden md:flex items-center space-x-7 text-[13px] font-semibold uppercase tracking-wider text-[#31302d]">
+<a class="text-[#5C0302] border-b-2 border-[#5C0302] pb-1 font-bold" href="#home">Home</a>
+<a class="hover:text-[#5C0302] transition-colors pb-1" href="#branches">Our Branch</a>
+<a class="hover:text-[#5C0302] transition-colors pb-1" href="#story">Our Story</a>
+<a class="hover:text-[#5C0302] transition-colors pb-1" href="#cakeworld">Cake World</a>
+<a class="hover:text-[#5C0302] transition-colors pb-1" href="#life">Life at Paradise</a>
+<a class="hover:text-[#5C0302] transition-colors pb-1" href="#findus">Find Us</a>
+<a class="hover:text-[#5C0302] transition-colors pb-1" href="#reviews">Reviews</a>
+</nav>
+<!-- Right Action CTA -->
+<div class="flex items-center gap-3">
+<a class="bg-[#9A1C20] hover:bg-[#5C0302] text-[#FDF2D8] text-xs font-semibold uppercase tracking-widest px-6 py-3 rounded-full transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5" href="#order">
+          Order Online
+        </a>
+<button aria-label="Open menu" class="w-10 h-10 rounded-full border border-[#d7c1c4] flex items-center justify-center text-[#5C0302] hover:bg-[#ebe8e2] transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+</div>
+</header>
+<!-- 3. HERO SECTION -->
+<section class="relative bg-[#5C0302] text-[#FDF2D8] overflow-hidden py-16 lg:py-24" id="home">
+<!-- Atmospheric glows -->
+<div class="absolute -top-32 -left-32 w-96 h-96 bg-[#C9A34E]/15 rounded-full blur-3xl pointer-events-none"></div>
+<div class="absolute -bottom-32 right-0 w-[500px] h-[500px] bg-black/30 rounded-full blur-3xl pointer-events-none"></div>
+<div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
+<!-- Left side copy -->
+<div class="lg:col-span-7 space-y-7">
+<div class="inline-flex items-center gap-2 bg-[#703343]/60 border border-[#C9A34E]/40 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider text-[#ffe088] uppercase">
+<span class="w-2 h-2 rounded-full bg-[#C9A34E]"></span>
+          Artisanal Bakery &amp; Cake Studio
+        </div>
+<h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.15] text-[#fdf9f3]">
+          Every craving finds its <span class="italic font-normal text-[#C9A34E]">Paradise.</span>
+</h1>
+<p class="text-base sm:text-lg text-[#FDF2D8]/90 font-light leading-relaxed max-w-xl">
+          Flaky buttery viennoiserie, stoneground artisan breads, and bespoke celebration cakes — handcrafted daily with pure French-style dairy butter at our three Kozhikode bakeries.
+        </p>
+<!-- CTA Action Buttons -->
+<div class="flex flex-wrap items-center gap-4 pt-2">
+<a class="bg-[#E3A04B] hover:bg-[#CA8B4A] text-[#5C0302] font-bold text-xs uppercase tracking-widest px-8 py-4 rounded-full transition-all shadow-xl hover:-translate-y-0.5" href="#cakeworld">
+            Explore Cake World
+          </a>
+<a class="border border-[#CA8B4A] hover:border-[#E3A04B] text-[#FDF2D8] bg-[#9A1C20]/40 hover:bg-[#9A1C20] font-semibold text-xs uppercase tracking-widest px-7 py-4 rounded-full transition-all" href="#branches">
+            View Menu &amp; Outlets
+          </a>
+</div>
+<!-- Stats Row -->
+<div class="grid grid-cols-3 gap-4 pt-8 border-t border-[#ffd7c9]/15 max-w-lg">
+<div>
+<div class="font-serif text-2xl lg:text-3xl font-bold text-[#C9A34E]">30+</div>
+<div class="text-[11px] uppercase tracking-wider text-[#ffd7c9]/80 font-medium mt-1">Years of Heritage</div>
+</div>
+<div>
+<div class="font-serif text-2xl lg:text-3xl font-bold text-[#C9A34E]">100%</div>
+<div class="text-[11px] uppercase tracking-wider text-[#ffd7c9]/80 font-medium mt-1">Pure Dairy Butter</div>
+</div>
+<div>
+<div class="font-serif text-2xl lg:text-3xl font-bold text-[#C9A34E]">3</div>
+<div class="text-[11px] uppercase tracking-wider text-[#ffd7c9]/80 font-medium mt-1">Outlets Across Calicut</div>
+</div>
+</div>
+</div>
+<!-- Right side Visual Card -->
+<div class="lg:col-span-5 relative">
+<div class="relative mx-auto max-w-md lg:max-w-none">
+<div class="absolute -inset-2 bg-gradient-to-tr from-[#C9A34E] to-[#ba1a1a] rounded-3xl opacity-30 blur-lg"></div>
+<div class="relative bg-[#1C050B] p-3 rounded-3xl shadow-2xl border border-[#C9A34E]/30 overflow-hidden group">
+<div class="h-[430px] w-full rounded-2xl overflow-hidden relative">
+<img alt="Artisanal Cake and Fresh Croissants" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida/ALJJyrC3mqdjfXTSzsGCsLPYPd3J5Wv5MstpIzQSUHPOHByi4B_JZWLu6tml66sYvPIQQnmAwGUQi5zcq0kf1_7JivAcEd_Dj_32zCo3E-ArCFpOgNQZ1OKqBDNvbcGH_0yagXSnDe5p7fw_-niDcPWumPC30xLYKlCrQqUWJzH1KkAublcuDuksiYXBJbGVY6fPw79N4yrxmHFD2WwmvHy4_QlHctPEhAUKZ5FUMTnlLL6E">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+<!-- Floating Fresh Badge -->
+<div class="absolute top-4 left-4 bg-[#1C050B]/90 backdrop-blur-md border border-[#C9A34E]/60 text-[#ffe088] px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wider flex items-center gap-1.5 shadow-lg">
+<span class="text-amber-400">★</span> FRESH FROM OVEN 6:00 AM
+              </div>
+<!-- Bottom caption -->
+<div class="absolute bottom-5 left-5 right-5 text-left">
+<span class="text-xs uppercase font-semibold text-[#C9A34E] tracking-widest block">Signature Gateaux &amp; Viennoiserie</span>
+<p class="font-serif text-xl font-bold text-white mt-1">Slow fermented. Oven-fresh daily.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. MARQUEE RIBBON -->
+<div class="bg-[#E3A04B] text-[#5C0302] py-3.5 font-bold text-xs uppercase tracking-widest overflow-hidden shadow-inner select-none">
+<div class="animate-marquee whitespace-nowrap flex items-center">
+<span class="mx-4">• HANDCRAFTED BUTTER CROISSANTS • BELGIAN CHOCOLATE TRUFFLES • FRENCH MACARONS • STONEGROUND SOURDOUGH • CUSTOM CELEBRATION CAKES • HANDCRAFTED BUTTER CROISSANTS • BELGIAN CHOCOLATE TRUFFLES • FRENCH MACARONS • STONEGROUND SOURDOUGH • CUSTOM CELEBRATION CAKES</span>
+<span class="mx-4">• HANDCRAFTED BUTTER CROISSANTS • BELGIAN CHOCOLATE TRUFFLES • FRENCH MACARONS • STONEGROUND SOURDOUGH • CUSTOM CELEBRATION CAKES • HANDCRAFTED BUTTER CROISSANTS • BELGIAN CHOCOLATE TRUFFLES • FRENCH MACARONS • STONEGROUND SOURDOUGH • CUSTOM CELEBRATION CAKES</span>
+</div>
+</div>
+<!-- 5. VISIT OUR LOCATIONS -->
+<section class="bg-[#F2E4C9] py-20 px-6 border-b border-[#d7c1c4]/60" id="branches">
+<div class="max-w-7xl mx-auto">
+<div class="text-center max-w-2xl mx-auto mb-16">
+<span class="text-xs font-bold tracking-widest uppercase text-[#5C0302] block mb-2">VISIT OUR LOCATIONS</span>
+<h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-[#2f0211]">Experience Paradise Near You</h2>
+<div class="w-16 h-0.5 bg-[#C9A34E] mx-auto mt-4"></div>
+<p class="mt-4 text-[#524346] text-sm sm:text-base">Step into any of our neighborhood patisseries to savor hot oven bakes, artisan desserts, and heartfelt Calicut warmth.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Branch 1: Olavanna -->
+<div class="bg-[#fdf9f3] rounded-2xl overflow-hidden shadow-md border border-[#e6e2dc] flex flex-col hover:shadow-xl transition-all duration-300">
+<div class="relative h-60 w-full overflow-hidden bg-stone-200">
+<img alt="Olavanna Branch" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/ALJJyrBgJl_ZzqyedGJmsnJGHzAgNqfEcxWh53DyNlpg3btnhlVyfyicHMLzmE6l5pEFBUtMkoY52_LxJTh1t-QicmJDtCABbC4yo57VSX3E7eTW1KzMG-XwTUBfQpe-LB7XNGdxoG2mH5dMrU8ADPp9xql71kxXVOraLw0GOPAX_0aQYIWRpG7JneQKUAE5lmX4Vjql8Gt5QEqCVA4kiviHML_L9AC39fffKxdzCdvFKwkt">
+<div class="absolute top-3 left-3 bg-[#1C050B]/90 text-[#ffe088] text-[10px] font-bold tracking-wider px-3 py-1 rounded-full uppercase border border-[#C9A34E]/50">
+              MAIN BRANCH • OLAVANNA
+            </div>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-between">
+<div>
+<h3 class="font-serif text-2xl font-bold text-[#5C0302]">Olavanna Branch</h3>
+<p class="text-xs text-[#524346] mt-3 leading-relaxed">
+                Warm artisanal ambiance, expansive viewing bakery kitchen, fresh oven-baked viennoiserie, and our premier celebration gateaux studio.
+              </p>
+<div class="mt-5 space-y-1.5 text-xs text-[#1c1c18] border-t border-[#e6e2dc] pt-4 font-medium">
+<p class="flex items-center gap-2"><span class="material-symbols-outlined text-[#735c00] text-[16px]">schedule</span> 10:00 AM – 12:00 Midnight</p>
+<p class="flex items-center gap-2"><span class="material-symbols-outlined text-[#735c00] text-[16px]">call</span> +91 97442 42477</p>
+<p class="flex items-center gap-2"><span class="material-symbols-outlined text-[#735c00] text-[16px]">location_on</span> Near Calicut Road, Olavanna</p>
+</div>
+</div>
+<div class="flex items-center gap-3 mt-6 pt-2">
+<button class="flex-1 py-2.5 px-3 rounded-lg border border-[#847375] text-xs font-semibold text-[#5C0302] hover:bg-[#ebe8e2] transition-colors text-center">
+                View Menu
+              </button>
+<a class="flex-1 py-2.5 px-3 rounded-lg bg-[#5C0302] hover:bg-[#430202] text-white text-xs font-semibold transition-colors text-center shadow-sm" href="#findus">
+                Get Directions
+              </a>
+</div>
+</div>
+</div>
+<!-- Branch 2: Kattukulangara -->
+<div class="bg-[#fdf9f3] rounded-2xl overflow-hidden shadow-md border border-[#e6e2dc] flex flex-col hover:shadow-xl transition-all duration-300">
+<div class="relative h-60 w-full overflow-hidden bg-stone-200">
+<img alt="Kattukulangara Branch" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/ALJJyrCYOqgIbdMF1plwQaiA7EnuX0D5z6r_q5B3nU8awzBLXnxDECc3fOUjAGRHBke4Y8gwEOqR_uvd45cTcyJE5JiDEI7g-a3MyZDRx0k3W0UguXn8SLNweXqToI5Wvn4VofaurIm4L1fKQPyJeOA8vxtRExO4nkgmizGDLW6gbl4rk-YI-4ftLt3jabOizg74iAgmKl0wIOrhhQq9ibaUNCthmQ01tfLub2csKTTv0l0">
+<div class="absolute top-3 left-3 bg-[#1C050B]/90 text-[#ffe088] text-[10px] font-bold tracking-wider px-3 py-1 rounded-full uppercase border border-[#C9A34E]/50">
+              CAFE &amp; BAKE • STATION RD
+            </div>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-between">
+<div>
+<h3 class="font-serif text-2xl font-bold text-[#5C0302]">Kattukulangara Branch</h3>
+<p class="text-xs text-[#524346] mt-3 leading-relaxed">
+                Intimate boutique cafe with specialty pour-over brews, delicate Parisian mousse cups, daily hot puffs, and cozy indoor seating.
+              </p>
+<div class="mt-5 space-y-1.5 text-xs text-[#1c1c18] border-t border-[#e6e2dc] pt-4 font-medium">
+<p class="flex items-center gap-2"><span class="material-symbols-outlined text-[#735c00] text-[16px]">schedule</span> 10:00 AM – 12:00 Midnight</p>
+<p class="flex items-center gap-2"><span class="material-symbols-outlined text-[#735c00] text-[16px]">call</span> +91 98467 72424</p>
+<p class="flex items-center gap-2"><span class="material-symbols-outlined text-[#735c00] text-[16px]">location_on</span> Station Junction, Kattukulangara</p>
+</div>
+</div>
+<div class="flex items-center gap-3 mt-6 pt-2">
+<button class="flex-1 py-2.5 px-3 rounded-lg border border-[#847375] text-xs font-semibold text-[#5C0302] hover:bg-[#ebe8e2] transition-colors text-center">
+                View Menu
+              </button>
+<a class="flex-1 py-2.5 px-3 rounded-lg bg-[#5C0302] hover:bg-[#430202] text-white text-xs font-semibold transition-colors text-center shadow-sm" href="#findus">
+                Get Directions
+              </a>
+</div>
+</div>
+</div>
+<!-- Branch 3: Kulangarapeedika -->
+<div class="bg-[#fdf9f3] rounded-2xl overflow-hidden shadow-md border border-[#e6e2dc] flex flex-col hover:shadow-xl transition-all duration-300">
+<div class="relative h-60 w-full overflow-hidden bg-stone-200">
+<img alt="Kulangarapeedika Branch" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/ALJJyrDolqAgbZg4y7As7lpOMFxG5vM5QrEp0WrMS8lFPUfcca-4nNVkKQ0NK5vK_csK01HonagbJGbnfV-oqkhYAi_fkREGxRI6h-miSDFbs56CN221xqDWVRQj9gW-PjTFk3OdqpfAcMgxtD9F4x1qEEZKXw21CxoLTWiL0Wk9gPKQ_BrMV9zskwW8YcFAfCv7J17F6FZ7mzVLObdFpCcJR7e-xHL2E8-AZsKr8evk5Xg7">
+<div class="absolute top-3 left-3 bg-[#1C050B]/90 text-[#ffe088] text-[10px] font-bold tracking-wider px-3 py-1 rounded-full uppercase border border-[#C9A34E]/50">
+              EXPRESS OUTPOST • HIGHWAY
+            </div>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-between">
+<div>
+<h3 class="font-serif text-2xl font-bold text-[#5C0302]">Kulangarapeedika Branch</h3>
+<p class="text-xs text-[#524346] mt-3 leading-relaxed">
+                Express takeaway counter stocked with hot savories, afternoon tea cookies, premium gift hampers, and on-demand celebration cakes.
+              </p>
+<div class="mt-5 space-y-1.5 text-xs text-[#1c1c18] border-t border-[#e6e2dc] pt-4 font-medium">
+<p class="flex items-center gap-2"><span class="material-symbols-outlined text-[#735c00] text-[16px]">schedule</span> 10:00 AM – 12:00 Midnight</p>
+<p class="flex items-center gap-2"><span class="material-symbols-outlined text-[#735c00] text-[16px]">call</span> +91 99467 77707</p>
+<p class="flex items-center gap-2"><span class="material-symbols-outlined text-[#735c00] text-[16px]">location_on</span> Highway Corner, Kulangarapeedika</p>
+</div>
+</div>
+<div class="flex items-center gap-3 mt-6 pt-2">
+<button class="flex-1 py-2.5 px-3 rounded-lg border border-[#847375] text-xs font-semibold text-[#5C0302] hover:bg-[#ebe8e2] transition-colors text-center">
+                View Menu
+              </button>
+<a class="flex-1 py-2.5 px-3 rounded-lg bg-[#5C0302] hover:bg-[#430202] text-white text-xs font-semibold transition-colors text-center shadow-sm" href="#findus">
+                Get Directions
+              </a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. OUR STORY & HERITAGE -->
+<section class="bg-[#F2E4C9] py-24 px-6 border-b border-[#CA8B4A]/30 relative" id="story">
+<div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+<!-- Left Editorial Copy -->
+<div class="lg:col-span-6 space-y-6">
+<span class="text-xs font-bold uppercase tracking-widest text-[#9A1C20] block">OUR STORY &amp; HERITAGE</span>
+<h2 class="font-serif text-3xl sm:text-5xl font-bold text-[#5C0302] leading-tight">
+          Fresh from the oven, <br><span class="italic font-normal text-[#5C0302]">every single morning.</span>
+</h2>
+<p class="text-sm sm:text-base text-[#31302d] leading-relaxed">
+          Founded with an uncompromising passion for slow-fermented crusts and genuine hospitality, Paradise Bakes has grown from a humble family oven into Kozhikode’s cherished neighborhood benchmark for artisanal baking.
+        </p>
+<p class="text-sm sm:text-base text-[#31302d] leading-relaxed">
+          We refuse shortcuts. We use only cultured butter, stoneground unbleached flours, rich chocolate couvertures, and seasonal Malabar fruits. Each loaf takes up to thirty hours of patient sourdough fermentation before touching the stone hearth.
+        </p>
+<!-- Feature Pills / Stat Cards -->
+<div class="grid grid-cols-3 gap-3 pt-4">
+<div class="p-3.5 bg-[#fdf9f3] rounded-xl border border-[#C9A34E]/40 text-center shadow-sm">
+<span class="block font-serif text-lg font-bold text-[#9A1C20]">01</span>
+<span class="block text-xs font-semibold text-[#1c1c18] mt-1">Three Branches</span>
+<span class="block text-[11px] text-[#524346]">Across Calicut</span>
+</div>
+<div class="p-3.5 bg-[#fdf9f3] rounded-xl border border-[#C9A34E]/40 text-center shadow-sm">
+<span class="block font-serif text-lg font-bold text-[#9A1C20]">02</span>
+<span class="block text-xs font-semibold text-[#1c1c18] mt-1">Baked Daily</span>
+<span class="block text-[11px] text-[#524346]">Zero preservatives</span>
+</div>
+<div class="p-3.5 bg-[#fdf9f3] rounded-xl border border-[#C9A34E]/40 text-center shadow-sm">
+<span class="block font-serif text-lg font-bold text-[#9A1C20]">03</span>
+<span class="block text-xs font-semibold text-[#1c1c18] mt-1">Made to Order</span>
+<span class="block text-[11px] text-[#524346]">Bespoke celebration</span>
+</div>
+</div>
+</div>
+<!-- Right Arch Photography -->
+<div class="lg:col-span-6 relative flex justify-center">
+<div class="relative w-full max-w-md">
+<!-- Arched Photo Container -->
+<div class="relative rounded-t-full rounded-b-2xl overflow-hidden border-4 border-[#C9A34E] shadow-2xl bg-stone-200 aspect-[3/4]">
+<img alt="Artisan Baker Shaping Sourdough Bread" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/ALJJyrCM3iOFfymaFumkfeaQNDbF9-eKPBEJTZY94pkD5rMLfSeu3_3TC7Gzn8kZBt46wLVa2MJAJ0Ihiu59Ov9qn_CKftpjdMRio7oh2puoJKVhOudP8T_tjSwlROvDTXNgR9C_YTBqN3DvCUNsGiaxIxqI2HH6AizAdls6IBYAf8oDzaNm2XeA20VFxC8UKaaAsv4aZ-x9j8RX8upAOJVZbIZxRPq4Cz3CFDxxZlaf-zfd">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+</div>
+<!-- Pure Heritage Badge -->
+<div class="absolute -bottom-6 -left-6 bg-[#5C0302] text-[#FDF2D8] p-5 rounded-2xl shadow-xl border border-[#C9A34E]/60 max-w-[200px]">
+<span class="text-[#ffe088] font-bold text-xs uppercase tracking-widest block">★ Pure Heritage</span>
+<p class="text-[11px] text-[#ffd7c9] mt-1">Honoring time-tested French patisserie methods in Calicut.</p>
+</div>
+<!-- Overlapping Circular Badge Logo -->
+<div class="absolute -top-6 -right-6 w-24 h-24 bg-[#fdf9f3] rounded-full p-2 shadow-xl border border-[#C9A34E]/50 flex items-center justify-center animate-spin-slow">
+<img alt="Badge Logo" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKlvM-jmTCO8mGH0KEXFqkg3NOxFwNaOvaeuH5aS_z1UFfX0kTisSaMYyp9valGuwb2vDMmJk3P4PzsCgmj6P7TXq1imw46w8BTM5P2HvTmJGriNwEelKV4QkPEI92FFjmH20AKk96Mzzgt_2_bG3ZPqZaP8T-AHABuLtJeemryncyqwaebHFUVRCWBc7PGcQ07ugrFhSU62BNSzBUiXN4o7P0eEcNik_aSKg_HhrRwOCCc5mC9G0o">
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 7. STEP INTO CAKE WORLD -->
+<section class="relative bg-[#9A1C20] text-[#FDF2D8] py-24 px-6 overflow-hidden" id="cakeworld">
+<!-- Radial Warm Glow -->
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#9A1C20] via-[#5C0302] to-[#5C0302] pointer-events-none opacity-80"></div>
+<div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10"><div class="lg:col-span-7 flex flex-col items-start text-left space-y-6"><div class="inline-flex items-center gap-2 bg-[#1C050B]/60 border border-[#C9A34E]/50 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider text-[#ffe088] uppercase"><span class="w-1.5 h-1.5 rounded-full bg-[#C9A34E]"></span>Experience The Art of Celebration</div><h2 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight text-white">Step into <span class="italic font-normal text-[#C9A34E]">Cake World.</span></h2><p class="text-sm sm:text-base text-[#ffd7c9] leading-relaxed max-w-xl">We're excited to share that Paradise is now making your cake experience easier, safer, and more affordable than ever. Every cake is prepared with strict hygiene and genuine care, so you can enjoy sweetness with complete peace of mind. We believe great quality shouldn't be expensive, which is why our prices stay friendly and budget-smart while keeping our standards high. Whether it's a small treat or a big celebration, Paradise is here to serve you with convenience, trust, and the taste you love.</p><div class="flex flex-wrap items-center gap-3 pt-2 text-xs font-medium text-[#fdf9f3]"><div class="flex items-center gap-2 bg-[#1C050B]/50 border border-[#C9A34E]/30 px-3.5 py-2 rounded-full"><span class="text-[#C9A34E] font-bold">✓</span> Strict Kitchen Hygiene</div><div class="flex items-center gap-2 bg-[#1C050B]/50 border border-[#C9A34E]/30 px-3.5 py-2 rounded-full"><span class="text-[#C9A34E] font-bold">✓</span> Pocket-Friendly Luxury</div><div class="flex items-center gap-2 bg-[#1C050B]/50 border border-[#C9A34E]/30 px-3.5 py-2 rounded-full"><span class="text-[#C9A34E] font-bold">✓</span> Handcrafted with Love &amp; Care</div><div class="flex items-center gap-2 bg-[#1C050B]/50 border border-[#C9A34E]/30 px-3.5 py-2 rounded-full"><span class="text-[#C9A34E] font-bold">✓</span> Safe Temperature Delivery</div></div><div class="pt-4"><a class="inline-flex items-center gap-3 bg-[#E3A04B] hover:bg-[#CA8B4A] text-[#5C0302] font-bold text-xs uppercase tracking-widest px-8 py-4 rounded-full transition-all shadow-xl hover:gap-4" href="#order"><span>Enter Cake World</span><span>→</span></a></div></div><div class="hidden lg:block lg:col-span-5"></div></div>
+</section>
+<!-- 8. LIFE AT PARADISE (Cover Flow / Carousel) -->
+<section class="bg-[#5C0302] text-[#FDF2D8] py-24 px-6 border-b border-[#CA8B4A]/30" id="life">
+<div class="max-w-7xl mx-auto">
+<div class="text-center max-w-2xl mx-auto mb-14">
+<span class="text-xs font-bold tracking-widest uppercase text-[#ffe088] block mb-2">MOMENTS IN THE BAKERY</span>
+<h2 class="font-serif text-3xl sm:text-5xl font-bold text-white">Life at Paradise</h2>
+<div class="w-16 h-0.5 bg-[#C9A34E] mx-auto mt-4"></div>
+<p class="mt-4 text-[#ffd7c9]/80 text-sm sm:text-base">
+          A glimpse into our flour-filled mornings, joyous laughter over freshly brewed coffee, and the artisan hands that craft your sweet memories.
+        </p>
+</div>
+<!-- Carousel Cards Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+<!-- Moment 1 -->
+<div class="group relative rounded-2xl overflow-hidden shadow-lg border border-[#703343] bg-[#1C050B] h-80 transition-all hover:-translate-y-1 hover:shadow-2xl">
+<img alt="The Artisan Hearth" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida/ALJJyrBj-9jtpeDXALtWwrtcVQ7zOzqHgZDFPhFxAWQF7OM506eEWKdvJ4s7HcjBYzvpBP3xK5f_NNnz6M7OB_6Pk-IMgJk09ej4KhEtDJJL4BXSgrwTU0r33vPJK4JvHKgjc9n8eBnnhp2B5nwrOnoHhQ8rVjPQgoSbNRMfcIMBZnbg2jTQ6HFel_sdF3VfdGxzz9kYYQtuLAJkrsw1oWWJVuPGeDiGew8vkmEYsDjuOgM-">
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
+<div class="absolute bottom-4 left-4 right-4">
+<span class="text-[10px] uppercase font-bold tracking-wider text-[#C9A34E] block">Stone Hearth Oven</span>
+<h4 class="font-serif text-base font-bold text-white mt-0.5">The Artisan Hearth</h4>
+</div>
+</div>
+<!-- Moment 2 -->
+<div class="group relative rounded-2xl overflow-hidden shadow-lg border border-[#703343] bg-[#1C050B] h-80 transition-all hover:-translate-y-1 hover:shadow-2xl">
+<img alt="Morning Rush &amp; Coffee" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida/ALJJyrDwYiBMLDZEv5frDLuQj9r5gAIN037n7-gNli4rzP1bI40IU_Do6QZgoYloNRrWV5nsXdVzGO_vL2UFrSfIp7TT7YPjlqcVSDLv-Gyct0UCGZLpmAYEbuLQ0vbQLvaSprekpUPzHf8cdeMfUN_wWHTca7zeuOkobevL0owrJ1KcBQqARzIUHis-nCvc2JbUE_uylu5gxmXYUGfHuiWeVbGguLMITbwZLYTzqXA4ds2G">
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
+<div class="absolute bottom-4 left-4 right-4">
+<span class="text-[10px] uppercase font-bold tracking-wider text-[#C9A34E] block">Olavanna Branch</span>
+<h4 class="font-serif text-base font-bold text-white mt-0.5">Morning Rush &amp; Coffee</h4>
+</div>
+</div>
+<!-- Moment 3 -->
+<div class="group relative rounded-2xl overflow-hidden shadow-lg border border-[#703343] bg-[#1C050B] h-80 transition-all hover:-translate-y-1 hover:shadow-2xl">
+<img alt="Golden Crisp Layers" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida/ALJJyrDDrQIiAHn-WjfJvy9VwNUSgX-bYgd7ySUseAbgQwyK27Mfq-UOYgs1cPiRRKLbfZ3-0tawYXV1VApRxNIKDqAwqwxulbGfAbM8H7-yuRcqBNIRNZuVA764tbIp4A-P9D7KKqXm2azwXvd9M6e97pYGr_PBw7e8N4dE2C9jKgIp8SrPysM2lQBvMHo4xWH2jnIE-8tzNM2TkULIbwPRze2lrfszHfoYtywD0HSNzRo2">
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
+<div class="absolute bottom-4 left-4 right-4">
+<span class="text-[10px] uppercase font-bold tracking-wider text-[#C9A34E] block">Viennoiserie</span>
+<h4 class="font-serif text-base font-bold text-white mt-0.5">Golden Crisp Layers</h4>
+</div>
+</div>
+<!-- Moment 4 -->
+<div class="group relative rounded-2xl overflow-hidden shadow-lg border border-[#703343] bg-[#1C050B] h-80 transition-all hover:-translate-y-1 hover:shadow-2xl">
+<img alt="Cake Studio Creations" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida/ALJJyrCROlRgTg-siQvvOCX6eJE-xzVaFPLw6RRi4dw9dSRfBcpCVhwPZSx6ON86gV_wZohu5rzIrRDBXxizpeLwATs31FVqhAm2T3fz5I1Rsgq-SZt49Hwfwk3BufuOysoE8Rc5SHxjhzeQx2hALJrPSbXePsev5Can0xMiHS2dDcE1GMTnknW9VEJGkdKa7uD2HwyVwGfbpJbLaGOTXTWIBG9ljRL5HpQTeJBBEQqZf2w">
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
+<div class="absolute bottom-4 left-4 right-4">
+<span class="text-[10px] uppercase font-bold tracking-wider text-[#C9A34E] block">Mastery</span>
+<h4 class="font-serif text-base font-bold text-white mt-0.5">Cake Studio Creations</h4>
+</div>
+</div>
+<!-- Moment 5 -->
+<div class="group relative rounded-2xl overflow-hidden shadow-lg border border-[#703343] bg-[#1C050B] h-80 transition-all hover:-translate-y-1 hover:shadow-2xl">
+<img alt="Master Handcrafted Craft" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida/ALJJyrCM3iOFfymaFumkfeaQNDbF9-eKPBEJTZY94pkD5rMLfSeu3_3TC7Gzn8kZBt46wLVa2MJAJ0Ihiu59Ov9qn_CKftpjdMRio7oh2puoJKVhOudP8T_tjSwlROvDTXNgR9C_YTBqN3DvCUNsGiaxIxqI2HH6AizAdls6IBYAf8oDzaNm2XeA20VFxC8UKaaAsv4aZ-x9j8RX8upAOJVZbIZxRPq4Cz3CFDxxZlaf-zfd">
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
+<div class="absolute bottom-4 left-4 right-4">
+<span class="text-[10px] uppercase font-bold tracking-wider text-[#C9A34E] block">Daily Craft</span>
+<h4 class="font-serif text-base font-bold text-white mt-0.5">Master Handcrafted Craft</h4>
+</div>
+</div>
+</div>
+<!-- Controls -->
+<div class="flex items-center justify-center gap-4 mt-10">
+<button class="w-11 h-11 rounded-full border border-[#ffe088]/40 hover:border-[#ffe088] text-[#ffe088] flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-11 h-11 rounded-full border border-[#ffe088]/40 hover:border-[#ffe088] text-[#ffe088] flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</section>
+<!-- 9. FIND US ACROSS KOZHIKODE -->
+<section class="bg-[#F2E4C9] py-24 px-6 border-b border-[#CA8B4A]/30" id="findus">
+<div class="max-w-7xl mx-auto">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-4">
+<div>
+<span class="text-xs font-bold tracking-widest uppercase text-[#9A1C20] block mb-2">FIND US ACROSS BRANCH</span>
+<h2 class="font-serif text-3xl sm:text-5xl font-bold text-[#5C0302]">Find Us Across Kozhikode</h2>
+<p class="text-sm text-[#524346] mt-2">Visit our nearest branch or service center to get in touch with our team across Kozhikode.</p>
+</div>
+<div class="inline-flex items-center gap-2 bg-[#FDF2D8] border border-[#CA8B4A]/40 px-4 py-2 rounded-full text-xs font-semibold text-[#5C0302] shadow-sm">
+<span class="w-2 h-2 rounded-full bg-[#9A1C20] animate-pulse"></span>
+          LOCATION SEARCH ACTIVE
+        </div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Map Card 1 -->
+<div class="bg-[#fdf9f3] rounded-2xl p-4 shadow-sm border border-[#CA8B4A]/40 flex flex-col justify-between hover:shadow-md transition-shadow">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="text-[11px] font-bold uppercase tracking-wider text-[#735c00]">Branch 01</span>
+<span class="material-symbols-outlined text-[#E3A04B] text-lg">pin_drop</span>
+</div>
+<h3 class="font-serif text-xl font-bold text-[#5C0302] mb-3">Olavanna Branch</h3>
+<!-- Map Container -->
+<div class="h-44 w-full rounded-xl overflow-hidden border border-[#CA8B4A]/30 relative mb-4">
+<img alt="Olavanna Map Location" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/ALJJyrDyA0ZHDSQPbfZJUIadK7elAuhTYLZzmeJSxyGY3xySECP_pRAIFSAjbcpxVI9J52vEKZZIKYUiEHYIwk7bEWXQNdviE6bwz2Asy0IsItIlGixduuAk0GC-yZpOIb7e4kMtjReoPv8NTBr7fV2LEbZnM2P42mHiLWuLx9UrWzqEhhkoTeFED2VWe7tzZ32L0-manRJVP1zu6olesNCogWsWhTcXRG5BPHRS1-wZS_CW">
+<div class="absolute bottom-2 right-2 bg-[#1C050B]/90 backdrop-blur-sm text-[10px] font-bold px-2 py-0.5 rounded text-[#ffe088] border border-[#C9A34E]/50">
+                Open Maps
+              </div>
+</div>
+<div class="space-y-1.5 text-xs text-[#524346]">
+<p class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[15px] text-[#5C0302] shrink-0 mt-0.5">location_on</span>
+<span>Near Calicut Road, Olavanna, Kozhikode</span>
+</p>
+<p class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[15px] text-[#5C0302] shrink-0">schedule</span>
+<span>10:00 AM – 12:00 PM</span>
+</p>
+<p class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[15px] text-[#5C0302] shrink-0">call</span>
+<span class="font-semibold text-[#1c1c18]">+91 97442 42477</span>
+</p>
+</div>
+</div>
+<a class="mt-6 w-full py-3 bg-[#5C0302] hover:bg-[#430202] text-[#FDF2D8] text-xs font-bold uppercase tracking-wider rounded-xl transition-colors text-center flex items-center justify-center gap-2" href="https://maps.google.com" rel="noopener" target="_blank">
+<span class="material-symbols-outlined text-[16px]">navigation</span>
+            GET DIRECTIONS ON MAPS
+          </a>
+</div>
+<!-- Map Card 2 -->
+<div class="bg-[#fdf9f3] rounded-2xl p-4 shadow-sm border border-[#CA8B4A]/40 flex flex-col justify-between hover:shadow-md transition-shadow">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="text-[11px] font-bold uppercase tracking-wider text-[#735c00]">Branch 02</span>
+<span class="material-symbols-outlined text-[#E3A04B] text-lg">pin_drop</span>
+</div>
+<h3 class="font-serif text-xl font-bold text-[#5C0302] mb-3">Kattukulangara Branch</h3>
+<!-- Map Container -->
+<div class="h-44 w-full rounded-xl overflow-hidden border border-[#CA8B4A]/30 relative mb-4">
+<img alt="Kattukulangara Map Location" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/ALJJyrBWqleRys0LFWEh_9f1_BEVVfijxa4ZFGwYrZUHMo6CMajPJJVsamfKSwJZ02T-W1MXCgc18Wynz_AB3MEU1GWvadQSVsigdocPD1LAc4OYUDp2XTzN7706PFZ6_vm_9SvycHV0f8fa6NB0xd6-eDpe-7qg3sDwMbUZ5_jWH-DeCtiR3MryDvoMrKaJTPy27NKY2TaycXyWddvv5Ieux8UCUTX4t1IKWmLX1Hmz8Tr8">
+<div class="absolute bottom-2 right-2 bg-[#1C050B]/90 backdrop-blur-sm text-[10px] font-bold px-2 py-0.5 rounded text-[#ffe088] border border-[#C9A34E]/50">
+                Open Maps
+              </div>
+</div>
+<div class="space-y-1.5 text-xs text-[#524346]">
+<p class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[15px] text-[#5C0302] shrink-0 mt-0.5">location_on</span>
+<span>Station Junction, Kattukulangara, Kozhikode</span>
+</p>
+<p class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[15px] text-[#5C0302] shrink-0">schedule</span>
+<span>10:00 AM – 12:00 PM</span>
+</p>
+<p class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[15px] text-[#5C0302] shrink-0">call</span>
+<span class="font-semibold text-[#1c1c18]">+91 98467 72424</span>
+</p>
+</div>
+</div>
+<a class="mt-6 w-full py-3 bg-[#5C0302] hover:bg-[#430202] text-[#FDF2D8] text-xs font-bold uppercase tracking-wider rounded-xl transition-colors text-center flex items-center justify-center gap-2" href="https://maps.google.com" rel="noopener" target="_blank">
+<span class="material-symbols-outlined text-[16px]">navigation</span>
+            GET DIRECTIONS ON MAPS
+          </a>
+</div>
+<!-- Map Card 3 -->
+<div class="bg-[#fdf9f3] rounded-2xl p-4 shadow-sm border border-[#CA8B4A]/40 flex flex-col justify-between hover:shadow-md transition-shadow">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="text-[11px] font-bold uppercase tracking-wider text-[#735c00]">Branch 03</span>
+<span class="material-symbols-outlined text-[#E3A04B] text-lg">pin_drop</span>
+</div>
+<h3 class="font-serif text-xl font-bold text-[#5C0302] mb-3">Kulangarapeedika Branch</h3>
+<!-- Map Container -->
+<div class="h-44 w-full rounded-xl overflow-hidden border border-[#CA8B4A]/30 relative mb-4">
+<img alt="Kulangarapeedika Map Location" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/ALJJyrBDAKzVho4g6CO1lP_cjDxxsSelzMkLPwSgvwTaA_S35DTc-QAEqMSh5HVWPVIU2u2a5OzJk5xllMzXvnaj0CS1UWsg6cUAoTs5zxOA9DeMSw_k--Wy4KZZIcMjt_keYd08gf-xrMT4o_1PQN_W-DfEr9UkzE_eOFxG69k90z5t1S4vldHUDagSobKC4SC3iIUFnfvJ3giDQoaNPCaH3Hb-HmBhRKbmYPavEjIJFvZe">
+<div class="absolute bottom-2 right-2 bg-[#1C050B]/90 backdrop-blur-sm text-[10px] font-bold px-2 py-0.5 rounded text-[#ffe088] border border-[#C9A34E]/50">
+                Open Maps
+              </div>
+</div>
+<div class="space-y-1.5 text-xs text-[#524346]">
+<p class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[15px] text-[#5C0302] shrink-0 mt-0.5">location_on</span>
+<span>Highway Corner, Kulangarapeedika, Kozhikode</span>
+</p>
+<p class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[15px] text-[#5C0302] shrink-0">schedule</span>
+<span>10:00 AM – 12:00 PM</span>
+</p>
+<p class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[15px] text-[#5C0302] shrink-0">call</span>
+<span class="font-semibold text-[#1c1c18]">+91 99467 77707</span>
+</p>
+</div>
+</div>
+<a class="mt-6 w-full py-3 bg-[#5C0302] hover:bg-[#430202] text-[#FDF2D8] text-xs font-bold uppercase tracking-wider rounded-xl transition-colors text-center flex items-center justify-center gap-2" href="https://maps.google.com" rel="noopener" target="_blank">
+<span class="material-symbols-outlined text-[16px]">navigation</span>
+            GET DIRECTIONS ON MAPS
+          </a>
+</div>
+</div>
+</div>
+</section>
+<!-- 10. CUSTOMER REVIEWS -->
+<section class="bg-[#F2E4C9] py-24 px-6 border-b border-[#d7c1c4]/60" id="reviews">
+<div class="max-w-7xl mx-auto">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+<div>
+<span class="text-xs font-bold tracking-widest uppercase text-[#5C0302] block mb-2">KOZHIKODE'S MOST LOVED PATISSERIE</span>
+<h2 class="font-serif text-3xl sm:text-5xl font-bold text-[#2f0211]">Loved by Thousands Across Calicut</h2>
+</div>
+<!-- Google Rating Badge -->
+<div class="flex items-center gap-4 bg-white/80 backdrop-blur-sm p-4 rounded-2xl border border-[#d7c1c4] shadow-sm">
+<div class="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow font-bold text-amber-600 text-lg border">
+            G
+          </div>
+<div>
+<div class="flex items-center gap-1 text-[#cca830] text-sm">
+              ★★★★★
+              <span class="font-bold text-[#1c1c18] ml-1 text-sm">4.9</span>
+</div>
+<span class="text-[11px] text-[#524346]">1,240+ Verified Reviews</span>
+</div>
+<button class="ml-2 text-xs font-bold uppercase tracking-wider bg-[#5C0302] text-white px-3.5 py-2 rounded-lg hover:bg-[#430202] transition-colors">
+            Write a Review
+          </button>
+</div>
+</div>
+<!-- Testimonial Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Review 1 -->
+<div class="bg-white rounded-2xl p-6 shadow-sm border border-[#e6e2dc] flex flex-col justify-between hover:shadow-md transition-shadow">
+<div>
+<div class="text-[#cca830] text-base mb-3">★★★★★</div>
+<p class="text-xs sm:text-sm text-[#31302d] italic leading-relaxed">
+              "Their Belgian Chocolate Truffle cake made my daughter's 5th birthday absolutely unforgettable. Every single guest asked where we ordered it from. Pure indulgence!"
+            </p>
+</div>
+<div class="mt-6 pt-4 border-t border-[#f1ede7] flex items-center justify-between">
+<div>
+<h5 class="font-bold text-xs text-[#1c1c18]">Anjali Menon</h5>
+<span class="text-[10px] text-[#524346]">Olavanna Resident</span>
+</div>
+<span class="text-[10px] bg-emerald-50 text-emerald-700 font-semibold px-2 py-0.5 rounded">Verified</span>
+</div>
+</div>
+<!-- Review 2 -->
+<div class="bg-white rounded-2xl p-6 shadow-sm border border-[#e6e2dc] flex flex-col justify-between hover:shadow-md transition-shadow">
+<div>
+<div class="text-[#cca830] text-base mb-3">★★★★★</div>
+<p class="text-xs sm:text-sm text-[#31302d] italic leading-relaxed">
+              "The croissants at Paradise Bakes Kattukulangara are identical to what you find in authentic Paris boulangeries. Crispy, honeycomb interior and real butter aroma."
+            </p>
+</div>
+<div class="mt-6 pt-4 border-t border-[#f1ede7] flex items-center justify-between">
+<div>
+<h5 class="font-bold text-xs text-[#1c1c18]">Dr. Farhan K.</h5>
+<span class="text-[10px] text-[#524346]">Regular Cafe Visitor</span>
+</div>
+<span class="text-[10px] bg-emerald-50 text-emerald-700 font-semibold px-2 py-0.5 rounded">Verified</span>
+</div>
+</div>
+<!-- Review 3 -->
+<div class="bg-white rounded-2xl p-6 shadow-sm border border-[#e6e2dc] flex flex-col justify-between hover:shadow-md transition-shadow">
+<div>
+<div class="text-[#cca830] text-base mb-3">★★★★★</div>
+<p class="text-xs sm:text-sm text-[#31302d] italic leading-relaxed">
+              "Warm service, clean counters, and the hot chicken puff with cappuccino is my afternoon ritual whenever I travel past the highway counter. Top quality!"
+            </p>
+</div>
+<div class="mt-6 pt-4 border-t border-[#f1ede7] flex items-center justify-between">
+<div>
+<h5 class="font-bold text-xs text-[#1c1c18]">Sujith Narayanan</h5>
+<span class="text-[10px] text-[#524346]">Kulangarapeedika</span>
+</div>
+<span class="text-[10px] bg-emerald-50 text-emerald-700 font-semibold px-2 py-0.5 rounded">Verified</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 11. FINAL CTA & RICH FOOTER -->
+<section class="bg-[#F2E4C9] py-20 px-6 border-b border-[#CA8B4A]/30 text-center">
+<div class="max-w-3xl mx-auto space-y-6">
+<img alt="Paradise Bakes Logo" class="h-16 mx-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDjtMyLuJAMudAi6V10AukPj5Uvu8-GYn-vlSJo_BfXIPp5VpendcUI1IoWgGLV8ZNB5vljXiN4Gco1FJTCO-OgDQNHN5xW5AcIxjNQj_EBWffCkjw-fBgnhOoijcuaxLEssnNXWDtWNHcL2nwNzW57l0-phPGPYwZDJg4nVsO3h2IRoAocEJv0u5oKT54b11uI7nko3EmN8mjxfd3eh27I-Y1OyiTmY8o8t6WU7ezVIN-LiXZ8a1V">
+<span class="text-xs font-bold uppercase tracking-widest text-[#9A1C20] block">BESPOKE ORDERS &amp; DAILY DELIGHTS</span>
+<h2 class="font-serif text-3xl sm:text-5xl font-bold text-[#5C0302]">Crafting Sweet Memories</h2>
+<p class="text-sm sm:text-base text-[#5C0302]/80 leading-relaxed">
+        Let us bake the centerpiece for your next wedding, anniversary, or intimate afternoon coffee break. Reach out to our bakery master team today.
+      </p>
+<div class="flex flex-wrap items-center justify-center gap-4 pt-4">
+<a class="bg-[#9A1C20] hover:bg-[#5C0302] border border-[#CA8B4A]/40 text-[#FDF2D8] font-bold text-xs uppercase tracking-widest px-8 py-4 rounded-full transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5" href="#order">
+          Order Online Now
+        </a>
+<a class="border border-[#5C0302] bg-[#fdf9f3] text-[#5C0302] hover:bg-[#5C0302] hover:text-white font-bold text-xs uppercase tracking-widest px-8 py-4 rounded-full transition-all shadow-sm hover:-translate-y-0.5" href="#findus">
+          Find Nearest Branch
+        </a>
+</div>
+</div>
+</section>
+<!-- FOOTER -->
+<footer class="bg-[#5C0302] text-[#FDF2D8] pt-16 pb-10 px-6 border-t border-[#CA8B4A]/30">
+<div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-[#CA8B4A]/30">
+<!-- Brand Info -->
+<div class="lg:col-span-2 space-y-4">
+<div class="flex items-center gap-3">
+<img alt="Paradise Bakes Logo" class="h-10 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDjtMyLuJAMudAi6V10AukPj5Uvu8-GYn-vlSJo_BfXIPp5VpendcUI1IoWgGLV8ZNB5vljXiN4Gco1FJTCO-OgDQNHN5xW5AcIxjNQj_EBWffCkjw-fBgnhOoijcuaxLEssnNXWDtWNHcL2nwNzW57l0-phPGPYwZDJg4nVsO3h2IRoAocEJv0u5oKT54b11uI7nko3EmN8mjxfd3eh27I-Y1OyiTmY8o8t6WU7ezVIN-LiXZ8a1V">
+<div>
+<h4 class="font-serif text-lg font-bold text-white tracking-wide">PARADISE BAKES</h4>
+<span class="text-[10px] tracking-widest text-[#C9A34E] uppercase">Artisanal Patisserie • Kozhikode</span>
+</div>
+</div>
+<p class="text-xs text-[#ffd7c9]/80 leading-relaxed max-w-sm">
+          Committed to classical slow baking, French butter viennoiserie, and memorable celebrations across Kozhikode since our inception.
+        </p>
+</div>
+<!-- Quick Links -->
+<div class="space-y-3">
+<h5 class="text-xs font-bold uppercase tracking-wider text-[#ffe088]">Quick Links</h5>
+<ul class="space-y-2 text-xs text-[#ffd7c9]/70">
+<li><a class="hover:text-white transition-colors" href="#home">Home</a></li>
+<li><a class="hover:text-white transition-colors" href="#branches">Our Branches</a></li>
+<li><a class="hover:text-white transition-colors" href="#story">Our Story</a></li>
+<li><a class="hover:text-white transition-colors" href="#cakeworld">Cake World</a></li>
+<li><a class="hover:text-white transition-colors" href="#life">Life at Paradise</a></li>
+</ul>
+</div>
+<!-- Our Branches -->
+<div class="space-y-3">
+<h5 class="text-xs font-bold uppercase tracking-wider text-[#ffe088]">Our Branches</h5>
+<ul class="space-y-2.5 text-xs text-[#ffd7c9]/70">
+<li>
+<strong class="text-white block">Olavanna Branch:</strong>
+            Near Calicut Road, Kozhikode<br>
+            +91 97442 42477
+          </li>
+<li>
+<strong class="text-white block">Kattukulangara Branch:</strong>
+            Station Rd Junction<br>
+            +91 98467 72424
+          </li>
+<li>
+<strong class="text-white block">Kulangarapeedika:</strong>
+            Main Highway Corner<br>
+            +91 99467 77707
+          </li>
+</ul>
+</div>
+<!-- Hours & Delivery -->
+<div class="space-y-3">
+<h5 class="text-xs font-bold uppercase tracking-wider text-[#ffe088]">Hours &amp; Delivery</h5>
+<p class="text-xs text-[#ffd7c9]/80">
+          Open 7 Days a Week<br>
+<strong class="text-white">10:00 AM – 12:00 Midnight</strong>
+</p>
+<div class="pt-2">
+<span class="text-[10px] uppercase font-bold tracking-wider text-[#C9A34E] block mb-1.5">Available on Delivery:</span>
+<div class="flex items-center gap-2 text-xs font-medium text-white">
+<span class="px-2.5 py-1 bg-[#3B0813] rounded">Swiggy</span>
+<span class="px-2.5 py-1 bg-[#3B0813] rounded">Zomato</span>
+<span class="px-2.5 py-1 bg-[#3B0813] rounded">Direct Counter Pickup</span>
+</div>
+</div>
+</div>
+</div>
+<div class="max-w-7xl mx-auto pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-[#ffd7c9]/60 gap-4">
+<p>© 2026 Paradise Bakes &amp; Patisserie. All rights reserved.</p>
+<div class="flex items-center gap-6">
+<a class="hover:text-white transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-white transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-white transition-colors" href="#findus">Google Maps</a>
+</div>
+</div>
+</footer>
+
+
+</body></html>

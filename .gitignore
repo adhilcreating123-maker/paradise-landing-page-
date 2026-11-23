@@ -1,0 +1,11 @@
+node_modules/
+.next/
+.env*
+!.env.example
+*.tsbuildinfo
+
+.npm-cache/
+.npm-logs/
+.qa/chrome*/
+*.log
+/data/review-submissions.jsonl

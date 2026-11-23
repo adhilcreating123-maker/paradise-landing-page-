@@ -1,0 +1,838 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="web_standard" name="shell-type">
+<title>Cake Showcase - Paradise Bakes</title>
+<style>
+    @layer base {
+      html, body { margin:0; padding:0; }
+      body { overscroll-behavior: none; }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+    ::-webkit-scrollbar { display: none; }
+
+    /* Chilled mist keyframe drift */
+    @keyframes mistFlow {
+      0% { transform: translateX(-10%) translateY(0); opacity: 0.25; }
+      50% { transform: translateX(5%) translateY(-4px); opacity: 0.45; }
+      100% { transform: translateX(-10%) translateY(0); opacity: 0.25; }
+    }
+    .animate-mist {
+      animation: mistFlow 12s ease-in-out infinite;
+    }
+
+    /* Vitrine sibling dimming on hover */
+    .vitrine-shelf:hover .cake-card {
+      opacity: 0.48;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .vitrine-shelf .cake-card:hover {
+      opacity: 1 !important;
+      transform: translateY(-8px) scale(1.08);
+      z-index: 30;
+    }
+    .cake-card.is-selected {
+      opacity: 1 !important;
+    }
+
+    /* Gold button shimmer shine */
+    .btn-shimmer {
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-shimmer::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 40%;
+      height: 200%;
+      background: linear-gradient(60deg, transparent, rgba(253, 242, 216, 0.35), transparent);
+      transform: rotate(25deg);
+      transition: all 0.75s ease;
+    }
+    .btn-shimmer:hover::after {
+      left: 120%;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .vitrine-shelf:hover .cake-card,
+      .vitrine-shelf .cake-card:hover,
+      .animate-mist,
+      .btn-shimmer::after {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+      }
+    }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+</head>
+<body class="bg-[#F2E4C9] font-['Inter',sans-serif] text-[#5C0302] antialiased selection:bg-[#E3A04B] selection:text-[#5C0302]">
+<!-- Top Navigation Header -->
+<header class="fixed top-0 w-full z-50 bg-[#F2E4C9]/95 backdrop-blur-md border-b border-[#5C0302]/10 shadow-[0_2px_12px_rgba(92,3,2,0.04)]">
+<div class="h-20 max-w-7xl mx-auto px-6 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<img alt="Paradise Bakes Logo" class="h-9 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ALJJyrCvfgycKifiVOGx3x2VD3FfWkftBdYJLXLKZ2ZbBIkQC2rChE1dY5VuUrA43UlC3SbgVMawkfq4lotg6gUwcqV-aYHo3vng6JyLSO2EOZFU0cX9CFiM_625JB58JTKwIAPShbxbCL-qtlKItDLUcKk-njWu2XvHDrgo5izz6cHhdRxOoWnqgpsFy5WoIzxwlaD3wEFyeW9EvjQuWzqWYt1jAcRUVpy-g_uZrCIo_5j3">
+<span class="font-['Playfair_Display',serif] text-xl font-bold tracking-wide text-[#5C0302]">Paradise Bakes</span>
+</div>
+<nav class="hidden md:flex items-center gap-7">
+<a class="text-sm font-medium text-[#5C0302]/80 hover:text-[#5C0302] transition-colors" href="#">Home</a>
+<a class="text-sm font-medium text-[#5C0302]/80 hover:text-[#5C0302] transition-colors" href="#">Menu</a>
+<a aria-current="page" class="text-sm font-bold bg-[#9A1C20] text-[#FDF2D8] rounded-full px-4 py-1.5 shadow-sm transition-all" href="#">Cakes</a>
+<a class="text-sm font-medium text-[#5C0302]/80 hover:text-[#5C0302] transition-colors" href="#">Our Story</a>
+<a class="text-sm font-medium text-[#5C0302]/80 hover:text-[#5C0302] transition-colors" href="#">Branches</a>
+</nav>
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-[#5C0302] text-[#FDF2D8] flex items-center justify-center shadow-inner cursor-pointer hover:bg-[#9A1C20] transition-colors">
+<span class="material-symbols-outlined text-[19px]">person</span>
+</div>
+</div>
+</div>
+</header>
+<main class="w-full pt-20">
+<!-- 1. HEADER SECTION -->
+<section class="w-full bg-[#5C0302] text-[#FDF2D8] pt-8 pb-7 px-6 border-b border-[#E3A04B]/30 relative overflow-hidden">
+<!-- Subtle atmospheric background glow -->
+<div class="absolute -top-24 right-10 w-96 h-96 bg-[#9A1C20]/40 rounded-full blur-3xl pointer-events-none"></div>
+<div class="max-w-7xl mx-auto flex flex-col gap-6 relative z-10">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div>
+<a class="inline-flex items-center gap-2 text-[#F2E4C9]/75 hover:text-[#E3A04B] text-xs uppercase tracking-wider font-semibold transition-colors mb-2.5" href="#">
+<span class="material-symbols-outlined text-base">arrow_back</span> Back to Home
+            </a>
+<h1 class="text-3xl md:text-5xl font-['Playfair_Display',serif] font-bold tracking-tight text-[#FDF2D8]">
+              Cake showcase
+            </h1>
+</div>
+<!-- Category Chips -->
+<div class="flex flex-col gap-3 w-full sm:w-auto pt-2 sm:pt-0"><div class="flex items-center gap-3 justify-between sm:justify-end"><div class="flex items-center gap-2 overflow-x-auto pb-1 max-w-full sm:max-w-xl scroll-smooth" id="category-filter-bar" style="scrollbar-width: none; -ms-overflow-style: none;"><button class="cat-filter-btn flex-shrink-0 px-4 py-1.5 rounded-full text-xs font-bold tracking-wide transition-all shadow-md bg-[#E3A04B] text-[#5C0302] ring-2 ring-[#E3A04B]/50 flex items-center gap-1.5" type="button" onclick="filterShowcase('all', this)"><span class="w-1.5 h-1.5 rounded-full bg-[#5C0302]"></span> All cakes (18)</button><button class="cat-filter-btn flex-shrink-0 px-4 py-1.5 rounded-full text-xs font-medium tracking-wide transition-all bg-[#9A1C20]/60 text-[#FDF2D8] hover:bg-[#9A1C20] border border-[#E3A04B]/30" type="button" onclick="filterShowcase('sweet-menu', this)">Sweet Menu&nbsp;</button><button class="cat-filter-btn flex-shrink-0 px-4 py-1.5 rounded-full text-xs font-medium tracking-wide transition-all bg-[#9A1C20]/60 text-[#FDF2D8] hover:bg-[#9A1C20] border border-[#E3A04B]/30" type="button" onclick="filterShowcase('fresh-joy', this)">Fresh Joy 4</button><button class="cat-filter-btn flex-shrink-0 px-4 py-1.5 rounded-full text-xs font-medium tracking-wide transition-all bg-[#9A1C20]/60 text-[#FDF2D8] hover:bg-[#9A1C20] border border-[#E3A04B]/30" type="button" onclick="filterShowcase('chocolate-dreams', this)">Chocolate Dreams 5</button><button class="cat-filter-btn flex-shrink-0 px-4 py-1.5 rounded-full text-xs font-medium tracking-wide transition-all bg-[#9A1C20]/60 text-[#FDF2D8] hover:bg-[#9A1C20] border border-[#E3A04B]/30" type="button" onclick="filterShowcase('classic-cakes', this)">Classic Cakes 4</button><button class="cat-filter-btn flex-shrink-0 px-4 py-1.5 rounded-full text-xs font-medium tracking-wide transition-all bg-[#9A1C20]/60 text-[#FDF2D8] hover:bg-[#9A1C20] border border-[#E3A04B]/30" type="button" onclick="filterShowcase('gourmet-specials', this)">Gourmet Specials 3</button><button class="cat-filter-btn flex-shrink-0 px-4 py-1.5 rounded-full text-xs font-medium tracking-wide transition-all bg-[#9A1C20]/60 text-[#FDF2D8] hover:bg-[#9A1C20] border border-[#E3A04B]/30" type="button" onclick="filterShowcase('signature-pastries', this)">Signature Pastries 4</button><button class="cat-filter-btn flex-shrink-0 px-4 py-1.5 rounded-full text-xs font-medium tracking-wide transition-all bg-[#9A1C20]/60 text-[#FDF2D8] hover:bg-[#9A1C20] border border-[#E3A04B]/30" type="button" onclick="filterShowcase('dessert-delights', this)">Dessert Delights 3</button></div><div class="flex-shrink-0 inline-flex items-center bg-[#240000]/80 p-0.5 rounded-full border border-[#CA8B4A]/60 shadow-inner mr-2"><button type="button" id="btn-view-shelf" onclick="setShowcaseView('shelf')" class="px-3 py-1 rounded-full text-[11px] font-bold tracking-wide transition-all shadow-sm bg-[#E3A04B] text-[#5C0302] flex items-center gap-1"><span class="material-symbols-outlined text-[13px]">shelves</span><span>Shelf view</span></button><button type="button" id="btn-view-full" onclick="setShowcaseView('full')" class="px-3 py-1 rounded-full text-[11px] font-medium tracking-wide transition-all text-[#FDF2D8] hover:text-[#E3A04B] flex items-center gap-1"><span class="material-symbols-outlined text-[13px]">grid_view</span><span>Full view</span></button></div><div class="flex-shrink-0 flex items-center gap-2 pl-2 border-l border-[#E3A04B]/30"><label for="instock-toggle" class="cursor-pointer flex items-center gap-2 select-none"><span class="text-[11px] font-semibold text-[#FDF2D8] whitespace-nowrap">In stock only</span><button type="button" id="instock-toggle" onclick="toggleInStockOnly()" class="w-9 h-5 rounded-full bg-[#240000]/80 border border-[#CA8B4A]/60 flex items-center p-0.5 transition-colors focus:outline-none" aria-pressed="false"><span id="toggle-thumb" class="w-3.5 h-3.5 rounded-full bg-[#CA8B4A] transition-transform duration-200 transform translate-x-0"></span></button></label></div></div><div class="flex items-center justify-between text-xs text-[#F2E4C9]/85 pt-0.5"><span id="filter-count-indicator" class="font-medium italic tracking-wide">Showing all 18 cakes across 7 categories</span></div></div>
+</div>
+</div>
+</section>
+<!-- 2. BAKERY DISPLAY CASE (Deep Cherry #5C0302 background) -->
+<section class="w-full bg-[#5C0302] text-[#FDF2D8] py-10 px-4 sm:px-8 relative overflow-hidden select-none" id="vitrine-showcase-section">
+<!-- Ambient Patisserie Texture Pattern -->
+<div class="absolute inset-0 opacity-15 pointer-events-none bg-[radial-gradient(#E3A04B_1px,transparent_1px)] [background-size:20px_20px]"></div>
+<div class="max-w-7xl mx-auto relative">
+<!-- Real Bakery Glass Display Case Outer Enclosure -->
+<div class="relative rounded-3xl border-2 border-[#CA8B4A]/80 shadow-[0_30px_70px_rgba(0,0,0,0.85)] bg-gradient-to-b from-[#3E0101] via-[#5C0302] to-[#2B0101] p-5 sm:p-8 pt-6 overflow-hidden">
+<!-- Glass Sheen / Reflection Highlights -->
+<div class="absolute inset-0 pointer-events-none z-20 opacity-30" style="background: linear-gradient(118deg, rgba(253,242,216,0.3) 0%, rgba(253,242,216,0.03) 25%, transparent 45%, rgba(227,160,75,0.18) 65%, transparent 80%);"></div>
+<!-- Top Warm LED Strip Light in Vitrine Ceiling -->
+<div class="absolute top-0 inset-x-0 h-3 bg-gradient-to-b from-[#E3A04B] via-[#E3A04B]/60 to-transparent opacity-90 z-20"></div>
+<!-- CASE TOP HEADER: Temperature readout & Vitrine Status -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between pb-6 gap-3 border-b border-[#E3A04B]/20 relative z-20">
+<!-- Digital Temperature Readout -->
+<div class="inline-flex items-center gap-3 bg-[#240000]/80 border border-[#CA8B4A]/50 px-3.5 py-1.5 rounded-full shadow-inner backdrop-blur-sm self-start">
+<span class="inline-flex items-center justify-center w-2.5 h-2.5 rounded-full bg-[#E3A04B] animate-pulse"></span>
+<span class="font-mono text-sm font-bold text-[#E3A04B] tracking-wider">4°C</span>
+<span class="w-px h-3.5 bg-[#E3A04B]/30"></span>
+<span class="text-xs text-[#FDF2D8] font-medium tracking-wide">Kept fresh, baked today</span>
+</div>
+<div class="flex items-center gap-2 text-xs text-[#F2E4C9]/70 italic">
+<span class="material-symbols-outlined text-sm text-[#E3A04B]">touch_app</span>
+<span>Hover to preview price tag • Click to view recipe &amp; order below</span>
+</div>
+</div>
+<!-- CHILLED MIST DRIFTING NEAR GLASS FLOOR -->
+<div class="absolute bottom-12 inset-x-0 h-28 pointer-events-none z-10 overflow-hidden">
+<div class="animate-mist w-[130%] h-full bg-gradient-to-t from-white/10 via-white/5 to-transparent blur-2xl"></div>
+</div>
+<!-- VITRINE SHELF CONTAINER (One elegant shelf with 4 cakes on stands) -->
+<div class="relative z-20 pt-6 pb-6 space-y-10" id="vitrine-shelves-wrapper"><!-- SHELF 1: Sweet Menu & Signature Favorites --><div class="shelf-section" data-category="sweet-menu"><div class="flex items-center gap-3 mb-4"><div class="px-3.5 py-1 rounded-full bg-gradient-to-r from-[#CA8B4A]/40 via-[#E3A04B]/30 to-[#CA8B4A]/40 border border-[#CA8B4A] shadow-md flex items-center gap-2"><span class="material-symbols-outlined text-xs text-[#E3A04B]">bakery_dining</span><span class="text-xs font-bold tracking-wider uppercase text-[#FDF2D8]">Sweet Menu</span><span class="text-[10px] text-[#E3A04B] font-mono font-semibold">(5 cakes)</span></div><div class="flex-1 h-px bg-gradient-to-r from-[#E3A04B]/40 to-transparent"></div></div><div class="overflow-x-auto scroll-smooth pb-4 select-none" style="scrollbar-width: none;"><div class="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 vitrine-shelf min-w-[700px] md:min-w-0"><!-- Cake 1: Red Velvet Rose (In Stock) --><div class="cake-card group relative flex flex-col items-center cursor-pointer transition-all duration-300" data-cake-key="red-velvet" data-category="sweet-menu" data-stock="instock" onclick="selectShowcaseCake('red-velvet', this)"><div class="spotlight-layer absolute -top-14 w-36 h-52 bg-gradient-to-b from-[#E3A04B]/40 to-transparent rounded-full blur-2xl pointer-events-none opacity-40 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300"></div><div class="price-tag-wrap absolute -top-9 z-30 flex flex-col items-center pointer-events-none transition-transform duration-300 group-hover:-translate-y-2"><div class="w-[1.5px] h-4 bg-[#E3A04B]"></div><div class="bg-[#FDF2D8] text-[#5C0302] border-2 border-[#E3A04B] rounded-lg px-2.5 py-1 shadow-xl text-center transform -rotate-1 group-hover:rotate-0 min-w-[110px]"><span class="block text-[11px] font-['Playfair_Display',serif] font-bold leading-tight text-[#5C0302]">Red Velvet</span><span class="block text-xs font-bold text-[#9A1C20] leading-tight">from ₹750 <span class="text-[9px] text-[#5C0302]/70 font-normal">/ kg</span></span><div class="mt-0.5 flex items-center justify-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-[#E3A04B]"></span><span class="text-[9px] font-semibold text-[#5C0302]">In stock</span></div></div></div><div class="selection-marker absolute -top-2 flex items-center gap-1 bg-[#E3A04B] text-[#5C0302] font-bold text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full shadow-md z-40 hidden"><span class="material-symbols-outlined text-[13px] font-bold">check</span> Selected</div><div class="relative flex flex-col items-center pt-8"><div class="w-40 h-40 sm:w-44 sm:h-44 relative flex items-center justify-center"><img alt="Red Velvet Rose" class="w-36 h-36 sm:w-40 sm:h-40 object-contain drop-shadow-[0_16px_14px_rgba(0,0,0,0.65)] transform transition-transform duration-300 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDplKcAwyL6K9cKEf4IdT_HFv-agCb6r4wBjDSQriIJptVllKicfXj5JeOP9Iya7JWfGluI_beKm1mykqnM-NA16dzcZWclguacsRBnL1NmjTgyZaVm37QzpeZ1ux_KEcPnQ6uazIKFWGo7Vgh52Qyqdzx1I-FBNEJUbfH1SH3LGaALSzO4yqfaHBv1yUZyEvrkqrgdBj9w8vKKD7k_DNeLuuoeXCT0ZoilUeXLY_0"></div><div class="w-32 sm:w-36 h-3 bg-gradient-to-r from-[#8C5D2C] via-[#E3A04B] to-[#8C5D2C] rounded-full shadow-lg border border-[#FDF2D8]/30 -mt-2"></div><div class="w-16 h-1.5 bg-[#CA8B4A] rounded-full mx-auto -mt-0.5 opacity-80"></div><div class="w-36 h-2 bg-black/60 rounded-full blur-[3px] mt-0.5"></div></div><div class="text-center mt-3"><h3 class="font-['Playfair_Display',serif] text-sm sm:text-base font-bold text-[#FDF2D8] group-hover:text-[#E3A04B] transition-colors">Red Velvet Rose</h3><p class="text-[11px] text-[#F2E4C9]/70">Crimson sponge &amp; vanilla cream</p><div class="inline-flex items-center gap-1.5 mt-1.5 px-2 py-0.5 rounded-full bg-[#9A1C20] text-[#FDF2D8] text-[10px] border border-[#E3A04B]/30"><span class="w-1.5 h-1.5 rounded-full bg-[#E3A04B]"></span><span>₹750 / kg • In stock</span></div></div></div><!-- Cake 2: Oreo Chocolate (In Stock) --><div class="cake-card group relative flex flex-col items-center cursor-pointer transition-all duration-300" data-cake-key="oreo-chocolate" data-category="sweet-menu" data-stock="instock" onclick="selectShowcaseCake('oreo-chocolate', this)"><div class="spotlight-layer absolute -top-14 w-36 h-52 bg-gradient-to-b from-[#E3A04B]/30 to-transparent rounded-full blur-2xl pointer-events-none opacity-40 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300"></div><div class="price-tag-wrap absolute -top-9 z-30 flex flex-col items-center pointer-events-none transition-transform duration-300 group-hover:-translate-y-2"><div class="w-[1.5px] h-4 bg-[#E3A04B]"></div><div class="bg-[#FDF2D8] text-[#5C0302] border-2 border-[#E3A04B] rounded-lg px-2.5 py-1 shadow-xl text-center transform rotate-1 group-hover:rotate-0 min-w-[110px]"><span class="block text-[11px] font-['Playfair_Display',serif] font-bold leading-tight text-[#5C0302]">Oreo Chocolate</span><span class="block text-xs font-bold text-[#9A1C20] leading-tight">from ₹550 <span class="text-[9px] text-[#5C0302]/70 font-normal">/ kg</span></span><div class="mt-0.5 flex items-center justify-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-[#E3A04B]"></span><span class="text-[9px] font-semibold text-[#5C0302]">In stock</span></div></div></div><div class="selection-marker hidden absolute -top-2 items-center gap-1 bg-[#E3A04B] text-[#5C0302] font-bold text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full shadow-md z-40"><span class="material-symbols-outlined text-[13px] font-bold">check</span> Selected</div><div class="relative flex flex-col items-center pt-8"><div class="w-40 h-40 sm:w-44 sm:h-44 relative flex items-center justify-center"><img alt="Oreo Chocolate" class="w-36 h-36 sm:w-40 sm:h-40 object-contain drop-shadow-[0_16px_14px_rgba(0,0,0,0.65)] transform transition-transform duration-300 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcesXuTWM8oCkmUQke081RDXp61NMdJvBvYEoADTgtBfgx40WFABA-Ix6KEGAL-2jk67FvINAWsDtptB51E0AP225qYa37kJmIV2b7V1cHWokm6tN5aZqOdfILSzYsNcb3rXjGOeitGWVX_ihNvble8xQi0j_VUrM6V-6DISjBJ5ILFn3Jc7KYag1DXtneRNicfMkMwj9RazGBxoLmNtRUTmdNW9a16yExwajl9Kw"></div><div class="w-32 sm:w-36 h-3 bg-gradient-to-r from-[#8C5D2C] via-[#E3A04B] to-[#8C5D2C] rounded-full shadow-lg border border-[#FDF2D8]/30 -mt-2"></div><div class="w-16 h-1.5 bg-[#CA8B4A] rounded-full mx-auto -mt-0.5 opacity-80"></div><div class="w-36 h-2 bg-black/60 rounded-full blur-[3px] mt-0.5"></div></div><div class="text-center mt-3"><h3 class="font-['Playfair_Display',serif] text-sm sm:text-base font-bold text-[#FDF2D8] group-hover:text-[#E3A04B] transition-colors">Oreo Chocolate</h3><p class="text-[11px] text-[#F2E4C9]/70">Crushed cookie &amp; rich truffle</p><div class="inline-flex items-center gap-1.5 mt-1.5 px-2 py-0.5 rounded-full bg-[#9A1C20] text-[#FDF2D8] text-[10px] border border-[#E3A04B]/30"><span class="w-1.5 h-1.5 rounded-full bg-[#E3A04B]"></span><span>₹550 / kg • In stock</span></div></div></div><!-- Cake 3: Royal Berry Gateau (Few Left - DEFAULT SELECTED) --><div class="cake-card group relative flex flex-col items-center cursor-pointer transition-all duration-300 is-selected" data-cake-key="royal-berry" data-category="sweet-menu" data-stock="fewleft" onclick="selectShowcaseCake('royal-berry', this)"><div class="spotlight-layer absolute -top-14 w-36 h-52 bg-gradient-to-b from-[#E3A04B]/30 to-transparent rounded-full blur-2xl pointer-events-none opacity-90 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300"></div><div class="price-tag-wrap absolute -top-9 z-30 flex flex-col items-center pointer-events-none transition-transform duration-300 group-hover:-translate-y-2"><div class="w-[1.5px] h-4 bg-[#E3A04B]"></div><div class="bg-[#FDF2D8] text-[#5C0302] border-2 border-[#E3A04B] rounded-lg px-2.5 py-1 shadow-xl text-center transform -rotate-1 group-hover:rotate-0 min-w-[110px]"><span class="block text-[11px] font-['Playfair_Display',serif] font-bold leading-tight text-[#5C0302]">Royal Berry</span><span class="block text-xs font-bold text-[#9A1C20] leading-tight">from ₹780 <span class="text-[9px] text-[#5C0302]/70 font-normal">/ kg</span></span><div class="mt-0.5 flex items-center justify-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-[#9A1C20] animate-pulse"></span><span class="text-[9px] font-bold text-[#9A1C20]">Only a few left</span></div></div></div><div class="selection-marker absolute -top-2 items-center gap-1 bg-[#E3A04B] text-[#5C0302] font-bold text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full shadow-md z-40"><span class="material-symbols-outlined text-[13px] font-bold">check</span> Selected</div><div class="relative flex flex-col items-center pt-8"><div class="w-40 h-40 sm:w-44 sm:h-44 relative flex items-center justify-center"><img alt="Royal Berry Gateau" class="w-36 h-36 sm:w-40 sm:h-40 object-contain drop-shadow-[0_16px_14px_rgba(0,0,0,0.65)] transform transition-transform duration-300 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmkwJlOtwpTejVrfn6AOCsRYjXVIHX0EbIcnG-uKHM5jPqZd-E4QEwm2RkO8YIcaP2Bphjrp25pyIdDpsGnanUQHpogmwgOblQN75Dfc83AaY9rSD8TJIgxdbTlen-ePt662k-zCnbwR0WXLOI-jSbAaTyXEyGt43BxzdKQM8029fIkr4phW6k_zoJHlf2vdhkkjX4Ak64K61MOwF2A4JUHDx5RvtOFuQ2uT-15dA"></div><div class="w-32 sm:w-36 h-3 bg-gradient-to-r from-[#8C5D2C] via-[#E3A04B] to-[#8C5D2C] rounded-full shadow-lg border border-[#FDF2D8]/30 -mt-2"></div><div class="w-16 h-1.5 bg-[#CA8B4A] rounded-full mx-auto -mt-0.5 opacity-80"></div><div class="w-36 h-2 bg-black/60 rounded-full blur-[3px] mt-0.5"></div></div><div class="text-center mt-3"><h3 class="font-['Playfair_Display',serif] text-sm sm:text-base font-bold text-[#FDF2D8] group-hover:text-[#E3A04B] transition-colors">Royal Berry Gateau</h3><p class="text-[11px] text-[#F2E4C9]/70">Wild raspberries &amp; mascarpone</p><div class="inline-flex items-center gap-1.5 mt-1.5 px-2 py-0.5 rounded-full bg-[#9A1C20] text-[#FDF2D8] text-[10px] border border-[#E3A04B]/30"><span class="w-1.5 h-1.5 rounded-full bg-[#E3A04B] animate-pulse"></span><span>₹780 / kg • Only a few left</span></div></div></div><!-- Cake 4: Ferrero Rocher (Sold Out) --><div class="cake-card group relative flex flex-col items-center cursor-pointer transition-all duration-300 opacity-40 hover:opacity-100" data-cake-key="ferrero-rocher" data-category="sweet-menu" data-stock="soldout" onclick="selectShowcaseCake('ferrero-rocher', this)"><div class="spotlight-layer absolute -top-14 w-36 h-52 bg-gradient-to-b from-[#E3A04B]/30 to-transparent rounded-full blur-2xl pointer-events-none opacity-40 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300"></div><div class="price-tag-wrap absolute -top-9 z-30 flex flex-col items-center pointer-events-none transition-transform duration-300 group-hover:-translate-y-2"><div class="w-[1.5px] h-4 bg-[#CA8B4A]"></div><div class="bg-[#FDF2D8] text-[#5C0302] border-2 border-[#CA8B4A] rounded-lg px-2.5 py-1 shadow-xl text-center transform rotate-2 group-hover:rotate-0 min-w-[110px]"><span class="block text-[11px] font-['Playfair_Display',serif] font-bold leading-tight text-[#5C0302]">Ferrero Rocher</span><span class="block text-xs font-bold text-[#5C0302]/70 leading-tight">Sold out</span><div class="mt-0.5 flex items-center justify-center gap-1"><span class="w-1.5 h-1.5 rounded-full border border-[#5C0302]/60"></span><span class="text-[9px] font-medium text-[#5C0302]/70">Sold out</span></div></div></div><div class="selection-marker hidden absolute -top-2 items-center gap-1 bg-[#E3A04B] text-[#5C0302] font-bold text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full shadow-md z-40"><span class="material-symbols-outlined text-[13px] font-bold">check</span> Selected</div><div class="relative flex flex-col items-center pt-8"><div class="w-40 h-40 sm:w-44 sm:h-44 relative flex items-center justify-center"><div class="absolute z-20 px-3 py-0.5 bg-[#FDF2D8] text-[#5C0302] border border-[#CA8B4A] text-[10px] font-bold uppercase tracking-wider rounded shadow-md transform -rotate-12 pointer-events-none">Sold out</div><img alt="Ferrero Rocher" class="w-36 h-36 sm:w-40 sm:h-40 object-contain drop-shadow-[0_16px_14px_rgba(0,0,0,0.65)] transform transition-transform duration-300 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuATITdLMaM3hyXu4wc63nNN1WYLfJDKGY96WiFvdUA6omMCYSjVn57ASKeCSdyloyvTTkkkWaaW3l7ASXMA-W5WYrGH3jpDTRY6as84hdxX8Zh_UoABYH-Hiz_ADZl5NKroeUfTbx-69UktczD5yIzd9LdFJc_7rcDFGeYFRfpWWcICPk30PosTlz2c6SATCmCpDIJ8bUGimOTzOLCVJxJWjBIjPk9ROee2V2foJ8I"></div><div class="w-32 sm:w-36 h-3 bg-gradient-to-r from-[#8C5D2C] via-[#E3A04B] to-[#8C5D2C] rounded-full shadow-lg border border-[#FDF2D8]/30 -mt-2"></div><div class="w-16 h-1.5 bg-[#CA8B4A] rounded-full mx-auto -mt-0.5 opacity-80"></div><div class="w-36 h-2 bg-black/60 rounded-full blur-[3px] mt-0.5"></div></div><div class="text-center mt-3"><h3 class="font-['Playfair_Display',serif] text-sm sm:text-base font-bold text-[#FDF2D8] group-hover:text-[#E3A04B] transition-colors">Ferrero Rocher</h3><p class="text-[11px] text-[#F2E4C9]/70">Roasted hazelnut &amp; gianduja</p><div class="inline-flex items-center gap-1.5 mt-1.5 px-2 py-0.5 rounded-full bg-[#5C0302]/80 text-[#F2E4C9]/80 text-[10px] border border-[#CA8B4A]/40"><span class="w-1.5 h-1.5 rounded-full border border-[#F2E4C9]/70"></span><span>Sold out</span></div></div></div></div></div><div class="w-full mt-2 h-3.5 border-t-2 border-[#E3A04B] shadow-[0_4px_25px_rgba(227,160,75,0.45)] bg-gradient-to-r from-[#CA8B4A]/40 via-[#E3A04B]/80 to-[#CA8B4A]/40 relative rounded-sm"><div class="absolute -bottom-2 inset-x-0 h-2 bg-black/60 blur-[3px]"></div></div></div><!-- SHELF 2: Chocolate Dreams --><div class="shelf-section" data-category="chocolate-dreams"><div class="flex items-center gap-3 mb-4"><div class="px-3.5 py-1 rounded-full bg-gradient-to-r from-[#CA8B4A]/40 via-[#E3A04B]/30 to-[#CA8B4A]/40 border border-[#CA8B4A] shadow-md flex items-center gap-2"><span class="material-symbols-outlined text-xs text-[#E3A04B]">cookie</span><span class="text-xs font-bold tracking-wider uppercase text-[#FDF2D8]">Chocolate Dreams</span><span class="text-[10px] text-[#E3A04B] font-mono font-semibold">(5 cakes)</span></div><div class="flex-1 h-px bg-gradient-to-r from-[#E3A04B]/40 to-transparent"></div></div><div class="overflow-x-auto scroll-smooth pb-4 select-none" style="scrollbar-width: none;"><div class="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 vitrine-shelf min-w-[700px] md:min-w-0"><!-- Cake 5: Belgian Truffle (In Stock) --><div class="cake-card group relative flex flex-col items-center cursor-pointer transition-all duration-300" data-cake-key="belgian-truffle" data-category="chocolate-dreams" data-stock="instock" onclick="selectShowcaseCake('belgian-truffle', this)"><div class="spotlight-layer absolute -top-14 w-36 h-52 bg-gradient-to-b from-[#E3A04B]/30 to-transparent rounded-full blur-2xl pointer-events-none opacity-40 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300"></div><div class="price-tag-wrap absolute -top-9 z-30 flex flex-col items-center pointer-events-none transition-transform duration-300 group-hover:-translate-y-2"><div class="w-[1.5px] h-4 bg-[#E3A04B]"></div><div class="bg-[#FDF2D8] text-[#5C0302] border-2 border-[#E3A04B] rounded-lg px-2.5 py-1 shadow-xl text-center transform rotate-1 group-hover:rotate-0 min-w-[110px]"><span class="block text-[11px] font-['Playfair_Display',serif] font-bold leading-tight text-[#5C0302]">Belgian Truffle</span><span class="block text-xs font-bold text-[#9A1C20] leading-tight">from ₹850 <span class="text-[9px] text-[#5C0302]/70 font-normal">/ kg</span></span><div class="mt-0.5 flex items-center justify-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-[#E3A04B]"></span><span class="text-[9px] font-semibold text-[#5C0302]">In stock</span></div></div></div><div class="selection-marker hidden absolute -top-2 items-center gap-1 bg-[#E3A04B] text-[#5C0302] font-bold text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full shadow-md z-40"><span class="material-symbols-outlined text-[13px] font-bold">check</span> Selected</div><div class="relative flex flex-col items-center pt-8"><div class="w-40 h-40 sm:w-44 sm:h-44 relative flex items-center justify-center"><img alt="Belgian Chocolate Truffle" class="w-36 h-36 sm:w-40 sm:h-40 object-contain drop-shadow-[0_16px_14px_rgba(0,0,0,0.65)] transform transition-transform duration-300 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcesXuTWM8oCkmUQke081RDXp61NMdJvBvYEoADTgtBfgx40WFABA-Ix6KEGAL-2jk67FvINAWsDtptB51E0AP225qYa37kJmIV2b7V1cHWokm6tN5aZqOdfILSzYsNcb3rXjGOeitGWVX_ihNvble8xQi0j_VUrM6V-6DISjBJ5ILFn3Jc7KYag1DXtneRNicfMkMwj9RazGBxoLmNtRUTmdNW9a16yExwajl9Kw"></div><div class="w-32 sm:w-36 h-3 bg-gradient-to-r from-[#8C5D2C] via-[#E3A04B] to-[#8C5D2C] rounded-full shadow-lg border border-[#FDF2D8]/30 -mt-2"></div><div class="w-16 h-1.5 bg-[#CA8B4A] rounded-full mx-auto -mt-0.5 opacity-80"></div><div class="w-36 h-2 bg-black/60 rounded-full blur-[3px] mt-0.5"></div></div><div class="text-center mt-3"><h3 class="font-['Playfair_Display',serif] text-sm sm:text-base font-bold text-[#FDF2D8] group-hover:text-[#E3A04B] transition-colors">Belgian Truffle</h3><p class="text-[11px] text-[#F2E4C9]/70">Grand Cru 70% dark ganache</p><div class="inline-flex items-center gap-1.5 mt-1.5 px-2 py-0.5 rounded-full bg-[#9A1C20] text-[#FDF2D8] text-[10px] border border-[#E3A04B]/30"><span class="w-1.5 h-1.5 rounded-full bg-[#E3A04B]"></span><span>₹850 / kg • In stock</span></div></div></div><!-- Cake 6: Black Forest (Few Left) --><div class="cake-card group relative flex flex-col items-center cursor-pointer transition-all duration-300" data-cake-key="black-forest" data-category="chocolate-dreams" data-stock="fewleft" onclick="selectShowcaseCake('black-forest', this)"><div class="spotlight-layer absolute -top-14 w-36 h-52 bg-gradient-to-b from-[#E3A04B]/30 to-transparent rounded-full blur-2xl pointer-events-none opacity-40 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300"></div><div class="price-tag-wrap absolute -top-9 z-30 flex flex-col items-center pointer-events-none transition-transform duration-300 group-hover:-translate-y-2"><div class="w-[1.5px] h-4 bg-[#E3A04B]"></div><div class="bg-[#FDF2D8] text-[#5C0302] border-2 border-[#E3A04B] rounded-lg px-2.5 py-1 shadow-xl text-center transform -rotate-1 group-hover:rotate-0 min-w-[110px]"><span class="block text-[11px] font-['Playfair_Display',serif] font-bold leading-tight text-[#5C0302]">Black Forest</span><span class="block text-xs font-bold text-[#9A1C20] leading-tight">from ₹750 <span class="text-[9px] text-[#5C0302]/70 font-normal">/ kg</span></span><div class="mt-0.5 flex items-center justify-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-[#9A1C20] animate-pulse"></span><span class="text-[9px] font-bold text-[#9A1C20]">Only a few left</span></div></div></div><div class="selection-marker hidden absolute -top-2 items-center gap-1 bg-[#E3A04B] text-[#5C0302] font-bold text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full shadow-md z-40"><span class="material-symbols-outlined text-[13px] font-bold">check</span> Selected</div><div class="relative flex flex-col items-center pt-8"><div class="w-40 h-40 sm:w-44 sm:h-44 relative flex items-center justify-center"><img alt="Black Forest Gateau" class="w-36 h-36 sm:w-40 sm:h-40 object-contain drop-shadow-[0_16px_14px_rgba(0,0,0,0.65)] transform transition-transform duration-300 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmkwJlOtwpTejVrfn6AOCsRYjXVIHX0EbIcnG-uKHM5jPqZd-E4QEwm2RkO8YIcaP2Bphjrp25pyIdDpsGnanUQHpogmwgOblQN75Dfc83AaY9rSD8TJIgxdbTlen-ePt662k-zCnbwR0WXLOI-jSbAaTyXEyGt43BxzdKQM8029fIkr4phW6k_zoJHlf2vdhkkjX4Ak64K61MOwF2A4JUHDx5RvtOFuQ2uT-15dA"></div><div class="w-32 sm:w-36 h-3 bg-gradient-to-r from-[#8C5D2C] via-[#E3A04B] to-[#8C5D2C] rounded-full shadow-lg border border-[#FDF2D8]/30 -mt-2"></div><div class="w-16 h-1.5 bg-[#CA8B4A] rounded-full mx-auto -mt-0.5 opacity-80"></div><div class="w-36 h-2 bg-black/60 rounded-full blur-[3px] mt-0.5"></div></div><div class="text-center mt-3"><h3 class="font-['Playfair_Display',serif] text-sm sm:text-base font-bold text-[#FDF2D8] group-hover:text-[#E3A04B] transition-colors">Black Forest</h3><p class="text-[11px] text-[#F2E4C9]/70">Kirsch cherries &amp; chocolate shavings</p><div class="inline-flex items-center gap-1.5 mt-1.5 px-2 py-0.5 rounded-full bg-[#9A1C20] text-[#FDF2D8] text-[10px] border border-[#E3A04B]/30"><span class="w-1.5 h-1.5 rounded-full bg-[#E3A04B] animate-pulse"></span><span>₹750 / kg • Only a few left</span></div></div></div><!-- Cake 7: Dark Truffle Noir (In Stock) --><div class="cake-card group relative flex flex-col items-center cursor-pointer transition-all duration-300" data-cake-key="dark-truffle" data-category="chocolate-dreams" data-stock="instock" onclick="selectShowcaseCake('belgian-truffle', this)"><div class="spotlight-layer absolute -top-14 w-36 h-52 bg-gradient-to-b from-[#E3A04B]/30 to-transparent rounded-full blur-2xl pointer-events-none opacity-40 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300"></div><div class="price-tag-wrap absolute -top-9 z-30 flex flex-col items-center pointer-events-none transition-transform duration-300 group-hover:-translate-y-2"><div class="w-[1.5px] h-4 bg-[#E3A04B]"></div><div class="bg-[#FDF2D8] text-[#5C0302] border-2 border-[#E3A04B] rounded-lg px-2.5 py-1 shadow-xl text-center transform rotate-1 group-hover:rotate-0 min-w-[110px]"><span class="block text-[11px] font-['Playfair_Display',serif] font-bold leading-tight text-[#5C0302]">Dark Truffle</span><span class="block text-xs font-bold text-[#9A1C20] leading-tight">from ₹850 <span class="text-[9px] text-[#5C0302]/70 font-normal">/ kg</span></span><div class="mt-0.5 flex items-center justify-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-[#E3A04B]"></span><span class="text-[9px] font-semibold text-[#5C0302]">In stock</span></div></div></div><div class="selection-marker hidden absolute -top-2 items-center gap-1 bg-[#E3A04B] text-[#5C0302] font-bold text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full shadow-md z-40"><span class="material-symbols-outlined text-[13px] font-bold">check</span> Selected</div><div class="relative flex flex-col items-center pt-8"><div class="w-40 h-40 sm:w-44 sm:h-44 relative flex items-center justify-center"><img alt="Dark Truffle Noir" class="w-36 h-36 sm:w-40 sm:h-40 object-contain drop-shadow-[0_16px_14px_rgba(0,0,0,0.65)] transform transition-transform duration-300 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcesXuTWM8oCkmUQke081RDXp61NMdJvBvYEoADTgtBfgx40WFABA-Ix6KEGAL-2jk67FvINAWsDtptB51E0AP225qYa37kJmIV2b7V1cHWokm6tN5aZqOdfILSzYsNcb3rXjGOeitGWVX_ihNvble8xQi0j_VUrM6V-6DISjBJ5ILFn3Jc7KYag1DXtneRNicfMkMwj9RazGBxoLmNtRUTmdNW9a16yExwajl9Kw"></div><div class="w-32 sm:w-36 h-3 bg-gradient-to-r from-[#8C5D2C] via-[#E3A04B] to-[#8C5D2C] rounded-full shadow-lg border border-[#FDF2D8]/30 -mt-2"></div><div class="w-16 h-1.5 bg-[#CA8B4A] rounded-full mx-auto -mt-0.5 opacity-80"></div><div class="w-36 h-2 bg-black/60 rounded-full blur-[3px] mt-0.5"></div></div><div class="text-center mt-3"><h3 class="font-['Playfair_Display',serif] text-sm sm:text-base font-bold text-[#FDF2D8] group-hover:text-[#E3A04B] transition-colors">Dark Truffle Noir</h3><p class="text-[11px] text-[#F2E4C9]/70">85% Ghana cocoa ganache</p><div class="inline-flex items-center gap-1.5 mt-1.5 px-2 py-0.5 rounded-full bg-[#9A1C20] text-[#FDF2D8] text-[10px] border border-[#E3A04B]/30"><span class="w-1.5 h-1.5 rounded-full bg-[#E3A04B]"></span><span>₹850 / kg • In stock</span></div></div></div><!-- Cake 8: Salted Caramel Crunch (Sold Out) --><div class="cake-card group relative flex flex-col items-center cursor-pointer transition-all duration-300 opacity-40 hover:opacity-100" data-cake-key="salted-caramel" data-category="chocolate-dreams" data-stock="soldout" onclick="selectShowcaseCake('salted-caramel', this)"><div class="spotlight-layer absolute -top-14 w-36 h-52 bg-gradient-to-b from-[#E3A04B]/30 to-transparent rounded-full blur-2xl pointer-events-none opacity-40 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300"></div><div class="price-tag-wrap absolute -top-9 z-30 flex flex-col items-center pointer-events-none transition-transform duration-300 group-hover:-translate-y-2"><div class="w-[1.5px] h-4 bg-[#CA8B4A]"></div><div class="bg-[#FDF2D8] text-[#5C0302] border-2 border-[#CA8B4A] rounded-lg px-2.5 py-1 shadow-xl text-center transform rotate-2 group-hover:rotate-0 min-w-[110px]"><span class="block text-[11px] font-['Playfair_Display',serif] font-bold leading-tight text-[#5C0302]">Salted Caramel</span><span class="block text-xs font-bold text-[#5C0302]/70 leading-tight">Sold out</span><div class="mt-0.5 flex items-center justify-center gap-1"><span class="w-1.5 h-1.5 rounded-full border border-[#5C0302]/60"></span><span class="text-[9px] font-medium text-[#5C0302]/70">Sold out</span></div></div></div><div class="selection-marker hidden absolute -top-2 items-center gap-1 bg-[#E3A04B] text-[#5C0302] font-bold text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full shadow-md z-40"><span class="material-symbols-outlined text-[13px] font-bold">check</span> Selected</div><div class="relative flex flex-col items-center pt-8"><div class="w-40 h-40 sm:w-44 sm:h-44 relative flex items-center justify-center"><div class="absolute z-20 px-3 py-0.5 bg-[#FDF2D8] text-[#5C0302] border border-[#CA8B4A] text-[10px] font-bold uppercase tracking-wider rounded shadow-md transform -rotate-12 pointer-events-none">Sold out</div><img alt="Salted Caramel Crunch" class="w-36 h-36 sm:w-40 sm:h-40 object-contain drop-shadow-[0_16px_14px_rgba(0,0,0,0.65)] transform transition-transform duration-300 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuATITdLMaM3hyXu4wc63nNN1WYLfJDKGY96WiFvdUA6omMCYSjVn57ASKeCSdyloyvTTkkkWaaW3l7ASXMA-W5WYrGH3jpDTRY6as84hdxX8Zh_UoABYH-Hiz_ADZl5NKroeUfTbx-69UktczD5yIzd9LdFJc_7rcDFGeYFRfpWWcICPk30PosTlz2c6SATCmCpDIJ8bUGimOTzOLCVJxJWjBIjPk9ROee2V2foJ8I"></div><div class="w-32 sm:w-36 h-3 bg-gradient-to-r from-[#8C5D2C] via-[#E3A04B] to-[#8C5D2C] rounded-full shadow-lg border border-[#FDF2D8]/30 -mt-2"></div><div class="w-16 h-1.5 bg-[#CA8B4A] rounded-full mx-auto -mt-0.5 opacity-80"></div><div class="w-36 h-2 bg-black/60 rounded-full blur-[3px] mt-0.5"></div></div><div class="text-center mt-3"><h3 class="font-['Playfair_Display',serif] text-sm sm:text-base font-bold text-[#FDF2D8] group-hover:text-[#E3A04B] transition-colors">Salted Caramel Crunch</h3><p class="text-[11px] text-[#F2E4C9]/70">Roasted hazelnuts &amp; fleur de sel</p><div class="inline-flex items-center gap-1.5 mt-1.5 px-2 py-0.5 rounded-full bg-[#5C0302]/80 text-[#F2E4C9]/80 text-[10px] border border-[#CA8B4A]/40"><span class="w-1.5 h-1.5 rounded-full border border-[#F2E4C9]/70"></span><span>Sold out</span></div></div></div></div></div><div class="w-full mt-2 h-3.5 border-t-2 border-[#E3A04B] shadow-[0_4px_25px_rgba(227,160,75,0.45)] bg-gradient-to-r from-[#CA8B4A]/40 via-[#E3A04B]/80 to-[#CA8B4A]/40 relative rounded-sm"><div class="absolute -bottom-2 inset-x-0 h-2 bg-black/60 blur-[3px]"></div></div></div></div><div id="vitrine-full-view" class="hidden relative z-20 pt-6 pb-6 space-y-10"><div class="full-view-category" data-category="sweet-menu"><div class="flex items-center gap-3 mb-5"><div class="px-4 py-1.5 rounded-full bg-gradient-to-r from-[#CA8B4A]/40 via-[#E3A04B]/30 to-[#CA8B4A]/40 border border-[#CA8B4A] shadow-md flex items-center gap-2"><span class="material-symbols-outlined text-sm text-[#E3A04B]">bakery_dining</span><span class="text-xs font-bold tracking-wider uppercase text-[#FDF2D8]">Sweet Menu &amp; Specials</span><span class="text-[11px] text-[#E3A04B] font-mono font-semibold">(5 items)</span></div><div class="flex-1 h-px bg-gradient-to-r from-[#E3A04B]/40 to-transparent"></div></div><div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-5"><div class="cake-card group relative flex flex-col items-center cursor-pointer p-3 rounded-2xl bg-[#3E0101]/60 border border-[#CA8B4A]/40 hover:border-[#E3A04B] hover:bg-[#5C0302]/80 transition-all duration-300" data-cake-key="red-velvet" data-category="sweet-menu" data-stock="instock" onclick="selectShowcaseCake('red-velvet', this)"><div class="w-24 h-24 sm:w-28 sm:h-28 relative flex items-center justify-center"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDplKcAwyL6K9cKEf4IdT_HFv-agCb6r4wBjDSQriIJptVllKicfXj5JeOP9Iya7JWfGluI_beKm1mykqnM-NA16dzcZWclguacsRBnL1NmjTgyZaVm37QzpeZ1ux_KEcPnQ6uazIKFWGo7Vgh52Qyqdzx1I-FBNEJUbfH1SH3LGaALSzO4yqfaHBv1yUZyEvrkqrgdBj9w8vKKD7k_DNeLuuoeXCT0ZoilUeXLY_0" alt="Red Velvet Rose" class="w-20 h-20 sm:w-24 sm:h-24 object-contain drop-shadow-md group-hover:scale-105 transition-transform"></div><div class="text-center mt-2 w-full"><h4 class="font-['Playfair_Display',serif] text-xs font-bold text-[#FDF2D8] truncate group-hover:text-[#E3A04B]">Red Velvet Rose</h4><span class="text-[10px] text-[#CA8B4A] font-semibold block mt-0.5">₹750 / kg</span><span class="inline-block text-[9px] px-2 py-0.5 mt-1 rounded-full bg-[#9A1C20] text-[#FDF2D8]">In stock</span></div></div><div class="cake-card group relative flex flex-col items-center cursor-pointer p-3 rounded-2xl bg-[#3E0101]/60 border border-[#CA8B4A]/40 hover:border-[#E3A04B] hover:bg-[#5C0302]/80 transition-all duration-300" data-cake-key="oreo-chocolate" data-category="sweet-menu" data-stock="instock" onclick="selectShowcaseCake('oreo-chocolate', this)"><div class="w-24 h-24 sm:w-28 sm:h-28 relative flex items-center justify-center"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcesXuTWM8oCkmUQke081RDXp61NMdJvBvYEoADTgtBfgx40WFABA-Ix6KEGAL-2jk67FvINAWsDtptB51E0AP225qYa37kJmIV2b7V1cHWokm6tN5aZqOdfILSzYsNcb3rXjGOeitGWVX_ihNvble8xQi0j_VUrM6V-6DISjBJ5ILFn3Jc7KYag1DXtneRNicfMkMwj9RazGBxoLmNtRUTmdNW9a16yExwajl9Kw" alt="Oreo Chocolate" class="w-20 h-20 sm:w-24 sm:h-24 object-contain drop-shadow-md group-hover:scale-105 transition-transform"></div><div class="text-center mt-2 w-full"><h4 class="font-['Playfair_Display',serif] text-xs font-bold text-[#FDF2D8] truncate group-hover:text-[#E3A04B]">Oreo Chocolate</h4><span class="text-[10px] text-[#CA8B4A] font-semibold block mt-0.5">₹550 / kg</span><span class="inline-block text-[9px] px-2 py-0.5 mt-1 rounded-full bg-[#9A1C20] text-[#FDF2D8]">In stock</span></div></div><div class="cake-card group relative flex flex-col items-center cursor-pointer p-3 rounded-2xl bg-[#3E0101]/60 border border-[#CA8B4A]/40 hover:border-[#E3A04B] hover:bg-[#5C0302]/80 transition-all duration-300" data-cake-key="royal-berry" data-category="sweet-menu" data-stock="fewleft" onclick="selectShowcaseCake('royal-berry', this)"><div class="w-24 h-24 sm:w-28 sm:h-28 relative flex items-center justify-center"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmkwJlOtwpTejVrfn6AOCsRYjXVIHX0EbIcnG-uKHM5jPqZd-E4QEwm2RkO8YIcaP2Bphjrp25pyIdDpsGnanUQHpogmwgOblQN75Dfc83AaY9rSD8TJIgxdbTlen-ePt662k-zCnbwR0WXLOI-jSbAaTyXEyGt43BxzdKQM8029fIkr4phW6k_zoJHlf2vdhkkjX4Ak64K61MOwF2A4JUHDx5RvtOFuQ2uT-15dA" alt="Royal Berry" class="w-20 h-20 sm:w-24 sm:h-24 object-contain drop-shadow-md group-hover:scale-105 transition-transform"></div><div class="text-center mt-2 w-full"><h4 class="font-['Playfair_Display',serif] text-xs font-bold text-[#FDF2D8] truncate group-hover:text-[#E3A04B]">Royal Berry Gateau</h4><span class="text-[10px] text-[#CA8B4A] font-semibold block mt-0.5">₹780 / kg</span><span class="inline-block text-[9px] px-2 py-0.5 mt-1 rounded-full bg-[#9A1C20] text-[#FDF2D8]">Few left</span></div></div><div class="cake-card group relative flex flex-col items-center cursor-pointer p-3 rounded-2xl bg-[#3E0101]/60 border border-[#CA8B4A]/40 hover:border-[#E3A04B] hover:bg-[#5C0302]/80 transition-all duration-300 opacity-60 hover:opacity-100" data-cake-key="ferrero-rocher" data-category="sweet-menu" data-stock="soldout" onclick="selectShowcaseCake('ferrero-rocher', this)"><div class="w-24 h-24 sm:w-28 sm:h-28 relative flex items-center justify-center"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuATITdLMaM3hyXu4wc63nNN1WYLfJDKGY96WiFvdUA6omMCYSjVn57ASKeCSdyloyvTTkkkWaaW3l7ASXMA-W5WYrGH3jpDTRY6as84hdxX8Zh_UoABYH-Hiz_ADZl5NKroeUfTbx-69UktczD5yIzd9LdFJc_7rcDFGeYFRfpWWcICPk30PosTlz2c6SATCmCpDIJ8bUGimOTzOLCVJxJWjBIjPk9ROee2V2foJ8I" alt="Ferrero Rocher" class="w-20 h-20 sm:w-24 sm:h-24 object-contain drop-shadow-md group-hover:scale-105 transition-transform"></div><div class="text-center mt-2 w-full"><h4 class="font-['Playfair_Display',serif] text-xs font-bold text-[#FDF2D8] truncate group-hover:text-[#E3A04B]">Ferrero Rocher</h4><span class="text-[10px] text-[#CA8B4A] font-semibold block mt-0.5">₹820 / kg</span><span class="inline-block text-[9px] px-2 py-0.5 mt-1 rounded-full bg-[#240000] text-[#FDF2D8]/70 border border-[#CA8B4A]/40">Sold out</span></div></div><div class="cake-card group relative flex flex-col items-center cursor-pointer p-3 rounded-2xl bg-[#3E0101]/60 border border-[#CA8B4A]/40 hover:border-[#E3A04B] hover:bg-[#5C0302]/80 transition-all duration-300" data-cake-key="vanilla-orchid" data-category="sweet-menu" data-stock="instock" onclick="selectShowcaseCake('royal-berry', this)"><div class="w-24 h-24 sm:w-28 sm:h-28 relative flex items-center justify-center"><img src="https://images.unsplash.com/photo-1535254973040-607b474cb50d?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Vanilla Orchid" class="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-full drop-shadow-md group-hover:scale-105 transition-transform"></div><div class="text-center mt-2 w-full"><h4 class="font-['Playfair_Display',serif] text-xs font-bold text-[#FDF2D8] truncate group-hover:text-[#E3A04B]">Vanilla Orchid</h4><span class="text-[10px] text-[#CA8B4A] font-semibold block mt-0.5">₹650 / kg</span><span class="inline-block text-[9px] px-2 py-0.5 mt-1 rounded-full bg-[#9A1C20] text-[#FDF2D8]">In stock</span></div></div><div class="cake-card group relative flex flex-col items-center cursor-pointer p-3 rounded-2xl bg-[#3E0101]/60 border border-[#CA8B4A]/40 hover:border-[#E3A04B] hover:bg-[#5C0302]/80 transition-all duration-300" data-cake-key="white-chocolate-rose" data-category="sweet-menu" data-stock="instock" onclick="selectShowcaseCake('red-velvet', this)"><div class="w-24 h-24 sm:w-28 sm:h-28 relative flex items-center justify-center"><img src="https://images.unsplash.com/photo-1535254973040-607b474cb50d?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="White Choco Rose" class="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-full drop-shadow-md group-hover:scale-105 transition-transform"></div><div class="text-center mt-2 w-full"><h4 class="font-['Playfair_Display',serif] text-xs font-bold text-[#FDF2D8] truncate group-hover:text-[#E3A04B]">White Choco Rose</h4><span class="text-[10px] text-[#CA8B4A] font-semibold block mt-0.5">₹700 / kg</span><span class="inline-block text-[9px] px-2 py-0.5 mt-1 rounded-full bg-[#9A1C20] text-[#FDF2D8]">In stock</span></div></div></div></div><div class="full-view-category" data-category="chocolate-dreams"><div class="flex items-center gap-3 mb-5"><div class="px-4 py-1.5 rounded-full bg-gradient-to-r from-[#CA8B4A]/40 via-[#E3A04B]/30 to-[#CA8B4A]/40 border border-[#CA8B4A] shadow-md flex items-center gap-2"><span class="material-symbols-outlined text-sm text-[#E3A04B]">cookie</span><span class="text-xs font-bold tracking-wider uppercase text-[#FDF2D8]">Chocolate Dreams</span><span class="text-[11px] text-[#E3A04B] font-mono font-semibold">(5 items)</span></div><div class="flex-1 h-px bg-gradient-to-r from-[#E3A04B]/40 to-transparent"></div></div><div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-5"><div class="cake-card group relative flex flex-col items-center cursor-pointer p-3 rounded-2xl bg-[#3E0101]/60 border border-[#CA8B4A]/40 hover:border-[#E3A04B] hover:bg-[#5C0302]/80 transition-all duration-300" data-cake-key="belgian-truffle" data-category="chocolate-dreams" data-stock="instock" onclick="selectShowcaseCake('belgian-truffle', this)"><div class="w-24 h-24 sm:w-28 sm:h-28 relative flex items-center justify-center"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcesXuTWM8oCkmUQke081RDXp61NMdJvBvYEoADTgtBfgx40WFABA-Ix6KEGAL-2jk67FvINAWsDtptB51E0AP225qYa37kJmIV2b7V1cHWokm6tN5aZqOdfILSzYsNcb3rXjGOeitGWVX_ihNvble8xQi0j_VUrM6V-6DISjBJ5ILFn3Jc7KYag1DXtneRNicfMkMwj9RazGBxoLmNtRUTmdNW9a16yExwajl9Kw" alt="Belgian Truffle" class="w-20 h-20 sm:w-24 sm:h-24 object-contain drop-shadow-md group-hover:scale-105 transition-transform"></div><div class="text-center mt-2 w-full"><h4 class="font-['Playfair_Display',serif] text-xs font-bold text-[#FDF2D8] truncate group-hover:text-[#E3A04B]">Belgian Truffle</h4><span class="text-[10px] text-[#CA8B4A] font-semibold block mt-0.5">₹850 / kg</span><span class="inline-block text-[9px] px-2 py-0.5 mt-1 rounded-full bg-[#9A1C20] text-[#FDF2D8]">In stock</span></div></div><div class="cake-card group relative flex flex-col items-center cursor-pointer p-3 rounded-2xl bg-[#3E0101]/60 border border-[#CA8B4A]/40 hover:border-[#E3A04B] hover:bg-[#5C0302]/80 transition-all duration-300" data-cake-key="black-forest" data-category="chocolate-dreams" data-stock="fewleft" onclick="selectShowcaseCake('black-forest', this)"><div class="w-24 h-24 sm:w-28 sm:h-28 relative flex items-center justify-center"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmkwJlOtwpTejVrfn6AOCsRYjXVIHX0EbIcnG-uKHM5jPqZd-E4QEwm2RkO8YIcaP2Bphjrp25pyIdDpsGnanUQHpogmwgOblQN75Dfc83AaY9rSD8TJIgxdbTlen-ePt662k-zCnbwR0WXLOI-jSbAaTyXEyGt43BxzdKQM8029fIkr4phW6k_zoJHlf2vdhkkjX4Ak64K61MOwF2A4JUHDx5RvtOFuQ2uT-15dA" alt="Black Forest" class="w-20 h-20 sm:w-24 sm:h-24 object-contain drop-shadow-md group-hover:scale-105 transition-transform"></div><div class="text-center mt-2 w-full"><h4 class="font-['Playfair_Display',serif] text-xs font-bold text-[#FDF2D8] truncate group-hover:text-[#E3A04B]">Black Forest</h4><span class="text-[10px] text-[#CA8B4A] font-semibold block mt-0.5">₹750 / kg</span><span class="inline-block text-[9px] px-2 py-0.5 mt-1 rounded-full bg-[#9A1C20] text-[#FDF2D8]">Few left</span></div></div><div class="cake-card group relative flex flex-col items-center cursor-pointer p-3 rounded-2xl bg-[#3E0101]/60 border border-[#CA8B4A]/40 hover:border-[#E3A04B] hover:bg-[#5C0302]/80 transition-all duration-300" data-cake-key="dark-truffle" data-category="chocolate-dreams" data-stock="instock" onclick="selectShowcaseCake('belgian-truffle', this)"><div class="w-24 h-24 sm:w-28 sm:h-28 relative flex items-center justify-center"><img src="https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&amp;fit=crop&amp;w=700&amp;q=80" alt="Dark Truffle Noir" class="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-full drop-shadow-md group-hover:scale-105 transition-transform"></div><div class="text-center mt-2 w-full"><h4 class="font-['Playfair_Display',serif] text-xs font-bold text-[#FDF2D8] truncate group-hover:text-[#E3A04B]">Dark Truffle Noir</h4><span class="text-[10px] text-[#CA8B4A] font-semibold block mt-0.5">₹850 / kg</span><span class="inline-block text-[9px] px-2 py-0.5 mt-1 rounded-full bg-[#9A1C20] text-[#FDF2D8]">In stock</span></div></div><div class="cake-card group relative flex flex-col items-center cursor-pointer p-3 rounded-2xl bg-[#3E0101]/60 border border-[#CA8B4A]/40 hover:border-[#E3A04B] hover:bg-[#5C0302]/80 transition-all duration-300 opacity-60 hover:opacity-100" data-cake-key="salted-caramel" data-category="chocolate-dreams" data-stock="soldout" onclick="selectShowcaseCake('salted-caramel', this)"><div class="w-24 h-24 sm:w-28 sm:h-28 relative flex items-center justify-center"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuATITdLMaM3hyXu4wc63nNN1WYLfJDKGY96WiFvdUA6omMCYSjVn57ASKeCSdyloyvTTkkkWaaW3l7ASXMA-W5WYrGH3jpDTRY6as84hdxX8Zh_UoABYH-Hiz_ADZl5NKroeUfTbx-69UktczD5yIzd9LdFJc_7rcDFGeYFRfpWWcICPk30PosTlz2c6SATCmCpDIJ8bUGimOTzOLCVJxJWjBIjPk9ROee2V2foJ8I" alt="Salted Caramel" class="w-20 h-20 sm:w-24 sm:h-24 object-contain drop-shadow-md group-hover:scale-105 transition-transform"></div><div class="text-center mt-2 w-full"><h4 class="font-['Playfair_Display',serif] text-xs font-bold text-[#FDF2D8] truncate group-hover:text-[#E3A04B]">Salted Caramel</h4><span class="text-[10px] text-[#CA8B4A] font-semibold block mt-0.5">₹720 / kg</span><span class="inline-block text-[9px] px-2 py-0.5 mt-1 rounded-full bg-[#240000] text-[#FDF2D8]/70 border border-[#CA8B4A]/40">Sold out</span></div></div><div class="cake-card group relative flex flex-col items-center cursor-pointer p-3 rounded-2xl bg-[#3E0101]/60 border border-[#CA8B4A]/40 hover:border-[#E3A04B] hover:bg-[#5C0302]/80 transition-all duration-300" data-cake-key="hazelnut-praline" data-category="chocolate-dreams" data-stock="instock" onclick="selectShowcaseCake('belgian-truffle', this)"><div class="w-24 h-24 sm:w-28 sm:h-28 relative flex items-center justify-center"><img src="https://images.unsplash.com/photo-1549576490-b0b4831ef60a?auto=format&amp;fit=crop&amp;w=700&amp;q=80" alt="Hazelnut Praline" class="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-full drop-shadow-md group-hover:scale-105 transition-transform"></div><div class="text-center mt-2 w-full"><h4 class="font-['Playfair_Display',serif] text-xs font-bold text-[#FDF2D8] truncate group-hover:text-[#E3A04B]">Hazelnut Praline</h4><span class="text-[10px] text-[#CA8B4A] font-semibold block mt-0.5">₹750 / kg</span><span class="inline-block text-[9px] px-2 py-0.5 mt-1 rounded-full bg-[#9A1C20] text-[#FDF2D8]">In stock</span></div></div><div class="cake-card group relative flex flex-col items-center cursor-pointer p-3 rounded-2xl bg-[#3E0101]/60 border border-[#CA8B4A]/40 hover:border-[#E3A04B] hover:bg-[#5C0302]/80 transition-all duration-300" data-cake-key="vintage-lambeth" data-category="chocolate-dreams" data-stock="instock" onclick="selectShowcaseCake('red-velvet', this)"><div class="w-24 h-24 sm:w-28 sm:h-28 relative flex items-center justify-center"><img src="https://images.unsplash.com/photo-1562772186-085d7946b3ba?auto=format&amp;fit=crop&amp;w=700&amp;q=80" alt="Vintage Lambeth" class="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-full drop-shadow-md group-hover:scale-105 transition-transform"></div><div class="text-center mt-2 w-full"><h4 class="font-['Playfair_Display',serif] text-xs font-bold text-[#FDF2D8] truncate group-hover:text-[#E3A04B]">Vintage Lambeth</h4><span class="text-[10px] text-[#CA8B4A] font-semibold block mt-0.5">₹780 / kg</span><span class="inline-block text-[9px] px-2 py-0.5 mt-1 rounded-full bg-[#9A1C20] text-[#FDF2D8]">In stock</span></div></div></div></div></div>
+</div>
+</div>
+</section>
+<!-- 3. CAKE DETAIL PANEL (Opens directly BELOW the showcase, Beige #F2E4C9 background) -->
+<section class="w-full bg-[#F2E4C9] text-[#5C0302] pt-4 pb-16 px-4 sm:px-8 relative border-t-4 border-[#CA8B4A]" id="cake-detail-panel">
+<!-- Small Deep Cherry notch / pointer pointing down from selected cake above into this panel -->
+<div class="relative -top-4 flex justify-center mb-4">
+<div class="w-7 h-4 bg-[#5C0302] [clip-path:polygon(50%_100%,0_0,100%_0)] shadow-sm"></div>
+</div>
+<div class="max-w-6xl mx-auto bg-[#FDF2D8] rounded-3xl border-2 border-[#CA8B4A]/60 p-6 sm:p-10 shadow-xl">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+<!-- MOBILE ONLY: Large Cutout Cake Image Shown First -->
+<div class="block lg:hidden w-full flex flex-col items-center justify-center">
+<div class="relative w-64 h-64 flex items-center justify-center">
+<div class="w-56 h-56 rounded-full bg-[#E5D5B5] shadow-inner absolute"></div>
+<img alt="Red Velvet Rose Cake Cutout" class="relative z-10 w-52 h-52 object-contain drop-shadow-[0_20px_25px_rgba(92,3,2,0.25)]" id="detail-cake-img-mobile" src="https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?auto=format&amp;fit=crop&amp;w=600&amp;q=80">
+</div>
+</div>
+<!-- LEFT COLUMN: Cake Details & Order Form (7 Cols) -->
+<div class="lg:col-span-7 space-y-6">
+<!-- Header: Title & Reviews -->
+<div>
+<div class="flex items-center gap-2 mb-1">
+<div class="flex text-[#E3A04B]">
+<span class="material-symbols-outlined text-lg fill-current">star</span>
+<span class="material-symbols-outlined text-lg fill-current">star</span>
+<span class="material-symbols-outlined text-lg fill-current">star</span>
+<span class="material-symbols-outlined text-lg fill-current">star</span>
+<span class="material-symbols-outlined text-lg fill-current">star_half</span>
+</div>
+<span class="text-xs font-semibold text-[#5C0302]/80">4.8 rating, 126 reviews</span>
+</div>
+<h2 class="text-3xl sm:text-4xl font-['Playfair_Display',serif] font-bold text-[#5C0302]" id="detail-cake-name">Red velvet</h2>
+</div>
+<!-- Price with Dynamic Per Kg Indicator -->
+<div class="flex items-baseline gap-2">
+<span class="text-3xl sm:text-4xl font-['Playfair_Display',serif] font-bold text-[#9A1C20]" id="detail-cake-total-price">₹1500</span>
+<span class="text-xs uppercase tracking-wider text-[#5C0302]/70 font-semibold">(<span id="detail-cake-rate">₹750</span> per kg)</span>
+</div><div class="flex items-center gap-2" id="detail-stock-indicator-wrap"><div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-[#CA8B4A]/20 border border-[#CA8B4A] text-[#5C0302]" id="detail-stock-pill"><span class="w-2 h-2 rounded-full bg-[#9A1C20] animate-pulse" id="detail-stock-dot"></span><span id="detail-stock-text">Only a few left</span></div><span class="text-xs font-semibold text-[#9A1C20]" id="detail-stock-alert">Only a few left today. Order early.</span></div>
+<!-- Weight Selection Pills (0.5 kg, 1 kg selected, 2 kg) -->
+<div>
+<label class="block text-xs uppercase tracking-wider font-bold text-[#5C0302] mb-2">Select Weight</label>
+<div class="flex items-center gap-3">
+<button class="weight-pill px-4 py-2 rounded-full border border-[#CA8B4A]/60 bg-[#F2E4C9] text-[#5C0302] font-semibold text-xs transition-all hover:bg-[#E3A04B]/20" onclick="setDetailWeight(0.5, this)" type="button" style="animation-delay: 362ms;">
+                  0.5 kg
+                </button>
+<button class="weight-pill px-4 py-2 rounded-full border border-[#CA8B4A]/60 bg-[#F2E4C9] text-[#5C0302] font-semibold text-xs transition-all hover:bg-[#E3A04B]/20" onclick="setDetailWeight(1.0, this)" type="button" style="animation-delay: 362ms;">
+                  1 kg
+                </button>
+
+</div>
+</div>
+<!-- 2x2 Grid Form Fields (Cream background with thin Gold borders) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<!-- Field 1: Flavour Dropdown -->
+<div>
+<label class="block text-xs uppercase font-bold tracking-wider text-[#5C0302] mb-1.5">Flavour Pairing</label>
+<select class="w-full p-2.5 rounded-xl bg-[#FDF2D8] text-[#5C0302] font-medium text-xs border border-[#CA8B4A] focus:ring-2 focus:ring-[#9A1C20] focus:outline-none shadow-sm" id="detail-flavour-select">
+<option selected="" value="Chocolate">Chocolate Ganache Core</option>
+<option value="Vanilla Bean">Tahitian Vanilla Bean</option>
+<option value="Cream Cheese">Authentic Cream Cheese</option>
+<option value="Berry Coulis">Tart Wild Berry Coulis</option>
+</select>
+</div>
+<!-- Field 2: Message on Cake -->
+<div>
+<label class="block text-xs uppercase font-bold tracking-wider text-[#5C0302] mb-1.5">Message on Cake</label>
+<input class="w-full p-2.5 rounded-xl bg-[#FDF2D8] text-[#5C0302] font-medium text-xs border border-[#CA8B4A] focus:ring-2 focus:ring-[#9A1C20] focus:outline-none shadow-sm" id="detail-cake-message" type="text" value="Happy birthday Anu">
+</div>
+<!-- Field 3: Date & Time Picker -->
+<div>
+<label class="block text-xs uppercase font-bold tracking-wider text-[#5C0302] mb-1.5">Pickup Date &amp; Time</label>
+<input class="w-full p-2.5 rounded-xl bg-[#FDF2D8] text-[#5C0302] font-medium text-xs border border-[#CA8B4A] focus:ring-2 focus:ring-[#9A1C20] focus:outline-none shadow-sm" id="detail-pickup-time" type="text" value="20 Nov, 5:00 PM">
+</div>
+<!-- Field 4: Pickup Branch Selector -->
+<div>
+<label class="block text-xs uppercase font-bold tracking-wider text-[#5C0302] mb-1.5">Pickup Branch</label>
+<select class="w-full p-2.5 rounded-xl bg-[#FDF2D8] text-[#5C0302] font-medium text-xs border border-[#CA8B4A] focus:ring-2 focus:ring-[#9A1C20] focus:outline-none shadow-sm" id="detail-branch-select">
+<option selected="" value="Branch 1">Branch 1 - Olavanna</option>
+<option value="Branch 2">Branch 2 - Kattukulangara</option>
+<option value="Branch 3">Branch 3 - Kulangarapeedika</option>
+</select>
+</div>
+</div>
+<!-- "What's inside" Row of Outlined Pills -->
+<div>
+<label class="block text-xs uppercase font-bold tracking-wider text-[#5C0302] mb-2">What’s inside</label>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 rounded-full text-xs font-medium border border-[#CA8B4A] text-[#5C0302] bg-[#F2E4C9]/40">Fresh cream</span>
+<span class="px-3 py-1 rounded-full text-xs font-medium border border-[#CA8B4A] text-[#5C0302] bg-[#F2E4C9]/40">Cocoa</span>
+<span class="px-3 py-1 rounded-full text-xs font-medium border border-[#CA8B4A] text-[#5C0302] bg-[#F2E4C9]/40">Butter</span>
+<span class="px-3 py-1 rounded-full text-xs font-medium border border-[#CA8B4A] text-[#5C0302] bg-[#F2E4C9]/40">Eggs</span>
+<span class="px-3 py-1 rounded-full text-xs font-medium border border-[#CA8B4A] text-[#5C0302] bg-[#F2E4C9]/40">Flour</span>
+<span class="px-3 py-1 rounded-full text-xs font-medium border border-[#CA8B4A] text-[#5C0302] bg-[#F2E4C9]/40">Cherries</span>
+</div>
+</div>
+<!-- Full-width Cherry Red (#9A1C20) Pill Button with WhatsApp SVG Icon -->
+<button class="btn-shimmer w-full py-4 rounded-full font-bold text-sm uppercase tracking-wider bg-[#9A1C20] text-[#FDF2D8] hover:bg-[#801418] transition-all shadow-lg flex items-center justify-center gap-3" onclick="sendReadyMadeWhatsApp()" type="button">
+<!-- WhatsApp SVG -->
+<svg class="w-5 h-5 fill-current text-[#FDF2D8]" viewBox="0 0 24 24">
+<path d="M12.031 0C5.399 0 0 5.399 0 12.031c0 2.119.553 4.185 1.602 6.008L.069 24l6.133-1.609c1.765.962 3.766 1.47 5.829 1.47 6.632 0 12.031-5.399 12.031-12.03C24.062 5.399 18.663 0 12.031 0zm0 22.008c-1.802 0-3.568-.485-5.109-1.401l-.367-.218-3.797.997 1.014-3.702-.239-.381c-1.008-1.605-1.541-3.468-1.541-5.272 0-5.517 4.488-10.005 10.039-10.005 5.551 0 10.039 4.488 10.039 10.005 0 5.517-4.488 10.005-10.039 10.005zm5.503-7.519c-.302-.151-1.785-.88-2.062-.981-.277-.101-.479-.151-.681.151-.202.302-.782.981-.958 1.183-.176.202-.353.227-.655.076-.302-.151-1.275-.47-2.428-1.498-.898-.8-1.503-1.789-1.68-2.091-.176-.302-.019-.465.132-.616.136-.135.302-.353.454-.529.151-.176.202-.302.302-.504.101-.202.05-.378-.025-.529-.076-.151-.681-1.642-.933-2.25-.245-.592-.494-.512-.681-.521l-.579-.01c-.202 0-.529.076-.806.378-.277.302-1.058 1.033-1.058 2.52 0 1.486 1.083 2.922 1.234 3.124.151.202 2.132 3.256 5.166 4.566.721.312 1.284.498 1.723.637.724.23 1.383.197 1.904.12.581-.087 1.785-.73 2.037-1.436.252-.705.252-1.309.176-1.436-.076-.126-.277-.202-.579-.353z"></path>
+</svg>
+<span>Order on WhatsApp</span>
+</button>
+</div>
+<!-- RIGHT COLUMN: Desktop Large Cutout Image on Soft Darker-Beige Circle (5 Cols) -->
+<div class="hidden lg:flex lg:col-span-5 flex-col items-center justify-center">
+<div class="relative w-80 h-80 flex items-center justify-center">
+<!-- Soft darker-beige circle with gentle ambient shadow, no box, no background -->
+<div class="w-72 h-72 rounded-full bg-[#E5D5B5] shadow-inner absolute"></div>
+<!-- Floating cutout cake image -->
+<img alt="Selected Cake Cutout" class="relative z-10 w-64 h-64 object-contain drop-shadow-[0_24px_30px_rgba(92,3,2,0.3)] transition-all duration-300" id="detail-cake-img" src="https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?auto=format&amp;fit=crop&amp;w=600&amp;q=80">
+</div>
+<p class="text-xs text-[#5C0302]/70 italic mt-3">Daily artisanal batch • Certified pure Normandy dairy</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. CUSTOM CAKE BUILDER (Deep Cherry #5C0302 section background) -->
+<section class="w-full bg-[#5C0302] text-[#FDF2D8] py-16 px-4 sm:px-8 border-t-2 border-[#E3A04B]/40 relative overflow-hidden" id="custom-builder">
+<!-- Glow effect -->
+<div class="absolute -bottom-20 -left-20 w-96 h-96 bg-[#9A1C20]/40 rounded-full blur-3xl pointer-events-none"></div>
+<div class="max-w-6xl mx-auto relative z-10">
+<!-- Title & Subtitle -->
+<div class="text-center mb-12">
+<h2 class="text-3xl md:text-5xl font-['Playfair_Display',serif] font-bold text-[#FDF2D8]">
+            Design a custom cake
+          </h2>
+<p class="text-sm md:text-base text-[#F2E4C9]/85 mt-2 max-w-xl mx-auto">
+            Pick your options, and your order goes to WhatsApp.
+          </p>
+</div>
+<!-- Custom Builder Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- LEFT: Beige Card with Interactive Options (7 Cols) -->
+<div class="lg:col-span-7 bg-[#F2E4C9] text-[#5C0302] rounded-3xl p-6 sm:p-8 border-2 border-[#CA8B4A] shadow-2xl space-y-6">
+<!-- 1. Shape -->
+<div>
+<label class="block text-xs uppercase font-bold tracking-wider text-[#5C0302] mb-2">Shape</label>
+<div class="grid grid-cols-3 gap-2.5">
+<button class="custom-shape-btn p-2.5 rounded-xl border-2 border-[#5C0302] bg-[#5C0302] text-[#FDF2D8] font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm transition-all" onclick="setCustomShape('Round', this)" type="button">
+<span class="material-symbols-outlined text-base text-[#E3A04B]">circle</span> Round
+                </button>
+<button class="custom-shape-btn p-2.5 rounded-xl border border-[#CA8B4A]/60 bg-[#FDF2D8] text-[#5C0302] font-semibold text-xs flex items-center justify-center gap-1.5 transition-all hover:bg-[#E3A04B]/20" onclick="setCustomShape('Square', this)" type="button">
+<span class="material-symbols-outlined text-base text-[#CA8B4A]">square</span> Square
+                </button>
+<button class="custom-shape-btn p-2.5 rounded-xl border border-[#CA8B4A]/60 bg-[#FDF2D8] text-[#5C0302] font-semibold text-xs flex items-center justify-center gap-1.5 transition-all hover:bg-[#E3A04B]/20" onclick="setCustomShape('Heart', this)" type="button">
+<span class="material-symbols-outlined text-base text-[#9A1C20]">favorite</span> Heart
+                </button>
+</div>
+</div>
+<!-- 2. Flavour -->
+<div>
+<label class="block text-xs uppercase font-bold tracking-wider text-[#5C0302] mb-2">Flavour</label>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+<button class="custom-flavour-btn p-2 rounded-xl border border-[#CA8B4A]/60 bg-[#FDF2D8] text-[#5C0302] font-medium text-xs text-center transition-all hover:bg-[#E3A04B]/20" onclick="setCustomFlavour('Vanilla', this)" type="button">Vanilla</button>
+<button class="custom-flavour-btn p-2 rounded-xl border-2 border-[#5C0302] bg-[#5C0302] text-[#FDF2D8] font-bold text-xs text-center shadow-sm transition-all" onclick="setCustomFlavour('Chocolate', this)" type="button">Chocolate</button>
+<button class="custom-flavour-btn p-2 rounded-xl border border-[#CA8B4A]/60 bg-[#FDF2D8] text-[#5C0302] font-medium text-xs text-center transition-all hover:bg-[#E3A04B]/20" onclick="setCustomFlavour('Red velvet', this)" type="button">Red velvet</button>
+<button class="custom-flavour-btn p-2 rounded-xl border border-[#CA8B4A]/60 bg-[#FDF2D8] text-[#5C0302] font-medium text-xs text-center transition-all hover:bg-[#E3A04B]/20" onclick="setCustomFlavour('Butterscotch', this)" type="button">Butterscotch</button>
+</div>
+</div>
+<!-- 3. Layers & Size in Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<!-- Layers -->
+<div>
+<label class="block text-xs uppercase font-bold tracking-wider text-[#5C0302] mb-2">Layers</label>
+<div class="grid grid-cols-3 gap-2">
+<button class="custom-layer-btn p-2 rounded-xl border border-[#CA8B4A]/60 bg-[#FDF2D8] text-[#5C0302] font-semibold text-xs text-center transition-all hover:bg-[#E3A04B]/20" onclick="setCustomLayers('1', this)" type="button">1</button>
+<button class="custom-layer-btn p-2 rounded-xl border-2 border-[#5C0302] bg-[#5C0302] text-[#FDF2D8] font-bold text-xs text-center shadow-sm transition-all" onclick="setCustomLayers('2', this)" type="button">2</button>
+<button class="custom-layer-btn p-2 rounded-xl border border-[#CA8B4A]/60 bg-[#FDF2D8] text-[#5C0302] font-semibold text-xs text-center transition-all hover:bg-[#E3A04B]/20" onclick="setCustomLayers('3', this)" type="button">3</button>
+</div>
+</div>
+<!-- Size -->
+<div>
+<label class="block text-xs uppercase font-bold tracking-wider text-[#5C0302] mb-2">Size</label>
+<div class="grid grid-cols-4 gap-1.5">
+<button class="custom-size-btn p-2 rounded-xl border border-[#CA8B4A]/60 bg-[#FDF2D8] text-[#5C0302] font-medium text-xs text-center transition-all hover:bg-[#E3A04B]/20" onclick="setCustomSize('0.5 kg', this)" type="button">0.5 kg</button>
+<button class="custom-size-btn p-2 rounded-xl border-2 border-[#5C0302] bg-[#5C0302] text-[#FDF2D8] font-bold text-xs text-center shadow-sm transition-all" onclick="setCustomSize('1 kg', this)" type="button">1 kg</button>
+<button class="custom-size-btn p-2 rounded-xl border border-[#CA8B4A]/60 bg-[#FDF2D8] text-[#5C0302] font-medium text-xs text-center transition-all hover:bg-[#E3A04B]/20" onclick="setCustomSize('2 kg', this)" type="button">2 kg</button>
+<button class="custom-size-btn p-2 rounded-xl border border-[#CA8B4A]/60 bg-[#FDF2D8] text-[#5C0302] font-medium text-xs text-center transition-all hover:bg-[#E3A04B]/20" onclick="setCustomSize('3 kg', this)" type="button">3 kg</button>
+</div>
+</div>
+</div>
+<!-- 4. Colour Theme: 4 Round Swatches -->
+<div>
+<label class="block text-xs uppercase font-bold tracking-wider text-[#5C0302] mb-2">Colour Theme</label>
+<div class="flex items-center gap-4">
+<!-- Cherry Red (Selected) -->
+<button class="theme-swatch group relative flex flex-col items-center gap-1" onclick="setCustomTheme('Cherry', this)" title="Cherry Red" type="button">
+<span class="w-9 h-9 rounded-full bg-[#9A1C20] border-2 border-[#5C0302]  shadow-sm flex items-center justify-center text-[#FDF2D8]"></span>
+<span class="text-[10px] font-bold text-[#5C0302]">Cherry</span>
+</button>
+<!-- Cream/Gold -->
+<button class="theme-swatch group relative flex flex-col items-center gap-1" onclick="setCustomTheme('Cream / Gold', this)" title="Cream / Gold" type="button">
+<span class="w-9 h-9 rounded-full bg-[#E3A04B] border-2 border-[#5C0302] shadow-sm flex items-center justify-center text-[#5C0302]"></span>
+<span class="text-[10px] font-medium text-[#5C0302]">Gold</span>
+</button>
+<!-- Dark Chocolate -->
+<button class="theme-swatch group relative flex flex-col items-center gap-1" onclick="setCustomTheme('Dark Chocolate', this)" title="Dark Chocolate" type="button">
+<span class="w-9 h-9 rounded-full bg-[#3B1E16] border-2 border-[#5C0302] shadow-sm flex items-center justify-center text-[#FDF2D8]"></span>
+<span class="text-[10px] font-medium text-[#5C0302]">Choco</span>
+</button>
+<!-- Pastel Rose -->
+<button class="theme-swatch group relative flex flex-col items-center gap-1" onclick="setCustomTheme('Pastel Rose', this)" title="Pastel Rose" type="button">
+<span class="w-9 h-9 rounded-full bg-[#E8A5A5] border-2 border-[#5C0302] shadow-sm flex items-center justify-center text-[#5C0302] ring-2 ring-[#9A1C20] ring-offset-2 ring-offset-[#F2E4C9]"><span class="material-symbols-outlined text-sm font-bold">check</span></span>
+<span class="text-[10px] font-medium text-[#5C0302]">Rose</span>
+</button>
+</div>
+</div>
+<!-- 5. Topper Selection -->
+<div>
+<label class="block text-xs uppercase font-bold tracking-wider text-[#5C0302] mb-2">Topper</label>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+<button class="custom-topper-btn p-2 rounded-xl border border-[#CA8B4A]/60 bg-[#FDF2D8] text-[#5C0302] font-medium text-xs text-center transition-all hover:bg-[#E3A04B]/20" onclick="setCustomTopper('None', this)" type="button">None</button>
+<button class="custom-topper-btn p-2 rounded-xl border border-[#CA8B4A]/60 bg-[#FDF2D8] text-[#5C0302] font-medium text-xs text-center transition-all hover:bg-[#E3A04B]/20" onclick="setCustomTopper('Candles', this)" type="button">Candles</button>
+<button class="custom-topper-btn p-2 rounded-xl border border-[#CA8B4A]/60 bg-[#FDF2D8] text-[#5C0302] font-medium text-xs text-center transition-all hover:bg-[#E3A04B]/20" onclick="setCustomTopper('Flowers', this)" type="button">Flowers</button>
+<button class="custom-topper-btn p-2 rounded-xl border-2 border-[#5C0302] bg-[#5C0302] text-[#FDF2D8] font-bold text-xs text-center shadow-sm transition-all" onclick="setCustomTopper('Name board', this)" type="button">Name board</button>
+</div>
+</div>
+<!-- 6. Message on cake input -->
+<div>
+<label class="block text-xs uppercase font-bold tracking-wider text-[#5C0302] mb-1.5">Message on Cake</label>
+<input class="w-full p-3 rounded-xl bg-[#FDF2D8] text-[#5C0302] font-medium text-xs border border-[#CA8B4A] focus:ring-2 focus:ring-[#9A1C20] focus:outline-none shadow-sm" id="custom-message-input" oninput="updateCustomSummary()" type="text" value="Happy birthday Anu">
+</div>
+<!-- 7. Reference Photo Upload: dashed upload box -->
+<div>
+<label class="block text-xs uppercase font-bold tracking-wider text-[#5C0302] mb-1.5">Reference photo upload</label>
+<div class="border-2 border-dashed border-[#CA8B4A] rounded-2xl p-5 text-center bg-[#FDF2D8]/50 hover:bg-[#FDF2D8] transition-colors cursor-pointer flex flex-col items-center justify-center gap-1.5">
+<span class="material-symbols-outlined text-2xl text-[#9A1C20]">add_photo_alternate</span>
+<span class="text-xs font-semibold text-[#5C0302]">Add a photo of the design you like</span>
+<span class="text-[10px] text-[#5C0302]/70">PNG, JPG up to 10MB (or attach directly in WhatsApp)</span>
+</div>
+</div>
+</div>
+<!-- RIGHT: Cream #FDF2D8 Card with "Live preview" (5 Cols) -->
+<div class="lg:col-span-5 sticky top-24">
+<div class="bg-[#FDF2D8] text-[#5C0302] rounded-3xl p-6 sm:p-8 border-2 border-[#CA8B4A] shadow-2xl relative">
+<!-- Badge -->
+<div class="flex items-center justify-between pb-4 border-b border-[#CA8B4A]/40 mb-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#9A1C20] text-xl">auto_fix_high</span>
+<h3 class="font-['Playfair_Display',serif] font-bold text-xl text-[#5C0302]">Live preview</h3>
+</div>
+<span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#E3A04B] text-[#5C0302]">
+                  Custom Craft
+                </span>
+</div>
+<!-- Adapting Cake Cutout Visual on Soft Circle -->
+<div class="flex flex-col items-center justify-center mb-6">
+<div class="relative w-56 h-56 flex items-center justify-center">
+<div class="w-48 h-48 rounded-full bg-[#E5D5B5] shadow-inner absolute"></div>
+<!-- Cutout adapts to choice -->
+<img alt="Custom Cake Cutout Preview" class="relative z-10 w-44 h-44 object-contain drop-shadow-[0_18px_22px_rgba(92,3,2,0.3)] transition-all duration-300" id="custom-preview-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcesXuTWM8oCkmUQke081RDXp61NMdJvBvYEoADTgtBfgx40WFABA-Ix6KEGAL-2jk67FvINAWsDtptB51E0AP225qYa37kJmIV2b7V1cHWokm6tN5aZqOdfILSzYsNcb3rXjGOeitGWVX_ihNvble8xQi0j_VUrM6V-6DISjBJ5ILFn3Jc7KYag1DXtneRNicfMkMwj9RazGBxoLmNtRUTmdNW9a16yExwajl9Kw">
+<!-- Floating Topper / Decor Indicator Tag -->
+<div class="absolute top-2 right-4 z-20 bg-[#5C0302] text-[#FDF2D8] text-[10px] font-bold px-2 py-0.5 rounded-full shadow-md flex items-center gap-1" id="preview-topper-badge"><span class="material-symbols-outlined text-xs text-[#E3A04B]">celebration</span> Name board</div>
+</div>
+</div>
+<!-- Summary List of Chosen Options -->
+<div class="bg-[#F2E4C9] rounded-2xl p-4 border border-[#CA8B4A]/50 space-y-2 text-xs mb-5">
+<div class="flex justify-between">
+<span class="text-[#5C0302]/70">Shape:</span>
+<span class="font-bold text-[#5C0302]" id="sum-shape">Round</span>
+</div>
+<div class="flex justify-between">
+<span class="text-[#5C0302]/70">Flavour:</span>
+<span class="font-bold text-[#5C0302]" id="sum-flavour">Chocolate</span>
+</div>
+<div class="flex justify-between">
+<span class="text-[#5C0302]/70">Layers:</span>
+<span class="font-bold text-[#5C0302]" id="sum-layers">2</span>
+</div>
+<div class="flex justify-between">
+<span class="text-[#5C0302]/70">Size:</span>
+<span class="font-bold text-[#5C0302]" id="sum-size">1 kg</span>
+</div>
+<div class="flex justify-between">
+<span class="text-[#5C0302]/70">Theme:</span>
+<span class="font-bold text-[#5C0302]" id="sum-theme">Pastel Rose</span>
+</div>
+<div class="flex justify-between">
+<span class="text-[#5C0302]/70">Topper:</span>
+<span class="font-bold text-[#5C0302]" id="sum-topper">Name board</span>
+</div>
+<div class="flex justify-between">
+<span class="text-[#5C0302]/70">Message:</span>
+<span class="font-bold text-[#9A1C20] truncate max-w-[180px]" id="sum-message">Happy birthday Anu</span>
+</div>
+</div>
+<!-- Note -->
+<p class="text-xs text-center text-[#5C0302]/80 font-medium italic mb-4">
+                We’ll confirm the price on WhatsApp
+              </p>
+<!-- Cherry Red "Order on WhatsApp" Button -->
+<button class="btn-shimmer w-full py-4 rounded-full font-bold text-xs uppercase tracking-wider bg-[#9A1C20] text-[#FDF2D8] hover:bg-[#801418] transition-all shadow-xl flex items-center justify-center gap-2.5" onclick="sendCustomWhatsApp()" type="button">
+<svg class="w-4 h-4 fill-current text-[#FDF2D8]" viewBox="0 0 24 24">
+<path d="M12.031 0C5.399 0 0 5.399 0 12.031c0 2.119.553 4.185 1.602 6.008L.069 24l6.133-1.609c1.765.962 3.766 1.47 5.829 1.47 6.632 0 12.031-5.399 12.031-12.03C24.062 5.399 18.663 0 12.031 0zm0 22.008c-1.802 0-3.568-.485-5.109-1.401l-.367-.218-3.797.997 1.014-3.702-.239-.381c-1.008-1.605-1.541-3.468-1.541-5.272 0-5.517 4.488-10.005 10.039-10.005 5.551 0 10.039 4.488 10.039 10.005 0 5.517-4.488 10.005-10.039 10.005zm5.503-7.519c-.302-.151-1.785-.88-2.062-.981-.277-.101-.479-.151-.681.151-.202.302-.782.981-.958 1.183-.176.202-.353.227-.655.076-.302-.151-1.275-.47-2.428-1.498-.898-.8-1.503-1.789-1.68-2.091-.176-.302-.019-.465.132-.616.136-.135.302-.353.454-.529.151-.176.202-.302.302-.504.101-.202.05-.378-.025-.529-.076-.151-.681-1.642-.933-2.25-.245-.592-.494-.512-.681-.521l-.579-.01c-.202 0-.529.076-.806.378-.277.302-1.058 1.033-1.058 2.52 0 1.486 1.083 2.922 1.234 3.124.151.202 2.132 3.256 5.166 4.566.721.312 1.284.498 1.723.637.724.23 1.383.197 1.904.12.581-.087 1.785-.73 2.037-1.436.252-.705.252-1.309.176-1.436-.076-.126-.277-.202-.579-.353z"></path>
+</svg>
+<span>Order on WhatsApp</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- MOBILE STICKY BOTTOM BAR (Live Price and Order Button) -->
+<div class="fixed bottom-0 inset-x-0 bg-[#5C0302]/95 border-t-2 border-[#E3A04B] p-3 px-5 z-50 flex items-center justify-between sm:hidden backdrop-blur-md shadow-2xl">
+<div>
+<div class="text-[10px] text-[#F2E4C9] uppercase tracking-wider font-semibold">Total Price</div>
+<div class="text-xl font-['Playfair_Display',serif] font-bold text-[#E3A04B]" id="sticky-mobile-price">₹1500</div>
+</div>
+<button class="px-5 py-2.5 rounded-full font-bold text-xs uppercase tracking-wider bg-[#9A1C20] text-[#FDF2D8] shadow-md flex items-center gap-2" onclick="sendReadyMadeWhatsApp()" type="button">
+<svg class="w-4 h-4 fill-current text-[#FDF2D8]" viewBox="0 0 24 24">
+<path d="M12.031 0C5.399 0 0 5.399 0 12.031c0 2.119.553 4.185 1.602 6.008L.069 24l6.133-1.609c1.765.962 3.766 1.47 5.829 1.47 6.632 0 12.031-5.399 12.031-12.03C24.062 5.399 18.663 0 12.031 0zm0 22.008c-1.802 0-3.568-.485-5.109-1.401l-.367-.218-3.797.997 1.014-3.702-.239-.381c-1.008-1.605-1.541-3.468-1.541-5.272 0-5.517 4.488-10.005 10.039-10.005 5.551 0 10.039 4.488 10.039 10.005 0 5.517-4.488 10.005-10.039 10.005zm5.503-7.519c-.302-.151-1.785-.88-2.062-.981-.277-.101-.479-.151-.681.151-.202.302-.782.981-.958 1.183-.176.202-.353.227-.655.076-.302-.151-1.275-.47-2.428-1.498-.898-.8-1.503-1.789-1.68-2.091-.176-.302-.019-.465.132-.616.136-.135.302-.353.454-.529.151-.176.202-.302.302-.504.101-.202.05-.378-.025-.529-.076-.151-.681-1.642-.933-2.25-.245-.592-.494-.512-.681-.521l-.579-.01c-.202 0-.529.076-.806.378-.277.302-1.058 1.033-1.058 2.52 0 1.486 1.083 2.922 1.234 3.124.151.202 2.132 3.256 5.166 4.566.721.312 1.284.498 1.723.637.724.23 1.383.197 1.904.12.581-.087 1.785-.73 2.037-1.436.252-.705.252-1.309.176-1.436-.076-.126-.277-.202-.579-.353z"></path>
+</svg>
+        Order on WhatsApp
+      </button>
+</div>
+</main>
+<!-- FOOTER -->
+<!-- 5. CAKES WE'VE MADE GALLERY SECTION -->
+<section id="cakes-we-have-made" class="w-full bg-[#F2E4C9] text-[#5C0302] py-16 sm:py-20 border-t-2 border-[#CA8B4A]/60 relative overflow-hidden">
+  <!-- Section Header -->
+  <div class="max-w-4xl mx-auto text-center px-4 mb-12 relative z-10">
+    <h2 class="text-3xl sm:text-4xl md:text-5xl font-['Playfair_Display',serif] font-bold text-[#5C0302] tracking-tight mb-3">
+      Cakes we’ve made
+    </h2>
+    <p class="text-sm sm:text-base font-semibold text-[#9A1C20] tracking-wide">
+      Real cakes from our ovens, made for real celebrations.
+    </p>
+    <div class="w-16 h-0.5 bg-[#CA8B4A] mx-auto mt-4 rounded-full"></div>
+  </div>
+
+  <!-- Drift Row 1: Leftward infinite marquee -->
+  <div class="relative w-full max-w-7xl mx-auto px-4 sm:px-8 py-4" id="gallery-carousel-container"><div class="absolute left-4 top-1/2 -translate-y-1/2 z-30"><button type="button" id="gallery-prev-btn" onclick="slideGallery(-1)" class="w-11 h-11 rounded-full bg-[#5C0302] border-2 border-[#E3A04B] text-[#E3A04B] shadow-xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:bg-[#9A1C20] hover:text-[#FDF2D8]" aria-label="Previous cakes"><span class="material-symbols-outlined text-2xl font-bold">chevron_left</span></button></div><div class="absolute right-4 top-1/2 -translate-y-1/2 z-30"><button type="button" id="gallery-next-btn" onclick="slideGallery(1)" class="w-11 h-11 rounded-full bg-[#5C0302] border-2 border-[#E3A04B] text-[#E3A04B] shadow-xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:bg-[#9A1C20] hover:text-[#FDF2D8]" aria-label="Next cakes"><span class="material-symbols-outlined text-2xl font-bold">chevron_right</span></button></div><div class="overflow-x-auto scroll-smooth py-4 px-2 select-none" id="gallery-track" style="scrollbar-width: none; -ms-overflow-style: none;"><div class="items-end gap-6 sm:gap-8 flex w-max" id="gallery-row-1"><div class="gallery-card group flex-shrink-0 cursor-pointer flex flex-col items-center"><div class="w-36 sm:w-44 h-48 sm:h-56 rounded-t-full rounded-b-2xl border-[1.5px] border-[#CA8B4A] overflow-hidden shadow-lg relative bg-white transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 group-hover:border-[#E3A04B]"><img src="https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&amp;fit=crop&amp;w=700&amp;q=80" alt="Black Forest" class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"></div><div class="mt-2.5 text-center"><h4 class="font-['Playfair_Display',serif] font-bold text-xs sm:text-sm text-[#5C0302]">Black Forest</h4><p class="text-[11px] font-medium text-[#9A1C20]">1 kg • ₹650</p></div></div><div class="gallery-card group flex-shrink-0 cursor-pointer flex flex-col items-center"><div class="w-36 sm:w-44 h-48 sm:h-56 rounded-t-full rounded-b-2xl border-[1.5px] border-[#CA8B4A] overflow-hidden shadow-lg relative bg-white transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 group-hover:border-[#E3A04B]"><img src="https://images.unsplash.com/photo-1535141192574-5d4897c13136?auto=format&amp;fit=crop&amp;w=700&amp;q=80" alt="Pistachio Berry" class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"></div><div class="mt-2.5 text-center"><h4 class="font-['Playfair_Display',serif] font-bold text-xs sm:text-sm text-[#5C0302]">Pistachio Berry</h4><p class="text-[11px] font-medium text-[#9A1C20]">1.5 kg • ₹890</p></div></div><div class="gallery-card group flex-shrink-0 cursor-pointer flex flex-col items-center"><div class="w-36 sm:w-44 h-48 sm:h-56 rounded-t-full rounded-b-2xl border-[1.5px] border-[#CA8B4A] overflow-hidden shadow-lg relative bg-white transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 group-hover:border-[#E3A04B]"><img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Belgian Truffle" class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"></div><div class="mt-2.5 text-center"><h4 class="font-['Playfair_Display',serif] font-bold text-xs sm:text-sm text-[#5C0302]">Belgian Truffle</h4><p class="text-[11px] font-medium text-[#9A1C20]">2 kg • ₹1150</p></div></div><div class="gallery-card group flex-shrink-0 cursor-pointer flex flex-col items-center"><div class="w-36 sm:w-44 h-48 sm:h-56 rounded-t-full rounded-b-2xl border-[1.5px] border-[#CA8B4A] overflow-hidden shadow-lg relative bg-white transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 group-hover:border-[#E3A04B]"><img src="https://images.unsplash.com/photo-1562772186-085d7946b3ba?auto=format&amp;fit=crop&amp;w=700&amp;q=80" alt="Vintage Lambeth" class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"></div><div class="mt-2.5 text-center"><h4 class="font-['Playfair_Display',serif] font-bold text-xs sm:text-sm text-[#5C0302]">Vintage Lambeth</h4><p class="text-[11px] font-medium text-[#9A1C20]">1 kg • ₹780</p></div></div><div class="gallery-card group flex-shrink-0 cursor-pointer flex flex-col items-center"><div class="w-36 sm:w-44 h-48 sm:h-56 rounded-t-full rounded-b-2xl border-[1.5px] border-[#CA8B4A] overflow-hidden shadow-lg relative bg-white transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 group-hover:border-[#E3A04B]"><img src="https://images.unsplash.com/photo-1549576490-b0b4831ef60a?auto=format&amp;fit=crop&amp;w=700&amp;q=80" alt="Hazelnut Praline" class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"></div><div class="mt-2.5 text-center"><h4 class="font-['Playfair_Display',serif] font-bold text-xs sm:text-sm text-[#5C0302]">Hazelnut Praline</h4><p class="text-[11px] font-medium text-[#9A1C20]">1 kg • ₹750</p></div></div><div class="gallery-card group flex-shrink-0 cursor-pointer flex flex-col items-center"><div class="w-36 sm:w-44 h-48 sm:h-56 rounded-t-full rounded-b-2xl border-[1.5px] border-[#CA8B4A] overflow-hidden shadow-lg relative bg-white transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 group-hover:border-[#E3A04B]"><img src="https://images.unsplash.com/photo-1535254973040-607b474cb50d?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Vanilla Orchid" class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"></div><div class="mt-2.5 text-center"><h4 class="font-['Playfair_Display',serif] font-bold text-xs sm:text-sm text-[#5C0302]">Vanilla Orchid</h4><p class="text-[11px] font-medium text-[#9A1C20]">3 kg • ₹1850</p></div></div><div class="gallery-card group flex-shrink-0 cursor-pointer flex flex-col items-center"><div class="w-36 sm:w-44 h-48 sm:h-56 rounded-t-full rounded-b-2xl border-[1.5px] border-[#CA8B4A] overflow-hidden shadow-lg relative bg-white transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 group-hover:border-[#E3A04B]"><img src="https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?auto=format&amp;fit=crop&amp;w=700&amp;q=80" alt="Mango Mascarpone" class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"></div><div class="mt-2.5 text-center"><h4 class="font-['Playfair_Display',serif] font-bold text-xs sm:text-sm text-[#5C0302]">Mango Mascarpone</h4><p class="text-[11px] font-medium text-[#9A1C20]">1 kg • ₹720</p></div></div><div class="gallery-card group flex-shrink-0 cursor-pointer flex flex-col items-center"><div class="w-36 sm:w-44 h-48 sm:h-56 rounded-t-full rounded-b-2xl border-[1.5px] border-[#CA8B4A] overflow-hidden shadow-lg relative bg-white transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 group-hover:border-[#E3A04B]"><img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&amp;fit=crop&amp;w=700&amp;q=80" alt="Caramel Lotus Gateau" class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"></div><div class="mt-2.5 text-center"><h4 class="font-['Playfair_Display',serif] font-bold text-xs sm:text-sm text-[#5C0302]">Caramel Lotus Gateau</h4><p class="text-[11px] font-medium text-[#9A1C20]">1.5 kg • ₹820</p></div></div><div class="gallery-card group flex-shrink-0 cursor-pointer flex flex-col items-center"><div class="w-36 sm:w-44 h-48 sm:h-56 rounded-t-full rounded-b-2xl border-[1.5px] border-[#CA8B4A] overflow-hidden shadow-lg relative bg-white transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 group-hover:border-[#E3A04B]"><img src="https://images.unsplash.com/photo-1549576490-b0b4831ef60a?auto=format&amp;fit=crop&amp;w=700&amp;q=80" alt="Salted Caramel Crunch" class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"></div><div class="mt-2.5 text-center"><h4 class="font-['Playfair_Display',serif] font-bold text-xs sm:text-sm text-[#5C0302]">Salted Caramel Crunch</h4><p class="text-[11px] font-medium text-[#9A1C20]">1 kg • ₹720</p></div></div><div class="gallery-card group flex-shrink-0 cursor-pointer flex flex-col items-center"><div class="w-36 sm:w-44 h-48 sm:h-56 rounded-t-full rounded-b-2xl border-[1.5px] border-[#CA8B4A] overflow-hidden shadow-lg relative bg-white transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 group-hover:border-[#E3A04B]"><img src="https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?auto=format&amp;fit=crop&amp;w=700&amp;q=80" alt="Royal Berry Gateau" class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"></div><div class="mt-2.5 text-center"><h4 class="font-['Playfair_Display',serif] font-bold text-xs sm:text-sm text-[#5C0302]">Royal Berry Gateau</h4><p class="text-[11px] font-medium text-[#9A1C20]">1.5 kg • ₹780</p></div></div><div class="gallery-card group flex-shrink-0 cursor-pointer flex flex-col items-center"><div class="w-36 sm:w-44 h-48 sm:h-56 rounded-t-full rounded-b-2xl border-[1.5px] border-[#CA8B4A] overflow-hidden shadow-lg relative bg-white transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 group-hover:border-[#E3A04B]"><img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&amp;fit=crop&amp;w=700&amp;q=80" alt="Butterscotch Delight" class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"></div><div class="mt-2.5 text-center"><h4 class="font-['Playfair_Display',serif] font-bold text-xs sm:text-sm text-[#5C0302]">Butterscotch Delight</h4><p class="text-[11px] font-medium text-[#9A1C20]">1 kg • ₹680</p></div></div><div class="gallery-card group flex-shrink-0 cursor-pointer flex flex-col items-center"><div class="w-36 sm:w-44 h-48 sm:h-56 rounded-t-full rounded-b-2xl border-[1.5px] border-[#CA8B4A] overflow-hidden shadow-lg relative bg-white transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 group-hover:border-[#E3A04B]"><img src="https://images.unsplash.com/photo-1535254973040-607b474cb50d?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="White Chocolate Rose" class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"></div><div class="mt-2.5 text-center"><h4 class="font-['Playfair_Display',serif] font-bold text-xs sm:text-sm text-[#5C0302]">White Chocolate Rose</h4><p class="text-[11px] font-medium text-[#9A1C20]">2 kg • ₹1200</p></div></div><div class="gallery-card group flex-shrink-0 cursor-pointer flex flex-col items-center"><div class="w-36 sm:w-44 h-48 sm:h-56 rounded-t-full rounded-b-2xl border-[1.5px] border-[#CA8B4A] overflow-hidden shadow-lg relative bg-white transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 group-hover:border-[#E3A04B]"><img src="https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&amp;fit=crop&amp;w=700&amp;q=80" alt="Dark Truffle Noir" class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"></div><div class="mt-2.5 text-center"><h4 class="font-['Playfair_Display',serif] font-bold text-xs sm:text-sm text-[#5C0302]">Dark Truffle Noir</h4><p class="text-[11px] font-medium text-[#9A1C20]">1 kg • ₹850</p></div></div><div class="gallery-card group flex-shrink-0 cursor-pointer flex flex-col items-center"><div class="w-36 sm:w-44 h-48 sm:h-56 rounded-t-full rounded-b-2xl border-[1.5px] border-[#CA8B4A] overflow-hidden shadow-lg relative bg-white transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 group-hover:border-[#E3A04B]"><img src="https://images.unsplash.com/photo-1535141192574-5d4897c13136?auto=format&amp;fit=crop&amp;w=700&amp;q=80" alt="Strawberry Fraisier" class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"></div><div class="mt-2.5 text-center"><h4 class="font-['Playfair_Display',serif] font-bold text-xs sm:text-sm text-[#5C0302]">Strawberry Fraisier</h4><p class="text-[11px] font-medium text-[#9A1C20]">1.5 kg • ₹920</p></div></div></div></div><div class="flex items-center justify-center gap-2 mt-6" id="gallery-dots-container"><button type="button" onclick="scrollToGalleryDot(0)" class="w-2.5 h-2.5 rounded-full bg-[#5C0302] border border-[#CA8B4A] transition-all duration-300" aria-label="Slide 1"></button><button type="button" onclick="scrollToGalleryDot(1)" class="w-2.5 h-2.5 rounded-full bg-[#5C0302]/30 border border-[#CA8B4A] transition-all duration-300" aria-label="Slide 2"></button><button type="button" onclick="scrollToGalleryDot(2)" class="w-2.5 h-2.5 rounded-full bg-[#5C0302]/30 border border-[#CA8B4A] transition-all duration-300" aria-label="Slide 3"></button><button type="button" onclick="scrollToGalleryDot(3)" class="w-2.5 h-2.5 rounded-full bg-[#5C0302]/30 border border-[#CA8B4A] transition-all duration-300" aria-label="Slide 4"></button><button type="button" onclick="scrollToGalleryDot(4)" class="w-2.5 h-2.5 rounded-full bg-[#5C0302]/30 border border-[#CA8B4A] transition-all duration-300" aria-label="Slide 5"></button></div></div>
+
+  <!-- Drift Row 2: Rightward infinite marquee -->
+  
+
+  <!-- Lightbox Modal -->
+  <div id="cake-lightbox" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-[#5C0302]/90 backdrop-blur-md transition-opacity duration-300" onclick="handleLightboxBackdropClick(event)">
+    <div class="relative max-w-lg w-full bg-[#FDF2D8] border-2 border-[#CA8B4A] rounded-3xl p-6 sm:p-8 shadow-2xl flex flex-col items-center text-center transform transition-transform duration-300 scale-95" id="lightbox-card" onclick="event.stopPropagation()">
+      <!-- Close Button -->
+      <button type="button" onclick="closeCakeLightbox()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-[#5C0302] text-[#FDF2D8] hover:bg-[#9A1C20] flex items-center justify-center transition-colors shadow-md" aria-label="Close lightbox">
+        <span class="material-symbols-outlined text-xl">close</span>
+      </button>
+
+      <!-- Arched Photo Frame in Lightbox -->
+      <div class="w-56 h-72 sm:w-64 sm:h-80 rounded-t-full rounded-b-2xl border-[1.5px] border-[#CA8B4A] overflow-hidden shadow-2xl relative mb-5 bg-[#5C0302]/10 ring-4 ring-[#E3A04B]/30">
+        <img id="lightbox-img" src="" alt="" class="w-full h-full object-cover object-center">
+      </div>
+
+      <!-- Cake Info -->
+      <h3 id="lightbox-title" class="text-2xl sm:text-3xl font-['Playfair_Display',serif] font-bold text-[#5C0302] mb-1.5"></h3>
+      <p id="lightbox-desc" class="text-xs sm:text-sm text-[#5C0302]/80 font-medium mb-1"></p>
+      <p id="lightbox-ref" class="text-[11px] font-mono uppercase tracking-wider text-[#9A1C20] mb-5 font-semibold"></p>
+
+      <!-- Navigation and WhatsApp CTA -->
+      <div class="w-full flex items-center justify-between gap-3 pt-2 border-t border-[#CA8B4A]/40">
+        <button type="button" onclick="prevLightboxCake()" class="w-9 h-9 rounded-full border border-[#CA8B4A] bg-[#F2E4C9] text-[#5C0302] hover:bg-[#E3A04B]/30 flex items-center justify-center transition-colors shadow-sm" aria-label="Previous">
+          <span class="material-symbols-outlined text-base">arrow_back</span>
+        </button>
+
+        <button type="button" onclick="orderCurrentLightboxCake()" class="btn-shimmer flex-1 py-3 px-5 rounded-full font-bold text-xs sm:text-sm uppercase tracking-wider bg-[#9A1C20] text-[#FDF2D8] hover:bg-[#801418] transition-all shadow-lg flex items-center justify-center gap-2">
+          <svg class="w-4 h-4 fill-current text-[#FDF2D8]" viewBox="0 0 24 24">
+            <path d="M12.031 0C5.399 0 0 5.399 0 12.031c0 2.119.553 4.185 1.602 6.008L.069 24l6.133-1.609c1.765.962 3.766 1.47 5.829 1.47 6.632 0 12.031-5.399 12.031-12.03C24.062 5.399 18.663 0 12.031 0zm0 22.008c-1.802 0-3.568-.485-5.109-1.401l-.367-.218-3.797.997 1.014-3.702-.239-.381c-1.008-1.605-1.541-3.468-1.541-5.272 0-5.517 4.488-10.005 10.039-10.005 5.551 0 10.039 4.488 10.039 10.005 0 5.517-4.488 10.005-10.039 10.005zm5.503-7.519c-.302-.151-1.785-.88-2.062-.981-.277-.101-.479-.151-.681.151-.202.302-.782.981-.958 1.183-.176.202-.353.227-.655.076-.302-.151-1.275-.47-2.428-1.498-.898-.8-1.503-1.789-1.68-2.091-.176-.302-.019-.465.132-.616.136-.135.302-.353.454-.529.151-.176.202-.302.302-.504.101-.202.05-.378-.025-.529-.076-.151-.681-1.642-.933-2.25-.245-.592-.494-.512-.681-.521l-.579-.01c-.202 0-.529.076-.806.378-.277.302-1.058 1.033-1.058 2.52 0 1.486 1.083 2.922 1.234 3.124.151.202 2.132 3.256 5.166 4.566.721.312 1.284.498 1.723.637.724.23 1.383.197 1.904.12.581-.087 1.785-.73 2.037-1.436.252-.705.252-1.309.176-1.436-.076-.126-.277-.202-.579-.353z"></path>
+          </svg>
+          <span>Order a cake like this</span>
+        </button>
+
+        <button type="button" onclick="nextLightboxCake()" class="w-9 h-9 rounded-full border border-[#CA8B4A] bg-[#F2E4C9] text-[#5C0302] hover:bg-[#E3A04B]/30 flex items-center justify-center transition-colors shadow-sm" aria-label="Next">
+          <span class="material-symbols-outlined text-base">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section><footer class="w-full bg-[#5C0302] text-[#FDF2D8] py-12 border-t border-[#E3A04B]/30 pb-20 sm:pb-12">
+<div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-3">
+<img alt="Paradise Bakes Logo" class="h-7 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ALJJyrCvfgycKifiVOGx3x2VD3FfWkftBdYJLXLKZ2ZbBIkQC2rChE1dY5VuUrA43UlC3SbgVMawkfq4lotg6gUwcqV-aYHo3vng6JyLSO2EOZFU0cX9CFiM_625JB58JTKwIAPShbxbCL-qtlKItDLUcKk-njWu2XvHDrgo5izz6cHhdRxOoWnqgpsFy5WoIzxwlaD3wEFyeW9EvjQuWzqWYt1jAcRUVpy-g_uZrCIo_5j3">
+<span class="font-['Playfair_Display',serif] text-lg font-bold text-[#FDF2D8]">Paradise Bakes</span>
+</div>
+<p class="text-xs text-[#F2E4C9]/70 text-center">
+        © 2024 Paradise Bakes. All rights reserved. Artisanal Pâtisserie &amp; Café.
+      </p>
+<div class="flex items-center gap-4 text-xs text-[#E3A04B]">
+<span>Branch 1: Olavanna</span>
+<span>•</span>
+<span>Branch 2: Kattukulangara</span>
+<span>•</span>
+<span>Branch 3: Kulangarapeedika</span>
+</div>
+</div>
+</footer>
+<!-- SCRIPT FOR STATE & WHATSAPP ORDERS -->
+<script>
+    // Ready-Made Cake Showcase Data
+    const showcaseCakes = {
+      'red-velvet': {
+        name: 'Red velvet',
+        displayName: 'Red Velvet Rose',
+        pricePerKg: 750,
+        img: 'https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?auto=format&fit=crop&w=600&q=80',
+        flavourDefault: 'Chocolate'
+      },
+      'belgian-truffle': {
+        name: 'Belgian truffle',
+        displayName: 'Belgian Chocolate Truffle',
+        pricePerKg: 850,
+        img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDcesXuTWM8oCkmUQke081RDXp61NMdJvBvYEoADTgtBfgx40WFABA-Ix6KEGAL-2jk67FvINAWsDtptB51E0AP225qYa37kJmIV2b7V1cHWokm6tN5aZqOdfILSzYsNcb3rXjGOeitGWVX_ihNvble8xQi0j_VUrM6V-6DISjBJ5ILFn3Jc7KYag1DXtneRNicfMkMwj9RazGBxoLmNtRUTmdNW9a16yExwajl9Kw',
+        flavourDefault: 'Chocolate'
+      },
+      'royal-berry': {
+        name: 'Royal berry',
+        displayName: 'Royal Berry Gateau',
+        pricePerKg: 780,
+        img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDmkwJlOtwpTejVrfn6AOCsRYjXVIHX0EbIcnG-uKHM5jPqZd-E4QEwm2RkO8YIcaP2Bphjrp25pyIdDpsGnanUQHpogmwgOblQN75Dfc83AaY9rSD8TJIgxdbTlen-ePt662k-zCnbwR0WXLOI-jSbAaTyXEyGt43BxzdKQM8029fIkr4phW6k_zoJHlf2vdhkkjX4Ak64K61MOwF2A4JUHDx5RvtOFuQ2uT-15dA',
+        flavourDefault: 'Berry Coulis'
+      },
+      'salted-caramel': {
+        name: 'Salted caramel crunch',
+        displayName: 'Salted Caramel Crunch',
+        pricePerKg: 720,
+        img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuATITdLMaM3hyXu4wc63nNN1WYLfJDKGY96WiFvdUA6omMCYSjVn57ASKeCSdyloyvTTkkkWaaW3l7ASXMA-W5WYrGH3jpDTRY6as84hdxX8Zh_UoABYH-Hiz_ADZl5NKroeUfTbx-69UktczD5yIzd9LdFJc_7rcDFGeYFRfpWWcICPk30PosTlz2c6SATCmCpDIJ8bUGimOTzOLCVJxJWjBIjPk9ROee2V2foJ8I',
+        flavourDefault: 'Vanilla Bean'
+      }
+    };
+
+    // Current State for Ready-Made Showcase Selection
+    let currentCakeKey = 'red-velvet';
+    let currentWeight = 1.0;
+
+    function selectShowcaseCake(cakeKey, cardEl) {
+      currentCakeKey = cakeKey;
+      const cake = showcaseCakes[cakeKey];
+
+      // Update Showcase Selection marker and styling
+      document.querySelectorAll('.cake-card').forEach(card => {
+        card.classList.remove('is-selected');
+        const marker = card.querySelector('.selection-marker');
+        if (marker) marker.classList.add('hidden');
+        const cone = card.querySelector('.spotlight-layer');
+        if (cone) cone.classList.replace('opacity-90', 'opacity-40');
+      });
+
+      cardEl.classList.add('is-selected');
+      const activeMarker = cardEl.querySelector('.selection-marker');
+      if (activeMarker) activeMarker.classList.remove('hidden');
+      const activeCone = cardEl.querySelector('.spotlight-layer');
+      if (activeCone) activeCone.classList.replace('opacity-40', 'opacity-90');
+
+      // Update Cake Detail Panel below
+      document.getElementById('detail-cake-name').innerText = cake.name;
+      document.getElementById('detail-cake-rate').innerText = '₹' + cake.pricePerKg;
+      document.getElementById('detail-cake-img').src = cake.img;
+      document.getElementById('detail-cake-img-mobile').src = cake.img;
+
+      updateReadyMadePrice();
+
+      // Smooth scroll to detail panel
+      const detailSec = document.getElementById('cake-detail-panel');
+      if (detailSec) {
+        detailSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function setDetailWeight(wt, btn) {
+      currentWeight = wt;
+      document.querySelectorAll('.weight-pill').forEach(b => {
+        b.className = 'weight-pill px-4 py-2 rounded-full border border-[#CA8B4A]/60 bg-[#F2E4C9] text-[#5C0302] font-semibold text-xs transition-all hover:bg-[#E3A04B]/20';
+      });
+      btn.className = 'weight-pill px-4 py-2 rounded-full border-2 border-[#5C0302] bg-[#5C0302] text-[#FDF2D8] font-bold text-xs shadow-sm transition-all';
+      updateReadyMadePrice();
+    }
+
+    function updateReadyMadePrice() {
+      const cake = showcaseCakes[currentCakeKey];
+      const total = Math.round(cake.pricePerKg * currentWeight);
+      document.getElementById('detail-cake-total-price').innerText = '₹' + total;
+      const mobPrice = document.getElementById('sticky-mobile-price');
+      if (mobPrice) mobPrice.innerText = '₹' + total;
+    }
+
+    // Submit Ready-Made WhatsApp Order
+    function sendReadyMadeWhatsApp() {
+      const cake = showcaseCakes[currentCakeKey];
+      const total = Math.round(cake.pricePerKg * currentWeight);
+      const flavour = document.getElementById('detail-flavour-select').value;
+      const messageOnCake = document.getElementById('detail-cake-message').value || 'None';
+      const dateTime = document.getElementById('detail-pickup-time').value || '20 Nov, 5:00 PM';
+      const branch = document.getElementById('detail-branch-select').value;
+
+      const waText = `Hi Paradise Bakes, I’d like to order this cake:\nCake: ${cake.name}\nWeight: ${currentWeight} kg\nFlavour: ${flavour}\nMessage on cake: ${messageOnCake}\nDate and time: ${dateTime}\nPickup branch: ${branch}\nTotal: ₹${total}\nPlease confirm availability. Thank you!`;
+
+      window.open('https://wa.me/?text=' + encodeURIComponent(waText), '_blank');
+    }
+
+    // Custom Cake Builder State
+    let customState = {
+      shape: 'Round',
+      flavour: 'Chocolate',
+      layers: '2',
+      size: '1 kg',
+      theme: 'Cherry',
+      topper: 'Candles',
+      message: 'Happy birthday Anu'
+    };
+
+    function setCustomShape(val, btn) {
+      customState.shape = val;
+      document.querySelectorAll('.custom-shape-btn').forEach(b => {
+        b.className = 'custom-shape-btn p-2.5 rounded-xl border border-[#CA8B4A]/60 bg-[#FDF2D8] text-[#5C0302] font-semibold text-xs flex items-center justify-center gap-1.5 transition-all hover:bg-[#E3A04B]/20';
+      });
+      btn.className = 'custom-shape-btn p-2.5 rounded-xl border-2 border-[#5C0302] bg-[#5C0302] text-[#FDF2D8] font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm transition-all';
+      updateCustomSummary();
+    }
+
+    function setCustomFlavour(val, btn) {
+      customState.flavour = val;
+      document.querySelectorAll('.custom-flavour-btn').forEach(b => {
+        b.className = 'custom-flavour-btn p-2 rounded-xl border border-[#CA8B4A]/60 bg-[#FDF2D8] text-[#5C0302] font-medium text-xs text-center transition-all hover:bg-[#E3A04B]/20';
+      });
+      btn.className = 'custom-flavour-btn p-2 rounded-xl border-2 border-[#5C0302] bg-[#5C0302] text-[#FDF2D8] font-bold text-xs text-center shadow-sm transition-all';
+
+      // Switch cutout preview picture to reflect flavour
+      const imgEl = document.getElementById('custom-preview-img');
+      if (val === 'Vanilla') {
+        imgEl.src = 'https://lh3.googleusercontent.com/aida-public/AB6AXuBuRinQauLcOunev2Vv8FPwj_JYvP6FRUwb087T6nEJnv713Db5r5m-CgfdPXcxTr9mc5m8BBp7B65tXKBcHxTGIfcXd9fragnV80-TEPWXL8hf2MnhXjZ8sP2-r82p7rtv_DYDo9GDdxyQ1t7I4mxh-mve94RWHVsFAn0zm2krgmXa7o6J2ip2sQZT-PrIb6FSFn3g0LDWFRmVB76pe_ctrhUBjo_Do5YoDSKtiaI';
+      } else if (val === 'Red velvet') {
+        imgEl.src = 'https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?auto=format&fit=crop&w=600&q=80';
+      } else if (val === 'Butterscotch') {
+        imgEl.src = 'https://lh3.googleusercontent.com/aida-public/AB6AXuATITdLMaM3hyXu4wc63nNN1WYLfJDKGY96WiFvdUA6omMCYSjVn57ASKeCSdyloyvTTkkkWaaW3l7ASXMA-W5WYrGH3jpDTRY6as84hdxX8Zh_UoABYH-Hiz_ADZl5NKroeUfTbx-69UktczD5yIzd9LdFJc_7rcDFGeYFRfpWWcICPk30PosTlz2c6SATCmCpDIJ8bUGimOTzOLCVJxJWjBIjPk9ROee2V2foJ8I';
+      } else {
+        imgEl.src = 'https://lh3.googleusercontent.com/aida-public/AB6AXuDcesXuTWM8oCkmUQke081RDXp61NMdJvBvYEoADTgtBfgx40WFABA-Ix6KEGAL-2jk67FvINAWsDtptB51E0AP225qYa37kJmIV2b7V1cHWokm6tN5aZqOdfILSzYsNcb3rXjGOeitGWVX_ihNvble8xQi0j_VUrM6V-6DISjBJ5ILFn3Jc7KYag1DXtneRNicfMkMwj9RazGBxoLmNtRUTmdNW9a16yExwajl9Kw';
+      }
+      updateCustomSummary();
+    }
+
+    function setCustomLayers(val, btn) {
+      customState.layers = val;
+      document.querySelectorAll('.custom-layer-btn').forEach(b => {
+        b.className = 'custom-layer-btn p-2 rounded-xl border border-[#CA8B4A]/60 bg-[#FDF2D8] text-[#5C0302] font-semibold text-xs text-center transition-all hover:bg-[#E3A04B]/20';
+      });
+      btn.className = 'custom-layer-btn p-2 rounded-xl border-2 border-[#5C0302] bg-[#5C0302] text-[#FDF2D8] font-bold text-xs text-center shadow-sm transition-all';
+      updateCustomSummary();
+    }
+
+    function setCustomSize(val, btn) {
+      customState.size = val;
+      document.querySelectorAll('.custom-size-btn').forEach(b => {
+        b.className = 'custom-size-btn p-2 rounded-xl border border-[#CA8B4A]/60 bg-[#FDF2D8] text-[#5C0302] font-medium text-xs text-center transition-all hover:bg-[#E3A04B]/20';
+      });
+      btn.className = 'custom-size-btn p-2 rounded-xl border-2 border-[#5C0302] bg-[#5C0302] text-[#FDF2D8] font-bold text-xs text-center shadow-sm transition-all';
+      updateCustomSummary();
+    }
+
+    function setCustomTheme(val, btn) {
+      customState.theme = val;
+      document.querySelectorAll('.theme-swatch').forEach(sw => {
+        const ring = sw.querySelector('span');
+        if (ring) {
+          ring.className = ring.className.replace('ring-2 ring-[#9A1C20] ring-offset-2 ring-offset-[#F2E4C9]', '');
+          ring.innerHTML = '';
+        }
+      });
+      const activeSpan = btn.querySelector('span');
+      if (activeSpan) {
+        activeSpan.classList.add('ring-2', 'ring-[#9A1C20]', 'ring-offset-2', 'ring-offset-[#F2E4C9]');
+        activeSpan.innerHTML = '<span class="material-symbols-outlined text-sm font-bold">check</span>';
+      }
+      updateCustomSummary();
+    }
+
+    function setCustomTopper(val, btn) {
+      customState.topper = val;
+      document.querySelectorAll('.custom-topper-btn').forEach(b => {
+        b.className = 'custom-topper-btn p-2 rounded-xl border border-[#CA8B4A]/60 bg-[#FDF2D8] text-[#5C0302] font-medium text-xs text-center transition-all hover:bg-[#E3A04B]/20';
+      });
+      btn.className = 'custom-topper-btn p-2 rounded-xl border-2 border-[#5C0302] bg-[#5C0302] text-[#FDF2D8] font-bold text-xs text-center shadow-sm transition-all';
+
+      // Update Topper Tag badge on Preview
+      const badge = document.getElementById('preview-topper-badge');
+      if (badge) {
+        if (val === 'None') {
+          badge.classList.add('hidden');
+        } else {
+          badge.classList.remove('hidden');
+          badge.innerHTML = `<span class="material-symbols-outlined text-xs text-[#E3A04B]">celebration</span> ${val}`;
+        }
+      }
+      updateCustomSummary();
+    }
+
+    function updateCustomSummary() {
+      const msg = document.getElementById('custom-message-input').value || 'None';
+      customState.message = msg;
+
+      document.getElementById('sum-shape').innerText = customState.shape;
+      document.getElementById('sum-flavour').innerText = customState.flavour;
+      document.getElementById('sum-layers').innerText = customState.layers;
+      document.getElementById('sum-size').innerText = customState.size;
+      document.getElementById('sum-theme').innerText = customState.theme;
+      document.getElementById('sum-topper').innerText = customState.topper;
+      document.getElementById('sum-message').innerText = customState.message;
+    }
+
+    // Submit Custom Cake WhatsApp Order
+    function sendCustomWhatsApp() {
+      updateCustomSummary();
+      const waCustomText = `Hi Paradise Bakes, I’d like a custom cake:\nShape: ${customState.shape}\nFlavour: ${customState.flavour}\nLayers: ${customState.layers}\nSize: ${customState.size}\nTheme: ${customState.theme}\nTopper: ${customState.topper}\nMessage on cake: ${customState.message}\nReference photo: I’ll send it here\nPlease confirm the price and availability. Thank you!`;
+
+      window.open('https://wa.me/?text=' + encodeURIComponent(waCustomText), '_blank');
+    }
+  </script>
+
+
+<script>
+  (function() {
+    const track = document.getElementById('gallery-track');
+    const container = document.getElementById('gallery-carousel-container');
+    const dotsContainer = document.getElementById('gallery-dots-container');
+    if (!track) return;
+
+    const step = 300;
+    let autoSlideInterval = null;
+
+    window.slideGallery = function(direction) {
+      if (!track) return;
+      const maxScroll = track.scrollWidth - track.clientWidth;
+      if (direction === 1 && track.scrollLeft >= maxScroll - 10) {
+        track.scrollTo({ left: 0, behavior: 'smooth' });
+      } else if (direction === -1 && track.scrollLeft <= 10) {
+        track.scrollTo({ left: maxScroll, behavior: 'smooth' });
+      } else {
+        track.scrollBy({ left: direction * step, behavior: 'smooth' });
+      }
+    };
+
+    window.scrollToGalleryDot = function(index) {
+      if (!track) return;
+      const maxScroll = track.scrollWidth - track.clientWidth;
+      const dots = dotsContainer ? dotsContainer.querySelectorAll('button') : [];
+      const count = dots.length > 1 ? dots.length - 1 : 1;
+      const targetLeft = (maxScroll * index) / count;
+      track.scrollTo({ left: targetLeft, behavior: 'smooth' });
+    };
+
+    function updateDots() {
+      if (!track || !dotsContainer) return;
+      const dots = dotsContainer.querySelectorAll('button');
+      if (!dots.length) return;
+      const maxScroll = track.scrollWidth - track.clientWidth;
+      const scrollRatio = maxScroll > 0 ? track.scrollLeft / maxScroll : 0;
+      const activeIndex = Math.min(dots.length - 1, Math.max(0, Math.round(scrollRatio * (dots.length - 1))));
+      dots.forEach((dot, idx) => {
+        if (idx === activeIndex) {
+          dot.className = 'w-6 h-2.5 rounded-full bg-[#5C0302] border border-[#CA8B4A] transition-all duration-300';
+        } else {
+          dot.className = 'w-2.5 h-2.5 rounded-full bg-[#5C0302]/30 border border-[#CA8B4A] transition-all duration-300';
+        }
+      });
+    }
+
+    function startAutoSlide() {
+      stopAutoSlide();
+      autoSlideInterval = setInterval(() => {
+        slideGallery(1);
+      }, 3500);
+    }
+
+    function stopAutoSlide() {
+      if (autoSlideInterval) {
+        clearInterval(autoSlideInterval);
+        autoSlideInterval = null;
+      }
+    }
+
+    track.addEventListener('scroll', updateDots, { passive: true });
+
+    if (container) {
+      container.addEventListener('mouseenter', stopAutoSlide);
+      container.addEventListener('mouseleave', startAutoSlide);
+    } else {
+      track.addEventListener('mouseenter', stopAutoSlide);
+      track.addEventListener('mouseleave', startAutoSlide);
+    }
+
+    startAutoSlide();
+    updateDots();
+  })();
+</script></body></html>

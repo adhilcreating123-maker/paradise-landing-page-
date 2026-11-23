@@ -1,0 +1,3 @@
+import Link from 'next/link';
+export const metadata = { title: 'Menu coming soon', description: 'The Paradise Bakes food and drinks menu is coming soon. Explore Cake World in the meantime.' };
+export default function Menu() { return <main data-parallax-section id="main" data-reveal className="site-shell py-12 text-center menu-page"><p data-parallax-depth="-0.045" className="eyebrow">SOMETHING LOVELY IS ON THE WAY</p><h1 data-parallax-depth="0.04">Menu coming soon</h1><p>Our food and drinks menu will be available here in a later update.</p><Link href="/cake-world" className="button">Explore Cake World ?</Link></main>; }

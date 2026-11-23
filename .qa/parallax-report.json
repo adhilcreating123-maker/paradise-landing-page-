@@ -1,0 +1,540 @@
+{
+  "results": [
+    {
+      "width": 1440,
+      "scrollWidth": 1425,
+      "bodyScrollWidth": 1425,
+      "layerRoots": 8,
+      "backgrounds": 9,
+      "foregrounds": 8,
+      "midgrounds": 8,
+      "maxActiveLayersPerSection": 6,
+      "activeLayerDetails": [
+        {
+          "section": "home",
+          "count": 4,
+          "layers": [
+            "div|background|0.12|section-layer section-layer--bg abso",
+            "div||-0.25|jsx-dce5e670d7a2f114 absolute -top-3",
+            "div||-0.15|jsx-dce5e670d7a2f114 absolute -botto",
+            "div||0.10|jsx-dce5e670d7a2f114 hidden lg:block"
+          ]
+        },
+        {
+          "section": "div",
+          "count": 2,
+          "layers": [
+            "div||0.018|animate-marquee whitespace-nowrap fl",
+            "div||0.16|pointer-events-none absolute inset-x"
+          ]
+        },
+        {
+          "section": "branches",
+          "count": 6,
+          "layers": [
+            "div|foreground|0.35|section-layer section-layer--fg abso",
+            "svg||0.1|[object SVGAnimatedString]",
+            "div||-0.075|text-center max-w-2xl mx-auto mb-10 ",
+            "div||0.05|w-full bg-[#fdf9f3] rounded-2xl over",
+            "div||0.12|w-full bg-[#fdf9f3] rounded-2xl over",
+            "div||0.2|w-full bg-[#fdf9f3] rounded-2xl over"
+          ]
+        },
+        {
+          "section": "story",
+          "count": 6,
+          "layers": [
+            "div|background|0.1|section-layer section-layer--bg abso",
+            "div|foreground|0.4|section-layer section-layer--fg abso",
+            "div||0.12|absolute inset-0 flex items-center j",
+            "div||0.4|absolute right-[12%] top-[18%] h-16 ",
+            "div||0.065|w-full lg:col-span-6 space-y-4 sm:sp",
+            "div||0.18|pointer-events-none absolute inset-x"
+          ]
+        },
+        {
+          "section": "cakeworld",
+          "count": 6,
+          "layers": [
+            "div||0.1|absolute inset-0 pointer-events-none",
+            "div||0.1|absolute inset-0 flex items-center j",
+            "div|foreground|0.45|section-layer section-layer--fg abso",
+            "div||0.12|absolute left-1/2 top-1/2 h-[min(78v",
+            "div|fg|0.45|absolute inset-0",
+            "div||0.07|w-full lg:col-span-7 flex flex-col i"
+          ]
+        },
+        {
+          "section": "life",
+          "count": 6,
+          "layers": [
+            "div|foreground|0.4|section-layer section-layer--fg abso",
+            "svg||0.15|[object SVGAnimatedString]",
+            "div|fg|0.4|absolute inset-0",
+            "div||0.05|text-center max-w-2xl mx-auto mb-10 ",
+            "div||0.15|absolute w-72 sm:w-96 aspect-square ",
+            "div||0.17|pointer-events-none absolute inset-x"
+          ]
+        },
+        {
+          "section": "findus",
+          "count": 6,
+          "layers": [
+            "div||0.1|absolute inset-[-8%] opacity-[0.07]",
+            "svg|fg|0.35|[object SVGAnimatedString]",
+            "div||-0.06|flex flex-col md:flex-row md:items-e",
+            "div||0.08|w-full bg-[#fdf9f3] rounded-2xl p-5 ",
+            "a||0.04|block h-[260px] sm:h-40 md:h-44 w-fu",
+            "div||0.12|w-full bg-[#fdf9f3] rounded-2xl p-5 "
+          ]
+        },
+        {
+          "section": "reviews",
+          "count": 6,
+          "layers": [
+            "div||0.15|absolute left-[4%] top-[-6%] select-",
+            "div|fg|0.4|absolute inset-0",
+            "div||-0.06|flex flex-col md:flex-row md:items-e",
+            "div||0.05|w-[85vw] max-w-[340px] shrink-0 snap",
+            "div||0.1|w-[85vw] max-w-[340px] shrink-0 snap",
+            "div||0.15|w-[85vw] max-w-[340px] shrink-0 snap"
+          ]
+        },
+        {
+          "section": "section",
+          "count": 5,
+          "layers": [
+            "div|background|0.08|section-layer section-layer--bg abso",
+            "div|foreground|0.3|section-layer section-layer--fg abso",
+            "img||-0.065|h-12 sm:h-16 mx-auto object-contain",
+            "h2||0.035|font-serif text-3xl sm:text-4xl lg:t",
+            "div||0.19|pointer-events-none absolute inset-x"
+          ]
+        },
+        {
+          "section": "contact",
+          "count": 3,
+          "layers": [
+            "div||0.08|absolute inset-0 flex items-center j",
+            "div||0.07|max-w-7xl mx-auto flex flex-col gap-",
+            "div||0.025|relative z-10 max-w-7xl mx-auto pt-8"
+          ]
+        }
+      ],
+      "decorImages": 30,
+      "decorViolations": [],
+      "clippedLayers": true,
+      "nonInteractive": true,
+      "midgroundAbove": true,
+      "headerPosition": "sticky",
+      "motionReady": true,
+      "lenisAnchors": true,
+      "brokenImages": [],
+      "undefinedText": false,
+      "scrolled": {
+        "foregroundTransform": "matrix(1, 0, 0, 1, 0, -18.8266)",
+        "backgroundTransform": "matrix(1.00275, 0, 0, 1.00275, 2.08119, -0.916014)",
+        "heroCopyOpacity": "0.5768",
+        "scrollY": 600
+      },
+      "anchor": {
+        "hash": "#story",
+        "targetTop": 82,
+        "headerHeight": 81,
+        "withinHeaderOffset": true
+      }
+    },
+    {
+      "width": 1024,
+      "scrollWidth": 1009,
+      "bodyScrollWidth": 1009,
+      "layerRoots": 8,
+      "backgrounds": 9,
+      "foregrounds": 8,
+      "midgrounds": 8,
+      "maxActiveLayersPerSection": 6,
+      "activeLayerDetails": [
+        {
+          "section": "home",
+          "count": 4,
+          "layers": [
+            "div|background|0.12|section-layer section-layer--bg abso",
+            "div||-0.25|jsx-dce5e670d7a2f114 absolute -top-3",
+            "div||-0.15|jsx-dce5e670d7a2f114 absolute -botto",
+            "div||0.10|jsx-dce5e670d7a2f114 hidden lg:block"
+          ]
+        },
+        {
+          "section": "div",
+          "count": 2,
+          "layers": [
+            "div||0.018|animate-marquee whitespace-nowrap fl",
+            "div||0.16|pointer-events-none absolute inset-x"
+          ]
+        },
+        {
+          "section": "branches",
+          "count": 6,
+          "layers": [
+            "div|foreground|0.35|section-layer section-layer--fg abso",
+            "svg||0.1|[object SVGAnimatedString]",
+            "div||-0.075|text-center max-w-2xl mx-auto mb-10 ",
+            "div||0.05|w-full bg-[#fdf9f3] rounded-2xl over",
+            "div||0.12|w-full bg-[#fdf9f3] rounded-2xl over",
+            "div||0.2|w-full bg-[#fdf9f3] rounded-2xl over"
+          ]
+        },
+        {
+          "section": "story",
+          "count": 6,
+          "layers": [
+            "div|background|0.1|section-layer section-layer--bg abso",
+            "div|foreground|0.4|section-layer section-layer--fg abso",
+            "div||0.12|absolute inset-0 flex items-center j",
+            "div||0.4|absolute right-[12%] top-[18%] h-16 ",
+            "div||0.065|w-full lg:col-span-6 space-y-4 sm:sp",
+            "div||0.18|pointer-events-none absolute inset-x"
+          ]
+        },
+        {
+          "section": "cakeworld",
+          "count": 6,
+          "layers": [
+            "div||0.1|absolute inset-0 pointer-events-none",
+            "div||0.1|absolute inset-0 flex items-center j",
+            "div|foreground|0.45|section-layer section-layer--fg abso",
+            "div||0.12|absolute left-1/2 top-1/2 h-[min(78v",
+            "div|fg|0.45|absolute inset-0",
+            "div||0.07|w-full lg:col-span-7 flex flex-col i"
+          ]
+        },
+        {
+          "section": "life",
+          "count": 6,
+          "layers": [
+            "div|foreground|0.4|section-layer section-layer--fg abso",
+            "svg||0.15|[object SVGAnimatedString]",
+            "div|fg|0.4|absolute inset-0",
+            "div||0.05|text-center max-w-2xl mx-auto mb-10 ",
+            "div||0.15|absolute w-72 sm:w-96 aspect-square ",
+            "div||0.17|pointer-events-none absolute inset-x"
+          ]
+        },
+        {
+          "section": "findus",
+          "count": 6,
+          "layers": [
+            "div||0.1|absolute inset-[-8%] opacity-[0.07]",
+            "svg|fg|0.35|[object SVGAnimatedString]",
+            "div||-0.06|flex flex-col md:flex-row md:items-e",
+            "div||0.08|w-full bg-[#fdf9f3] rounded-2xl p-5 ",
+            "a||0.04|block h-[260px] sm:h-40 md:h-44 w-fu",
+            "div||0.12|w-full bg-[#fdf9f3] rounded-2xl p-5 "
+          ]
+        },
+        {
+          "section": "reviews",
+          "count": 6,
+          "layers": [
+            "div||0.15|absolute left-[4%] top-[-6%] select-",
+            "div|fg|0.4|absolute inset-0",
+            "div||-0.06|flex flex-col md:flex-row md:items-e",
+            "div||0.05|w-[85vw] max-w-[340px] shrink-0 snap",
+            "div||0.1|w-[85vw] max-w-[340px] shrink-0 snap",
+            "div||0.15|w-[85vw] max-w-[340px] shrink-0 snap"
+          ]
+        },
+        {
+          "section": "section",
+          "count": 5,
+          "layers": [
+            "div|background|0.08|section-layer section-layer--bg abso",
+            "div|foreground|0.3|section-layer section-layer--fg abso",
+            "img||-0.065|h-12 sm:h-16 mx-auto object-contain",
+            "h2||0.035|font-serif text-3xl sm:text-4xl lg:t",
+            "div||0.19|pointer-events-none absolute inset-x"
+          ]
+        },
+        {
+          "section": "contact",
+          "count": 3,
+          "layers": [
+            "div||0.08|absolute inset-0 flex items-center j",
+            "div||0.07|max-w-7xl mx-auto flex flex-col gap-",
+            "div||0.025|relative z-10 max-w-7xl mx-auto pt-8"
+          ]
+        }
+      ],
+      "decorImages": 30,
+      "decorViolations": [],
+      "clippedLayers": true,
+      "nonInteractive": true,
+      "midgroundAbove": true,
+      "headerPosition": "sticky",
+      "motionReady": true,
+      "lenisAnchors": true,
+      "brokenImages": [],
+      "undefinedText": false,
+      "scrolled": {
+        "foregroundTransform": "matrix(1, 0, 0, 1, 0, -15.7513)",
+        "backgroundTransform": "matrix(1.00298, 0, 0, 1.00298, 1.5992, -0.99407)",
+        "heroCopyOpacity": "0.5887",
+        "scrollY": 600
+      },
+      "anchor": {
+        "hash": "#story",
+        "targetTop": 82,
+        "headerHeight": 81,
+        "withinHeaderOffset": true
+      }
+    },
+    {
+      "width": 768,
+      "scrollWidth": 753,
+      "bodyScrollWidth": 753,
+      "layerRoots": 8,
+      "backgrounds": 9,
+      "foregrounds": 8,
+      "midgrounds": 8,
+      "maxActiveLayersPerSection": 3,
+      "activeLayerDetails": [
+        {
+          "section": "div",
+          "count": 2,
+          "layers": [
+            "div||0.018|animate-marquee whitespace-nowrap fl",
+            "div||0.16|pointer-events-none absolute inset-x"
+          ]
+        },
+        {
+          "section": "branches",
+          "count": 3,
+          "layers": [
+            "div||-0.075|text-center max-w-2xl mx-auto mb-10 ",
+            "div||0.05|w-full bg-[#fdf9f3] rounded-2xl over",
+            "div||0.12|w-full bg-[#fdf9f3] rounded-2xl over"
+          ]
+        },
+        {
+          "section": "story",
+          "count": 3,
+          "layers": [
+            "div|foreground|0.4|section-layer section-layer--fg abso",
+            "div||0.4|absolute right-[12%] top-[18%] h-16 ",
+            "div||0.065|w-full lg:col-span-6 space-y-4 sm:sp"
+          ]
+        },
+        {
+          "section": "cakeworld",
+          "count": 3,
+          "layers": [
+            "div|foreground|0.45|section-layer section-layer--fg abso",
+            "div|fg|0.45|absolute inset-0",
+            "div||0.07|w-full lg:col-span-7 flex flex-col i"
+          ]
+        },
+        {
+          "section": "life",
+          "count": 3,
+          "layers": [
+            "div|fg|0.4|absolute inset-0",
+            "div||0.05|text-center max-w-2xl mx-auto mb-10 ",
+            "div||0.15|absolute w-72 sm:w-96 aspect-square "
+          ]
+        },
+        {
+          "section": "findus",
+          "count": 3,
+          "layers": [
+            "svg|fg|0.35|[object SVGAnimatedString]",
+            "div||-0.06|flex flex-col md:flex-row md:items-e",
+            "div||0.08|w-full bg-[#fdf9f3] rounded-2xl p-5 "
+          ]
+        },
+        {
+          "section": "reviews",
+          "count": 3,
+          "layers": [
+            "div|fg|0.4|absolute inset-0",
+            "div||-0.06|flex flex-col md:flex-row md:items-e",
+            "div||0.05|w-[85vw] max-w-[340px] shrink-0 snap"
+          ]
+        },
+        {
+          "section": "section",
+          "count": 3,
+          "layers": [
+            "div|foreground|0.3|section-layer section-layer--fg abso",
+            "img||-0.065|h-12 sm:h-16 mx-auto object-contain",
+            "h2||0.035|font-serif text-3xl sm:text-4xl lg:t"
+          ]
+        },
+        {
+          "section": "contact",
+          "count": 2,
+          "layers": [
+            "div||0.07|max-w-7xl mx-auto flex flex-col gap-",
+            "div||0.025|relative z-10 max-w-7xl mx-auto pt-8"
+          ]
+        }
+      ],
+      "decorImages": 30,
+      "decorViolations": [],
+      "clippedLayers": true,
+      "nonInteractive": true,
+      "midgroundAbove": true,
+      "headerPosition": "sticky",
+      "motionReady": true,
+      "lenisAnchors": true,
+      "brokenImages": [],
+      "undefinedText": false,
+      "scrolled": {
+        "foregroundTransform": "matrix(1, 0, 0, 1, 0, -7.2397)",
+        "backgroundTransform": "matrix(1.00342, 0, 0, 1.00342, 1.36761, -1.20376)",
+        "heroCopyOpacity": "0.5937",
+        "scrollY": 600
+      },
+      "anchor": {
+        "hash": "#story",
+        "targetTop": 66,
+        "headerHeight": 65,
+        "withinHeaderOffset": true
+      }
+    },
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "bodyScrollWidth": 390,
+      "layerRoots": 8,
+      "backgrounds": 9,
+      "foregrounds": 8,
+      "midgrounds": 8,
+      "maxActiveLayersPerSection": 3,
+      "activeLayerDetails": [
+        {
+          "section": "div",
+          "count": 2,
+          "layers": [
+            "div||0.018|animate-marquee whitespace-nowrap fl",
+            "div||0.16|pointer-events-none absolute inset-x"
+          ]
+        },
+        {
+          "section": "branches",
+          "count": 3,
+          "layers": [
+            "div||-0.075|text-center max-w-2xl mx-auto mb-10 ",
+            "div||0.05|w-full bg-[#fdf9f3] rounded-2xl over",
+            "div||0.12|w-full bg-[#fdf9f3] rounded-2xl over"
+          ]
+        },
+        {
+          "section": "story",
+          "count": 3,
+          "layers": [
+            "div|foreground|0.4|section-layer section-layer--fg abso",
+            "div||0.4|absolute right-[12%] top-[18%] h-16 ",
+            "div||0.065|w-full lg:col-span-6 space-y-4 sm:sp"
+          ]
+        },
+        {
+          "section": "cakeworld",
+          "count": 3,
+          "layers": [
+            "div|foreground|0.45|section-layer section-layer--fg abso",
+            "div|fg|0.45|absolute inset-0",
+            "div||0.07|w-full lg:col-span-7 flex flex-col i"
+          ]
+        },
+        {
+          "section": "life",
+          "count": 3,
+          "layers": [
+            "div|fg|0.4|absolute inset-0",
+            "div||0.05|text-center max-w-2xl mx-auto mb-10 ",
+            "div||0.15|absolute w-72 sm:w-96 aspect-square "
+          ]
+        },
+        {
+          "section": "findus",
+          "count": 3,
+          "layers": [
+            "svg|fg|0.35|[object SVGAnimatedString]",
+            "div||-0.06|flex flex-col md:flex-row md:items-e",
+            "div||0.08|w-full bg-[#fdf9f3] rounded-2xl p-5 "
+          ]
+        },
+        {
+          "section": "reviews",
+          "count": 3,
+          "layers": [
+            "div|fg|0.4|absolute inset-0",
+            "div||-0.06|flex flex-col md:flex-row md:items-e",
+            "div||0.05|w-[85vw] max-w-[340px] shrink-0 snap"
+          ]
+        },
+        {
+          "section": "section",
+          "count": 3,
+          "layers": [
+            "div|foreground|0.3|section-layer section-layer--fg abso",
+            "img||-0.065|h-12 sm:h-16 mx-auto object-contain",
+            "h2||0.035|font-serif text-3xl sm:text-4xl lg:t"
+          ]
+        },
+        {
+          "section": "contact",
+          "count": 2,
+          "layers": [
+            "div||0.07|max-w-7xl mx-auto flex flex-col gap-",
+            "div||0.025|relative z-10 max-w-7xl mx-auto pt-8"
+          ]
+        }
+      ],
+      "decorImages": 30,
+      "decorViolations": [],
+      "clippedLayers": true,
+      "nonInteractive": true,
+      "midgroundAbove": true,
+      "headerPosition": "sticky",
+      "motionReady": true,
+      "lenisAnchors": true,
+      "brokenImages": [],
+      "undefinedText": false,
+      "scrolled": {
+        "foregroundTransform": "matrix(1, 0, 0, 1, 0, -0.7987)",
+        "backgroundTransform": "matrix(1.00273, 0, 0, 1.00273, 0.566287, -1.02893)",
+        "heroCopyOpacity": "0.6438",
+        "scrollY": 600
+      },
+      "anchor": {
+        "hash": "#story",
+        "targetTop": 66,
+        "headerHeight": 65,
+        "withinHeaderOffset": true
+      }
+    }
+  ],
+  "existingAnimations": {
+    "marqueeAnimation": "marquee",
+    "cakeRingAnimation": "spin",
+    "revealCount": 7,
+    "heroPhotoRotated": true,
+    "beforeRotation": "/hero/Rosetta Cappuccino on Burgundy-3.png",
+    "afterRotation": "/hero/Sparkling lime mint cooler-2.png"
+  },
+  "frameTiming": {
+    "frames": 29,
+    "avgMs": 34.6,
+    "p95Ms": 69.3,
+    "maxMs": 104.3
+  },
+  "reducedMotion": {
+    "contentVisible": true,
+    "animationName": "none",
+    "parallaxOffset": "",
+    "scrollBehavior": "auto"
+  },
+  "errors": [],
+  "badResponses": []
+}

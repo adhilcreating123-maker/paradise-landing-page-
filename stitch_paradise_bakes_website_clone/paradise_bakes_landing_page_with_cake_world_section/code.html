@@ -1,0 +1,967 @@
+<!DOCTYPE html><html lang="en"><head></head><body class="antialiased selection:bg-brand-gold selection:text-white"><svg class="inline-defs-container" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"></svg>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Paradise Bakes - Artisanal Patisserie &amp; Cafe</title>
+<!-- Google Fonts for Luxury Editorial Aesthetic -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&amp;family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400&amp;family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS v3 with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              burgundy: '#2B0B12',
+              deepWine: '#3B0E19',
+              garnet: '#4D1422',
+              cream: '#FAF6F0',
+              creamSoft: '#F4ECE1',
+              gold: '#C59A58',
+              goldLight: '#E8D0A7',
+              amber: '#D97706',
+              charcoal: '#1F1B1C',
+              muted: '#716565'
+            }
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            cinzel: ['Cinzel', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            inter: ['"Inter"', 'sans-serif'],
+            fraunces: ['"Fraunces"', '"Playfair Display"', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+<!-- BEGIN: Custom Styles -->
+<style data-purpose="base-enhancements">
+    body {
+      background-color: #FAF6F0;
+      color: #1F1B1C;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+    }
+    
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #F3E0BE 0%, #C59A58 50%, #9B6F2D 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-glow {
+      background: radial-gradient(circle at 75% 45%, rgba(197, 154, 88, 0.18) 0%, rgba(59, 14, 25, 0) 65%);
+    }
+
+    .ticker-scroll {
+      display: flex;
+      width: max-content;
+      animation: ticker 32s linear infinite;
+    }
+
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* 3D Coverflow Styles */
+    .coverflow-perspective {
+      perspective: 1200px;
+      perspective-origin: center center;
+    }
+
+    .coverflow-item {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform-style: preserve-3d;
+      transition: transform 0.65s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.65s cubic-bezier(0.25, 1, 0.5, 1), filter 0.65s ease, box-shadow 0.65s ease;
+      will-change: transform, opacity, filter;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .coverflow-item.is-active {
+      box-shadow: 0 20px 50px rgba(201, 163, 78, 0.25), 0 0 35px rgba(227, 160, 75, 0.22);
+    }
+
+    .coverflow-stage:hover .coverflow-item.is-active img {
+      transform: scale(1.04);
+    }
+
+    /* Cake World Depth Floating Animations */
+    @keyframes float-slow {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-14px) rotate(2deg); }
+    }
+
+    @keyframes float-mid {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-22px) rotate(-3deg); }
+    }
+
+    @keyframes float-fast {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(4deg); }
+    }
+
+    .animate-float-slow {
+      animation: float-slow 7s ease-in-out infinite;
+    }
+
+    .animate-float-mid {
+      animation: float-mid 5s ease-in-out infinite;
+    }
+
+    .animate-float-fast {
+      animation: float-fast 4s ease-in-out infinite;
+    }
+
+    /* Gold Shimmer Sweep */
+    @keyframes goldShimmer {
+      0% { transform: translateX(-150%) skewX(-20deg); }
+      100% { transform: translateX(250%) skewX(-20deg); }
+    }
+
+    .btn-gold-shimmer {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-gold-shimmer::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.4),
+        transparent
+      );
+      transform: translateX(-150%) skewX(-20deg);
+    }
+
+    .btn-gold-shimmer:hover::after {
+      animation: goldShimmer 1.2s ease-in-out;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .animate-float-slow,
+      .animate-float-mid,
+      .animate-float-fast {
+        animation: none !important;
+      }
+      .btn-gold-shimmer:hover::after {
+        animation: none !important;
+      }
+    }
+  </style>
+<!-- END: Custom Styles -->
+
+
+<!-- BEGIN: TopAnnouncement -->
+<aside class="bg-[#1C050B] text-brand-goldLight text-[11px] font-medium tracking-[0.22em] uppercase py-2 px-4 border-b border-[#3D141F]" data-purpose="announcement-bar">
+<div class="max-w-7xl mx-auto flex items-center justify-between">
+<div class="flex items-center space-x-3">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-brand-gold animate-pulse"></span>
+<span>life at paradis Artisanal Patisserie &amp; Cafe • Fresh Daily Bakes</span>
+</div>
+<div class="hidden md:flex items-center space-x-6 text-[10px]">
+<span>kulangara peedika • OLAVANNA • KATTUKULANGARA</span>
+<span class="text-brand-gold">Opening Hours: 10:00 AM - 12:00 PM</span>
+</div>
+</div>
+</aside>
+<!-- END: TopAnnouncement -->
+<!-- BEGIN: MainHeader -->
+<header class="sticky top-0 z-50 bg-[#FAF6F0]/95 backdrop-blur-md border-b border-[#EADFCF] transition-all">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+<!-- Brand Logo -->
+<a class="flex items-center space-x-3 group" data-purpose="site-brand" href="#"><div class="relative flex items-center justify-center shrink-0 w-14 h-14"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2DV3RNuq0v-o__i9xmWQh9-kTYXRLIhpwACatL12gMEOyViD3NwybQLsg-rddytneuwqBfFYI0bpleB9ynkFIQTj2cG9m52Oj-Iv7-Y6iROIiXYm-k7GeDamIYN-mXKUR8qyOdbFDG7sGyGLa36Z56dIau8Hy_zrU5zxdXiZvC8eJuRJC4BMTqlhR8igW1lNsqogiFJIl4C2XpINbL7_ufSP6OTyy2AQhSvW1IegJZRfEzlLXQWYh" alt="Paradise Bakes Logo" class="w-full h-full object-contain transition-transform group-hover:scale-105 drop-shadow-sm"></div><div class="flex flex-col"><span class="font-cinzel text-xl font-bold tracking-widest text-brand-burgundy leading-none">paradise bakes</span><span class="text-[9px] uppercase tracking-[0.35em] text-brand-gold font-bold mt-1">turn moment, into memories</span></div></a>
+<!-- Desktop Navigation Menu -->
+<nav class="hidden lg:flex items-center space-x-8 text-sm font-medium text-brand-charcoal" data-purpose="main-nav">
+<a class="text-brand-garnet font-semibold border-b-2 border-brand-garnet pb-0.5" href="#hero">Home</a>
+<a class="hover:text-brand-garnet transition-colors" href="#menu">Our Menu</a>
+<a class="hover:text-brand-garnet transition-colors" href="#cake-world">Cake World</a>
+<a class="hover:text-brand-garnet transition-colors" href="#story">Our Story</a>
+<a class="hover:text-brand-garnet transition-colors" href="#branches">Branches</a>
+<a class="hover:text-brand-garnet transition-colors" href="#contact">Contact</a>
+</nav>
+<!-- Action Button -->
+<div class="flex items-center space-x-4"><a class="inline-flex items-center justify-center px-6 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase text-white bg-[#1C050B] hover:bg-brand-burgundy border border-brand-gold/40 active:scale-95 transition-all shadow-md" href="tel:+919744242477">ORDER ONLINE</a></div>
+</div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: HeroSection -->
+<section class="relative bg-[#1C0B0A] text-[#FAF6F0] overflow-hidden border-b border-[#3E1A17]" id="hero" style="background-color: rgb(92, 3, 2); border-color: rgb(122, 12, 14);"><div class="w-full min-h-[550px] lg:min-h-[640px] grid grid-cols-1 lg:grid-cols-12"><div class="order-2 lg:order-1 lg:col-span-6 flex flex-col justify-center px-6 sm:px-12 lg:px-16 py-12 lg:py-20 z-10"><div class="flex items-center space-x-3 mb-6"><span class="w-8 h-px bg-[#E3A04B]"></span><span class="text-[#E3A04B] text-xs sm:text-sm font-semibold tracking-widest uppercase">Paradise Bakes</span></div><h1 class="font-serif text-4xl sm:text-6xl lg:text-7xl font-normal leading-[1.08] tracking-tight text-[#F4E4BC] mb-6">Every craving<br>finds<br><span class="italic font-serif text-[#E3A04B]">Paradise.</span></h1><p class="text-stone-300 text-base sm:text-lg max-w-lg font-light leading-relaxed mb-8">Puffs, breads and celebration cakes, baked fresh every morning at our three branches.</p><div class="flex flex-wrap items-center gap-4"><a class="btn-gold-shimmer inline-flex items-center justify-center px-8 py-3.5 rounded-full bg-[#E3A04B] text-[#1C0B0A] font-bold text-xs tracking-wider uppercase transition shadow-lg hover:brightness-110 active:scale-95" href="#cake-world"><span>Explore Cake World</span></a><a class="inline-flex items-center justify-center px-8 py-3.5 rounded-full border border-[#E3A04B] text-[#E3A04B] hover:bg-[#E3A04B]/10 font-medium text-xs tracking-wider uppercase transition active:scale-95" href="#menu"><span>View menu</span></a></div></div><div class="order-1 lg:order-2 lg:col-span-6 relative w-full h-[360px] sm:h-[450px] lg:h-full min-h-[360px] lg:min-h-[640px] overflow-hidden select-none" id="heroPhotoContainer"><div class="absolute inset-0 z-0"><div class="hero-carousel-slide absolute inset-0 transition-opacity duration-1000 ease-in-out opacity-0"><img alt="Artisanal chocolate truffle cake garnished with fresh berries" class="w-full h-full object-cover animate-hero-zoom" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuhiQp2TQkTuirzjRG6qOzEk3tqOp3lL9HkR3fXGuzJFhrs-wfYvvIloUA4V1lKMwzmzSmJzVYSWaGhLzAz_KMO9o-k8YDlhE4nBbRsZuWj8AKwIRsXqhKM69O4er5a2mlvFJA1ZxoivsBJeZk2_aE6AB_lztAwWUGIcPHSamh_-IXH1FxhwTPp_7QLCLvrMk7_TqS7i55lXTMFX0bMj-I3nnhqoZJsskXJWRvgmI"></div><div class="hero-carousel-slide absolute inset-0 transition-opacity duration-1000 ease-in-out opacity-100"><img alt="Artisanal golden brown croissants and pain au chocolat" class="w-full h-full object-cover animate-hero-zoom" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCD7KvJQ17kzEEKibpkjXh4IZfRQNCB5bI1AGJruwzqEFL0K6YfJibww0jW3HdprCZN37hNNfEkDWJyZMaOICLlH-vjAcE2Mhgloc97OHXAM3cNfbqFTzHgMPjB4QogVt8ZGYMJCnjiKGCf-R9s3_N-t7qk3EF6g-C4IJmOUPs1Q7Q2GNY7ujtbl_60RxCuZXLnm2wn_V94M5JT7B_tuh7SIj56ju2I5--I0z0ccMU"></div><div class="hero-carousel-slide absolute inset-0 transition-opacity duration-1000 ease-in-out opacity-0"><img alt="Paradise Bakes boutique bakery exterior storefront" class="w-full h-full object-cover animate-hero-zoom" src="https://lh3.googleusercontent.com/aida/ALJJyrBjHMWQVtHKDhdxfBn-cVQFrcdxIHFpsArfEXPm_Oiqh0GVZ81P9h1qA0IW2Bc9RdGMqLQwu1gjGdn-Ixo8dbtSeLYK3NaJyM0-GP9j91knqGsn5CrTUrDDc-_SGJmaAsZWNbd6oEk8_P_cnMG4fKBbOepDJJYjHgp4yWm09o9mTSjp0aiT2YrRVsDfvdcGZ4voNXiaeLuAhU56WL_MCTETsaeu5n4hApsmhPJ-Yyaw"></div></div><div class="absolute inset-0 pointer-events-none z-10 hidden lg:block" style="background: linear-gradient(to right, rgb(92, 3, 2) 0%, rgba(92, 3, 2, 0.88) 18%, rgba(92, 3, 2, 0) 55%);"></div><div class="absolute inset-0 pointer-events-none z-10 lg:hidden" style="background: linear-gradient(to top, rgb(92, 3, 2) 0%, rgba(92, 3, 2, 0.85) 25%, transparent 60%);"></div><div class="absolute inset-0 pointer-events-none z-10" style="background: linear-gradient(to top, rgb(92, 3, 2) 0%, transparent 35%);"></div><div class="absolute inset-0 pointer-events-none z-10 bg-[#E3A04B]/10 mix-blend-color"></div><div class="absolute bottom-4 left-6 right-6 lg:left-12 lg:right-12 z-20 flex items-center gap-2"><div class="flex-1 h-0.5 bg-white/20 rounded-full overflow-hidden"><div class="hero-prog-bar h-full bg-[#E3A04B] w-full origin-left transition-all duration-300" style="transition: none; width: 100%;"></div></div><div class="flex-1 h-0.5 bg-white/20 rounded-full overflow-hidden"><div class="hero-prog-bar h-full bg-[#E3A04B] w-0 origin-left transition-all duration-300" style="transition: width 4000ms linear; width: 100%;"></div></div><div class="flex-1 h-0.5 bg-white/20 rounded-full overflow-hidden"><div class="hero-prog-bar h-full bg-[#E3A04B] w-0 origin-left transition-all duration-300" style="transition: none; width: 0%;"></div></div></div></div></div><style>@keyframes heroZoom { 0% { transform: scale(1); } 100% { transform: scale(1.08); } } .animate-hero-zoom { animation: heroZoom 6s ease-out forwards; }</style><script>(function initHeroCarousel() { const container = document.getElementById('heroPhotoContainer'); if (!container) return; const slides = container.querySelectorAll('.hero-carousel-slide'); const progBars = container.querySelectorAll('.hero-prog-bar'); if (!slides.length) return; let current = 0; const total = slides.length; const duration = 4000; function showSlide(index) { slides.forEach((slide, idx) => { if (idx === index) { slide.classList.remove('opacity-0'); slide.classList.add('opacity-100'); const img = slide.querySelector('img'); if (img) { img.classList.remove('animate-hero-zoom'); void img.offsetWidth; img.classList.add('animate-hero-zoom'); } } else { slide.classList.remove('opacity-100'); slide.classList.add('opacity-0'); } }); progBars.forEach((bar, idx) => { bar.style.transition = 'none'; if (idx < index) { bar.style.width = '100%'; } else if (idx === index) { bar.style.width = '0%'; setTimeout(() => { bar.style.transition = 'width ' + duration + 'ms linear'; bar.style.width = '100%'; }, 20); } else { bar.style.width = '0%'; } }); } showSlide(0); setInterval(() => { current = (current + 1) % total; showSlide(current); }, duration); })();</script></section>
+<!-- END: HeroSection -->
+<!-- BEGIN: InfiniteTickerRibbon -->
+<section class="bg-brand-gold text-brand-burgundy py-3 overflow-hidden border-y border-[#A87B37]" data-purpose="ticker-strip">
+<div class="ticker-scroll font-cinzel text-xs font-bold tracking-[0.25em] uppercase space-x-8">
+<span>• Handcrafted Butter Croissants</span>
+<span>• Belgian Chocolate Truffles</span>
+<span>• French Macarons</span>
+<span>• Stoneground Sourdough</span>
+<span>• Custom Celebration Cakes</span>
+<span>• Fresh Daily Pastries</span>
+<span>• Calicut Speciality Coffee</span>
+<span>• Pure Ingredients</span>
+<span>• Handcrafted Butter Croissants</span>
+<span>• Belgian Chocolate Truffles</span>
+<span>• French Macarons</span>
+<span>• Stoneground Sourdough</span>
+<span>• Custom Celebration Cakes</span>
+<span>• Fresh Daily Pastries</span>
+</div>
+</section>
+<!-- END: InfiniteTickerRibbon -->
+<!-- BEGIN: BakeryExperienceSection -->
+<section class="py-20 bg-brand-cream" data-purpose="featured-branches" id="menu" style="background-color: rgb(242, 228, 201);"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <!-- Section Title Header -->
+  <div class="text-center max-w-2xl mx-auto mb-14">
+    <span class="text-xs uppercase tracking-[0.3em] font-bold" style="color: rgb(202, 139, 74);">VISIT OUR LOCATIONS</span>
+    <h2 class="font-serif text-3xl sm:text-4xl font-normal mt-2" style="color: rgb(92, 3, 2);">
+      Experience Paradise Near You
+    </h2>
+    <div class="w-16 h-0.5 mx-auto mt-4" style="background-color: #CA8B4A;"></div>
+  </div>
+
+  <!-- 3-Column Branch Cards Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <!-- Branch 1: Olavanna Branch -->
+    <article class="rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border flex flex-col group" style="background-color: rgb(253, 242, 216); border-color: rgba(202, 139, 74, 0.4);"><div class="relative h-64 overflow-hidden rounded-t-3xl"><img alt="Charming warm artisanal bakery storefront exterior of Olavanna branch" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 rounded-t-3xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjreaukcfb5yFDQ-kjrLNA6RY02RzkZkb2rylc4DwlQx_-ykpfII_jR7Pq1lVzkqtJKejl0ytLEODkUTN09o7tiLUodDVxsgzzGJcGdPZVF3Lx_QRcRp_Z5zqlgO-kDOFhdkRrbhsq5_-Bz24yzXCxSVO9SAlNFGwfvinGXW7L4IR1sscI1ZXDvEEjWRtL5r2O2ZBacIexFNau7UA8a18eMHUlVwbhuGJ09giASr0"><span class="absolute top-4 left-4 backdrop-blur-sm text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full shadow-sm" style="background-color: rgb(154, 28, 32); color: rgb(253, 242, 216);">MAIN BRANCH • OLAVANNA</span></div><div class="p-6 flex-1 flex flex-col justify-between space-y-4"><div><h3 class="font-serif text-xl font-medium" style="color: rgb(92, 3, 2);">Olavanna Branch</h3><p class="text-xs mt-2 leading-relaxed font-normal" style="color: rgb(92, 3, 2); opacity: 0.85;">Paradise Complex, Main Road, Calicut. Fresh artisan pastries, warm crusty breads, and signature celebration cakes baked at sunrise.</p></div><div class="pt-4 border-t flex items-center gap-3" style="border-color: rgba(202, 139, 74, 0.25);"><a class="flex-1 text-center py-2.5 px-3 rounded-lg border text-xs font-semibold transition" style="border-color: rgb(92, 3, 2); color: rgb(92, 3, 2); background-color: transparent;" href="#branches">View Menu</a><a class="flex-1 text-center py-2.5 px-3 rounded-lg text-xs font-semibold transition shadow-sm" style="background-color: rgb(92, 3, 2); color: rgb(253, 242, 216);" href="https://maps.app.goo.gl/49WfTtpBAKszr95N8?g_st=ic" rel="noopener noreferrer" target="_blank">Get Directions</a></div></div></article>
+
+    <!-- Branch 2: Kattukulangara Branch -->
+    <article class="rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border flex flex-col group" style="background-color: rgb(253, 242, 216); border-color: rgba(202, 139, 74, 0.4);"><div class="relative h-64 overflow-hidden rounded-t-3xl"><img alt="Elegant boutique bakery and cafe storefront exterior of Kattukulangara branch" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 rounded-t-3xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5SdOMTkMN1SK1DdpqrGYkJJ0c1YDJZSZAfzjPhw6IyTDHbLsMyUdhDCGM1Z--Y1pBMy06tPTaZWfLlJSRxdR-s-u57Cr0lzukkzwh7XInGLZymLwb-cKmVJ_Dh7NB6MXNi2JSKTJ5S8NVYIEbGXjBadsPiioijbKU77VaXvHoubW66rf2ACGg31d_-iUE-Ypvu5stIW5I9yp8SmQGX0q5qIO5VTKA1ZZZioGhyww"><span class="absolute top-4 left-4 backdrop-blur-sm text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full shadow-sm" style="background-color: rgb(154, 28, 32); color: rgb(253, 242, 216);">CAFE &amp; BAKE • STATION JUNCTION</span></div><div class="p-6 flex-1 flex flex-col justify-between space-y-4"><div><h3 class="font-serif text-xl font-medium" style="color: rgb(92, 3, 2);">Kattukulangara Branch</h3><p class="text-xs mt-2 leading-relaxed font-normal" style="color: rgb(92, 3, 2); opacity: 0.85;">Junction Arcade, Station Road, Calicut. Charming cafe arcade setting with artisanal coffee, flaky croissants, and delicate patisserie.</p></div><div class="pt-4 border-t flex items-center gap-3" style="border-color: rgba(202, 139, 74, 0.25);"><a class="flex-1 text-center py-2.5 px-3 rounded-lg border text-xs font-semibold transition" style="border-color: rgb(92, 3, 2); color: rgb(92, 3, 2); background-color: transparent;" href="#branches">View Menu</a><a class="flex-1 text-center py-2.5 px-3 rounded-lg text-xs font-semibold transition shadow-sm" style="background-color: rgb(92, 3, 2); color: rgb(253, 242, 216);" href="https://maps.app.goo.gl/HdktFy3z33jXDytF9?g_st=ic" rel="noopener noreferrer" target="_blank">Get Directions</a></div></div></article>
+
+    <!-- Branch 3: Kulangarapeedika Branch -->
+    <article class="rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border flex flex-col group" style="background-color: rgb(253, 242, 216); border-color: rgba(202, 139, 74, 0.4);"><div class="relative h-64 overflow-hidden rounded-t-3xl"><img alt="Luxury European patisserie and artisan bakery shopfront exterior of Kulangarapeedika branch" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 rounded-t-3xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOJFL29AsuYeg2pO-NujhAlMTZE4yfEB4WodU7lin4M_gh-1OBF-EnYl2_e48jEVgGaF7ScZ7aTyWQ8pr9B99oPeYHT3exXIS6jEjuHIlZG0raR1OGFLPr0UzNWelzS_1extsObCfvdD0CN3qxB5OXFrxKdf-1ODbS2dSqPegON79wn5LdpMOf_cxaWebScEFT2wpRkYKK9w0VMkcipzg1DmMlPpvmA8-wzkQT2Hs"><span class="absolute top-4 left-4 backdrop-blur-sm text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full shadow-sm" style="background-color: rgb(154, 28, 32); color: rgb(253, 242, 216);">PATISSERIE OUTLET • HIGHWAY</span></div><div class="p-6 flex-1 flex flex-col justify-between space-y-4"><div><h3 class="font-serif text-xl font-medium" style="color: rgb(92, 3, 2);">Kulangarapeedika Branch</h3><p class="text-xs mt-2 leading-relaxed font-normal" style="color: rgb(92, 3, 2); opacity: 0.85;">Heritage Square, Highway Corner, Kerala. Vintage patisserie corner with artisan celebration cakes, French macarons, and warm savory pies.</p></div><div class="pt-4 border-t flex items-center gap-3" style="border-color: rgba(202, 139, 74, 0.25);"><a class="flex-1 text-center py-2.5 px-3 rounded-lg border text-xs font-semibold transition" style="border-color: rgb(92, 3, 2); color: rgb(92, 3, 2); background-color: transparent;" href="#branches">View Menu</a><a class="flex-1 text-center py-2.5 px-3 rounded-lg text-xs font-semibold transition shadow-sm" style="background-color: rgb(92, 3, 2); color: rgb(253, 242, 216);" href="https://maps.app.goo.gl/QCRyJKBEdF9bmrtv5?g_st=ic" rel="noopener noreferrer" target="_blank">Get Directions</a></div></div></article>
+  </div>
+</div></section>
+<!-- END: BakeryExperienceSection -->
+<!-- BEGIN: MasterBakerStoryPhotoBanner -->
+<section class="relative overflow-hidden py-12 px-6 lg:px-12" data-purpose="our-story-banner" id="story" style="background-color: rgb(242, 228, 201); color: rgb(92, 3, 2);"><div class="max-w-7xl mx-auto"><div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center"><div class="lg:col-span-6 space-y-4 text-left"><div class="flex items-center gap-3"><span class="w-8 h-px" style="background-color: #9A1C20;"></span><span class="text-xs font-semibold tracking-widest uppercase" style="color: rgb(154, 28, 32);">Our story</span></div><h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight" style="color: rgb(92, 3, 2);">Fresh from the oven, every morning.</h2><p class="font-sans text-sm sm:text-base leading-relaxed max-w-[60ch]" style="color: rgb(92, 3, 2); opacity: 0.85;">We bake in small batches, with real butter and patience, so what reaches your table is still warm from the oven.</p><p class="font-sans text-sm sm:text-base leading-relaxed max-w-[60ch]" style="color: rgb(92, 3, 2); opacity: 0.85;">From a morning puff to a birthday cake, every item is made with care, strict hygiene and prices that stay friendly.</p><div class="pt-1"><svg class="w-10 h-5 opacity-90" fill="currentColor" viewBox="0 0 48 24" style="color: #CA8B4A;"><path d="M4 12c8 0 14-6 20-10-2 6-6 10-12 10zm6 3c6 1 10-3 14-6-1 4-4 7-9 7zm8 3c5 1 9-2 12-5-1 3-3 6-7 6zm10 2c4 0 7-2 9-4-1 2-2 4-5 5z" opacity="0.85"></path><path d="M2 12h44" fill="none" stroke="#CA8B4A" stroke-linecap="round" stroke-width="1.4"></path></svg></div></div><div class="lg:col-span-6 flex justify-center lg:justify-end relative"><div class="relative pt-3 pr-3 sm:pr-4"><div class="absolute inset-0 translate-x-3 -translate-y-3 rounded-t-full rounded-b-2xl border-2 pointer-events-none w-[220px] sm:w-[260px] h-[300px] sm:h-[360px]" style="border-color: #CA8B4A;"></div><div class="w-[220px] sm:w-[260px] h-[300px] sm:h-[360px] rounded-t-full rounded-b-2xl overflow-hidden shadow-xl relative z-10" style="background-color: #5C0302;"><img src="https://lh3.googleusercontent.com/aida/ALJJyrBUctHb0HTg29LM8qP306-ajz0n_Yamsoq0g2ka7QMczb4BE9-MwMlTRAhcKPOhZMPiOakHN-BU0-FOiOXUXytUGf4nLops8Uxpv3zr3hUCr65I-qs94DszMwomf1jddX3bRgkIc0xXGJaYgZ7MoF11SjTl9GuUW19mbIKcpIdXjafhsFy-vE8QDRYPbIVEv53ReRRpf6EEIUHTfho6X_eUyTw8d_V0WQyFp8CVw0x0" alt="Artisan baker gently shaping sourdough bread dough" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105"></div><div class="w-32 sm:w-36 h-32 sm:h-36 rounded-3xl overflow-hidden absolute -bottom-4 -left-4 sm:-bottom-5 sm:-left-5 border-4 shadow-xl z-20" style="background-color: rgb(92, 3, 2); border-color: rgb(253, 242, 216);"><img src="https://lh3.googleusercontent.com/aida/ALJJyrCftVheB6UoEBJ3ryC-9vIfea4tzkKkoaoPmD6i6Op1b3WTK2Nb_gl-VbefvH-LZReRIAmgoVIdpjFcBsnBw2lr6xk9_OxlgdkbWCdRlNc8eHaM9lFLx6kPVMtgrrajZOz3UbOD32grh2iVU-EI4mqAqsBV4P0uaV3Loe581Gcs4VuseDENWX65tus1ZIAstFGmdOgnkf7Jhf5a0lV9yFTSLrwbSTNFz970vWiKzrHE" alt="Artisanal chocolate truffle cake garnished with fresh berries" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105 rounded-3xl"></div><div class="absolute -top-3 -right-3 sm:-top-4 sm:-right-4 w-20 h-20 rounded-full flex items-center justify-center shadow-lg border z-30 select-none" style="background-color: #9A1C20; color: #FDF2D8; border-color: #CA8B4A;"><svg class="w-full h-full animate-spin" style="animation-duration: 22s;" viewBox="0 0 100 100"><path id="stampTextCircleCompact" d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" fill="none"></path><text class="text-[9px] uppercase tracking-widest font-bold" fill="#FDF2D8"><textPath href="#stampTextCircleCompact" startOffset="0%">BAKED FRESH DAILY • PARADISE BAKES •</textPath></text></svg><div class="absolute inset-0 flex items-center justify-center" style="color: #E3A04B;"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4.5C8 4.5 4.5 7.5 3 11c1.5 3.5 5 6.5 9 6.5s7.5-3 9-6.5c-1.5-3.5-5-6.5-9-6.5zm0 10.5c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4z"></path></svg></div></div></div></div></div><div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8 mt-8 border-t" style="border-color: rgba(202, 139, 74, 0.35);"><div class="flex flex-col space-y-1.5 p-4 rounded-xl border" style="background-color: #FDF2D8; border-color: rgba(154, 28, 32, 0.15);"><div class="w-9 h-9 rounded-full flex items-center justify-center mb-1" style="background-color: rgba(154, 28, 32, 0.1); color: #9A1C20;"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 21h18M3 7l9-4 9 4M4 10h16v11H4V10zm5 4h6v7H9v-7z"></path></svg></div><h3 class="font-serif text-lg font-bold" style="color: rgb(92, 3, 2);">Three branches</h3><p class="text-xs sm:text-sm font-light leading-relaxed" style="color: rgb(92, 3, 2); opacity: 0.8;">The same recipes and the same care, wherever you walk in.</p></div><div class="flex flex-col space-y-1.5 p-4 rounded-xl border" style="background-color: #FDF2D8; border-color: rgba(154, 28, 32, 0.15);"><div class="w-9 h-9 rounded-full flex items-center justify-center mb-1" style="background-color: rgba(154, 28, 32, 0.1); color: #9A1C20;"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z"></path></svg></div><h3 class="font-serif text-lg font-bold" style="color: rgb(92, 3, 2);">Baked daily</h3><p class="text-xs sm:text-sm font-light leading-relaxed" style="color: rgb(92, 3, 2); opacity: 0.8;">Puffs and breads fresh out of the oven by morning.</p></div><div class="flex flex-col space-y-1.5 p-4 rounded-xl border" style="background-color: #FDF2D8; border-color: rgba(154, 28, 32, 0.15);"><div class="w-9 h-9 rounded-full flex items-center justify-center mb-1" style="background-color: rgba(154, 28, 32, 0.1); color: #9A1C20;"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg></div><h3 class="font-serif text-lg font-bold" style="color: rgb(92, 3, 2);">Made to order</h3><p class="text-xs sm:text-sm font-light leading-relaxed" style="color: rgb(92, 3, 2); opacity: 0.8;">Birthday, wedding and custom cakes, just for you.</p></div></div></div></section>
+<!-- END: MasterBakerStoryPhotoBanner -->
+<!-- BEGIN: SignatureSpotlightSection -->
+
+<!-- END: SignatureSpotlightSection -->
+<!-- BEGIN: CakeWorldSection -->
+<section class="relative overflow-hidden text-[#F4E4BC] border-t border-[#4A1525] pt-8 pb-20" data-purpose="cake-world-section" id="cake-world" style="background: radial-gradient(circle at 60% 50%, rgb(154, 28, 32) 0%, rgb(122, 12, 14) 50%, rgb(92, 3, 2) 100%);">
+<!-- Ambient Lighting Backdrops -->
+<div class="absolute -top-32 left-1/4 w-[500px] h-[500px] bg-[#E3A04B]/10 blur-[130px] rounded-full pointer-events-none"></div>
+<div class="absolute bottom-0 right-10 w-[600px] h-[600px] bg-[#1C0B0A]/80 blur-[120px] rounded-full pointer-events-none"></div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+<!-- Left Column: Editorial & Trust Chips -->
+<div class="lg:col-span-6 space-y-7 text-center lg:text-left order-2 lg:order-1">
+<!-- Wheat Stalk Ornament & Eyebrow -->
+<div class="flex flex-col items-center lg:items-start space-y-2.5">
+<svg class="w-10 h-6 text-[#C9A34E] opacity-85" fill="currentColor" viewBox="0 0 48 24">
+<path d="M4 12c8 0 14-6 20-10-2 6-6 10-12 10zm6 3c6 1 10-3 14-6-1 4-4 7-9 7zm8 3c5 1 9-2 12-5-1 3-3 6-7 6zm10 2c4 0 7-2 9-4-1 2-2 4-5 5z" opacity="0.85"></path>
+<path d="M2 12h44" fill="none" stroke="#C9A34E" stroke-linecap="round" stroke-width="1.3"></path>
+</svg>
+<span class="inline-block text-[#E3A04B] font-inter text-xs tracking-[0.28em] uppercase font-bold">
+            EXPERIENCE THE ART OF CELEBRATION
+          </span>
+</div>
+<!-- Main Headline -->
+<h2 class="font-serif text-4xl sm:text-5xl lg:text-6xl text-[#F4E4BC] font-bold tracking-tight leading-[1.15]">
+          Step into <br class="hidden sm:inline"><span class="italic font-serif gold-gradient-text">Cake World</span>
+</h2>
+<!-- Core Narrative Paragraph -->
+<p class="font-inter text-[#F4E4BC]/90 text-base lg:text-lg font-light leading-relaxed max-w-[60ch] mx-auto lg:mx-0">
+          We’re excited to share that Paradise is now making your cake experience easier, safer, and more affordable than ever. Every cake is prepared with strict hygiene and genuine care, so you can enjoy sweetness with complete peace of mind. We believe great quality shouldn’t be expensive, which is why our prices stay friendly and budget-smart while keeping our standards high. Whether it’s a small treat or a big celebration, Paradise is here to serve you with convenience, trust, and the taste you love.
+        </p>
+<!-- 3 Trust Chips -->
+<div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2">
+<!-- Chip 1: Strict Hygiene -->
+<div class="border border-[#C9A34E]/40 bg-[#4A1525]/50 backdrop-blur-sm rounded-full px-4 py-2 flex items-center gap-2.5 text-xs lg:text-sm text-[#F4E4BC] shadow-sm hover:border-[#E3A04B] transition-colors">
+<svg class="w-4 h-4 text-[#E3A04B] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="font-medium">Strict hygiene</span>
+</div>
+<!-- Chip 2: Budget-friendly -->
+<div class="border border-[#C9A34E]/40 bg-[#4A1525]/50 backdrop-blur-sm rounded-full px-4 py-2 flex items-center gap-2.5 text-xs lg:text-sm text-[#F4E4BC] shadow-sm hover:border-[#E3A04B] transition-colors">
+<svg class="w-4 h-4 text-[#E3A04B] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="font-medium">Budget-friendly</span>
+</div>
+<!-- Chip 3: Made with care -->
+<div class="border border-[#C9A34E]/40 bg-[#4A1525]/50 backdrop-blur-sm rounded-full px-4 py-2 flex items-center gap-2.5 text-xs lg:text-sm text-[#F4E4BC] shadow-sm hover:border-[#E3A04B] transition-colors">
+<svg class="w-4 h-4 text-[#E3A04B] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="font-medium">Made with care</span>
+</div>
+</div>
+<!-- CTA Button -->
+<div class="pt-3">
+<a class="btn-gold-shimmer inline-flex items-center space-x-3 px-8 py-4 rounded-full bg-gradient-to-r from-[#E3A04B] via-[#C9A34E] to-[#B88628] text-[#1C0B0A] font-bold text-xs tracking-widest uppercase transition-all duration-300 shadow-xl hover:shadow-[0_10px_30px_rgba(227,160,75,0.45)] hover:scale-[1.02] active:scale-95 border border-[#F4E4BC]/40" href="#menu">
+<span>Enter Cake World</span>
+<svg class="w-4 h-4 text-[#1C0B0A] transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
+<path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</a>
+</div>
+</div>
+<!-- Right Column: Interactive 3D Depth Animation Stage -->
+<div class="lg:col-span-6 order-1 lg:order-2 flex justify-center">
+<div class="relative w-full max-w-lg lg:max-w-xl h-[460px] sm:h-[520px] lg:h-[580px] flex items-center justify-center p-6 select-none" id="cakeStageContainer">
+<!-- Stage Ambient Backlight -->
+<div class="absolute inset-0 bg-radial-gradient flex items-center justify-center pointer-events-none">
+<div class="w-72 h-72 sm:w-96 sm:h-96 rounded-full bg-[#E3A04B]/15 blur-[90px] animate-pulse" style="animation-duration: 6s;"></div>
+<div class="w-48 h-48 rounded-full bg-[#7B1E1B]/35 blur-[60px]"></div>
+</div>
+<!-- Concentric Celestial Rings -->
+<div class="absolute w-80 h-80 sm:w-[420px] sm:h-[420px] rounded-full border border-[#C9A34E]/15 pointer-events-none animate-spin" style="animation-duration: 75s;"></div>
+<div class="absolute w-64 h-64 sm:w-[320px] sm:h-[320px] rounded-full border border-dashed border-[#C9A34E]/20 pointer-events-none"></div>
+<!-- LAYER 1: Far Background (Small, soft blur, floating particles, vanilla bean & stars) -->
+<div class="absolute inset-0 pointer-events-none cake-depth-layer" data-depth="0.015" style="transition: opacity 0.8s ease-out, transform 0.8s ease-out; transform: translate3d(-0.0007289px, 0.0022313px, 0px);">
+<!-- Flour & Gold Dust Particles -->
+<div class="absolute top-12 left-16 w-2 h-2 rounded-full bg-[#F4E4BC]/50 blur-[1px] animate-float-slow"></div>
+<div class="absolute top-24 right-20 w-3 h-3 rounded-full bg-[#E3A04B]/40 blur-[1.5px] animate-float-mid"></div>
+<div class="absolute bottom-28 left-20 w-2.5 h-2.5 rounded-full bg-[#F4E4BC]/40 blur-[1px] animate-float-fast"></div>
+<div class="absolute bottom-16 right-24 w-1.5 h-1.5 rounded-full bg-[#C9A34E]/60 blur-[0.5px] animate-float-slow"></div>
+<!-- Cocoa Cloud / Dust SVG -->
+<svg class="absolute top-16 right-12 w-10 h-10 text-[#C9A34E]/30 blur-[2px] animate-float-slow" fill="currentColor" viewBox="0 0 24 24">
+<path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path>
+</svg>
+<!-- Vanilla Pod illustration SVG -->
+<svg class="absolute bottom-24 left-10 w-12 h-12 text-[#E3A04B]/35 blur-[1.5px] transform -rotate-45 animate-float-mid" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24">
+<path d="M3 21c3-6 8-12 18-18-6 3-12 8-18 18z"></path>
+<path d="M9 15c2-2 4-4 6-6"></path>
+</svg>
+</div>
+<!-- LAYER 2: Midground (Fresh berries, gold flakes, stars, chocolate curls) -->
+<div class="absolute inset-0 pointer-events-none cake-depth-layer" data-depth="0.032" style="transition: opacity 0.8s ease-out 0.15s, transform 0.8s ease-out 0.15s; transform: translate3d(-0.001555px, 0.0047602px, 0px);">
+<!-- Glazed Ruby Cherry (Top Left) -->
+<div class="absolute top-16 left-12 w-11 h-11 rounded-full bg-gradient-to-br from-[#E11D48] to-[#881337] border border-[#F4E4BC]/30 shadow-lg animate-float-mid flex items-center justify-center">
+<div class="w-3 h-3 rounded-full bg-white/40 -translate-y-1 -translate-x-1 blur-[0.5px]"></div>
+<div class="absolute -top-3 right-2 w-4 h-4 border-r-2 border-t-2 border-[#15803D] rounded-tr-lg transform rotate-12"></div>
+</div>
+<!-- Dark Chocolate Curl (Top Right) -->
+<div class="absolute top-20 right-14 w-12 h-7 rounded-full bg-gradient-to-r from-[#2A110D] to-[#451A14] border border-[#C9A34E]/40 shadow-lg transform rotate-12 animate-float-slow"></div>
+<!-- Golden Butter Flake / Star (Mid Left) -->
+<div class="absolute top-1/2 -left-3 -translate-y-1/2 w-8 h-8 text-[#E3A04B] animate-float-fast opacity-80">
+<svg fill="currentColor" viewBox="0 0 24 24">
+<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+</svg>
+</div>
+<!-- Farm Fresh Egg / Cream Drop (Bottom Right) -->
+<div class="absolute bottom-20 right-14 w-8 h-10 rounded-full bg-gradient-to-br from-[#FFF7ED] to-[#FED7AA] border border-[#C9A34E]/30 shadow-md transform rotate-12 animate-float-mid"></div>
+<!-- Mini Gold Sparkle Star (Bottom Left) -->
+<div class="absolute bottom-24 left-24 w-6 h-6 text-[#F4E4BC] animate-float-slow opacity-90">
+<svg fill="currentColor" viewBox="0 0 24 24">
+<path d="M12 0l2.5 9.5L24 12l-9.5 2.5L12 24l-2.5-9.5L0 12l9.5-2.5z"></path>
+</svg>
+</div>
+</div>
+<!-- CENTER MASTERPIECE CAKE (Sharp, rich drop shadow, wheat-gold rim glow) -->
+<div class="relative z-20 w-64 sm:w-80 lg:w-96 cake-depth-layer flex flex-col items-center pointer-events-auto" data-depth="0.05" style="transition: opacity 0.8s ease-out 0.3s, transform 0.8s ease-out 0.3s; transform: translate3d(-0.0024297px, 0.0074378px, 0px);"><div class="absolute -bottom-6 w-56 sm:w-72 h-8 rounded-full bg-black/60 blur-xl pointer-events-none"></div><div class="absolute -bottom-4 w-44 sm:w-56 h-6 rounded-full bg-[#E3A04B]/25 blur-lg pointer-events-none"></div><div class="relative group cursor-pointer flex flex-col items-center"><svg class="w-60 sm:w-72 lg:w-84 h-auto drop-shadow-[0_25px_35px_rgba(20,5,8,0.7)] transition-transform duration-700 group-hover:scale-105" viewBox="0 0 340 320" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="170" cy="295" rx="140" ry="16" fill="#180509" opacity="0.6" filter="blur(4px)"></ellipse><ellipse cx="170" cy="285" rx="130" ry="14" fill="#C9A34E" stroke="#FFE088" stroke-width="1.5"></ellipse><path d="M160 285 L164 305 L176 305 L180 285 Z" fill="#B88628"></path><ellipse cx="170" cy="305" rx="35" ry="6" fill="#9B6F2D"></ellipse><path d="M55 235 C55 215 285 215 285 235 L285 272 C285 288 55 288 55 272 Z" fill="url(#cakeBaseDark)"></path><ellipse cx="170" cy="235" rx="115" ry="18" fill="#4A1525"></ellipse><path d="M55 235 C70 248 85 238 100 252 C115 238 135 248 150 240 C165 248 185 238 205 250 C225 240 245 248 260 238 C275 246 285 238 285 235" stroke="#E3A04B" stroke-width="5" stroke-linecap="round" fill="none"></path><path d="M80 170 C80 152 260 152 260 170 L260 215 C260 230 80 230 80 215 Z" fill="url(#cakeMidDark)"></path><ellipse cx="170" cy="170" rx="90" ry="15" fill="#3B0E19"></ellipse><path d="M80 170 C95 180 110 172 125 182 C145 174 165 184 185 175 C205 184 225 174 245 182 C255 176 260 170 260 170" stroke="#FED7AA" stroke-width="4.5" stroke-linecap="round" fill="none"></path><path d="M105 110 C105 96 235 96 235 110 L235 152 C235 164 105 164 105 152 Z" fill="url(#cakeTopDark)"></path><ellipse cx="170" cy="110" rx="65" ry="12" fill="#2B0B12"></ellipse><path d="M105 110 C118 118 132 112 145 120 C160 114 175 122 195 114 C210 120 225 114 235 110" stroke="#E3A04B" stroke-width="3.5" stroke-linecap="round" fill="none"></path><g filter="drop-shadow(0 4px 6px rgba(0,0,0,0.5))"><circle cx="170" cy="96" r="11" fill="#DC2626"></circle><circle cx="167" cy="93" r="3" fill="#FFFFFF" opacity="0.6"></circle><circle cx="152" cy="102" r="9" fill="#881337"></circle><circle cx="188" cy="101" r="9" fill="#BE123C"></circle><circle cx="138" cy="106" r="7" fill="#1E1B4B"></circle><circle cx="202" cy="105" r="7" fill="#1E1B4B"></circle><circle cx="170" cy="84" r="3" fill="#FFE088"></circle><circle cx="180" cy="88" r="2" fill="#FFE088"></circle><circle cx="160" cy="89" r="2" fill="#FFE088"></circle></g><g stroke="#FFE088" stroke-width="2" stroke-linecap="round"><line x1="168" y1="136" x2="172" y2="136"></line><line x1="140" y1="195" x2="144" y2="195"></line><line x1="200" y1="196" x2="204" y2="196"></line><line x1="115" y1="258" x2="120" y2="258"></line><line x1="225" y1="260" x2="230" y2="260"></line></g><defs><linearGradient id="cakeBaseDark" x1="55" y1="215" x2="285" y2="280" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#42111D"></stop><stop offset="50%" stop-color="#2B0B12"></stop><stop offset="100%" stop-color="#180509"></stop></linearGradient><linearGradient id="cakeMidDark" x1="80" y1="152" x2="260" y2="220" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#581728"></stop><stop offset="50%" stop-color="#3B0E19"></stop><stop offset="100%" stop-color="#21060D"></stop></linearGradient><linearGradient id="cakeTopDark" x1="105" y1="96" x2="235" y2="158" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#4A1525"></stop><stop offset="50%" stop-color="#2B0B12"></stop><stop offset="100%" stop-color="#1C050B"></stop></linearGradient></defs></svg><div class="absolute -top-3 -right-2 bg-[#2B0B12]/90 backdrop-blur-md border border-[#E3A04B] rounded-full px-3.5 py-1 text-[10px] font-bold text-[#E3A04B] uppercase tracking-wider shadow-xl flex items-center space-x-1.5"><span class="w-1.5 h-1.5 rounded-full bg-[#E3A04B] animate-ping"></span><span>Bespoke 2026</span></div></div></div>
+<!-- LAYER 3: Foreground (Larger, sharp, dew strawberries, wheat sprig & chantilly swirl) -->
+<div class="absolute inset-0 pointer-events-none cake-depth-layer z-30" data-depth="0.075" style="transition: opacity 0.8s ease-out 0.45s, transform 0.8s ease-out 0.45s; transform: translate3d(-0.0036446px, 0.0111568px, 0px);">
+<!-- Foreground Ripe Strawberry with Dew (Bottom Left) -->
+<div class="absolute bottom-6 left-6 sm:left-10 w-14 h-16 rounded-[40%] bg-gradient-to-br from-[#EF4444] via-[#DC2626] to-[#7F1D1D] border border-white/20 shadow-2xl transform -rotate-12 animate-float-fast flex items-center justify-center">
+<!-- Calyx / Leaves -->
+<div class="absolute -top-2 left-1/2 -translate-x-1/2 flex space-x-0.5">
+<span class="w-2 h-3 bg-[#15803D] rounded-full transform -rotate-30"></span>
+<span class="w-2 h-3.5 bg-[#16A34A] rounded-full"></span>
+<span class="w-2 h-3 bg-[#15803D] rounded-full transform rotate-30"></span>
+</div>
+<!-- Seeds shimmer -->
+<div class="w-1 h-1 rounded-full bg-[#FEF08A] opacity-80 translate-x-1 translate-y-1"></div>
+<div class="w-1 h-1 rounded-full bg-[#FEF08A] opacity-80 -translate-x-2"></div>
+</div>
+<!-- Belgian Chocolate Shard (Bottom Right) -->
+<div class="absolute bottom-8 right-6 sm:right-10 w-16 h-12 bg-gradient-to-br from-[#3B1910] via-[#240C07] to-[#120503] border-l border-t border-[#E3A04B]/60 rounded-tl-xl shadow-2xl transform rotate-12 animate-float-mid flex items-center justify-center">
+<span class="text-[9px] text-[#C9A34E] font-serif font-bold italic tracking-widest opacity-80">70%</span>
+</div>
+<!-- Golden Wheat Sprig (Top Right Foreground) -->
+<div class="absolute top-10 right-6 w-10 h-10 text-[#E3A04B] opacity-90 animate-float-slow transform rotate-45">
+<svg fill="currentColor" viewBox="0 0 24 24">
+<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14h2v2h-2v-2zm1-12c2.21 0 4 1.79 4 4 0 .96-.34 1.83-.9 2.52l-.85 1.04C13.62 12.3 13 13.06 13 14h-2c0-1.42.74-2.5 1.4-3.32l1.04-1.28c.35-.43.56-.99.56-1.4 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4z" opacity="0"></path>
+<path d="M21 3l-8.5 8.5M14 4l5.5 5.5M17 1l6 6M11 7l5.5 5.5M8 10l5.5 5.5M5 13l5.5 5.5M2 22l6-6"></path>
+</svg>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: CakeWorldSection -->
+<!-- BEGIN: LifeAtParadiseGallery (Cinematic 3D Coverflow) -->
+<section class="bg-[#1C0B0A] text-[#F4E4BC] relative overflow-hidden border-y border-[#3E1A17] py-12" data-purpose="gallery-section" id="gallery" style="background-color: rgb(92, 3, 2); border-color: rgb(154, 28, 32); color: rgb(253, 242, 216);">
+<!-- Subtle ambient glow background -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[550px] bg-[#7B1E1B]/20 blur-[130px] rounded-full pointer-events-none"></div>
+<div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-[#E3A04B]/10 blur-[110px] rounded-full pointer-events-none"></div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+<!-- Section Header -->
+<div class="text-center max-w-3xl mx-auto mb-8">
+<div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-[#7B1E1B]/35 border border-[#C9A34E]/40 text-[#C9A34E] text-[11px] font-semibold tracking-[0.28em] uppercase shadow-sm" style="background-color: rgb(154, 28, 32); border-color: rgb(202, 139, 74); color: rgb(253, 242, 216);">
+<span class="w-1.5 h-1.5 rounded-full bg-[#E3A04B] animate-pulse"></span>
+<span>MOMENTS IN THE BAKERY</span>
+</div>
+<!-- Title flanked by subtle wheat stalk SVG ornaments -->
+<div class="flex items-center justify-center space-x-4 sm:space-x-6 mt-4">
+<!-- Left Wheat Stalk Ornament -->
+<svg class="w-8 sm:w-12 h-6 sm:h-8 text-[#C9A34E] opacity-75 shrink-0" fill="currentColor" viewBox="0 0 48 24">
+<path d="M4 12c8 0 14-6 20-10-2 6-6 10-12 10zm6 3c6 1 10-3 14-6-1 4-4 7-9 7zm8 3c5 1 9-2 12-5-1 3-3 6-7 6zm10 2c4 0 7-2 9-4-1 2-2 4-5 5z" opacity="0.8"></path>
+<path d="M2 12h44" fill="none" stroke="#C9A34E" stroke-linecap="round" stroke-width="1.2"></path>
+</svg>
+<h2 class="font-fraunces text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#F4E4BC] leading-tight" style="color: rgb(253, 242, 216);">
+        Life at Paradise
+      </h2>
+<!-- Right Wheat Stalk Ornament (mirrored) -->
+<svg class="w-8 sm:w-12 h-6 sm:h-8 text-[#C9A34E] opacity-75 shrink-0 transform -scale-x-100" fill="currentColor" viewBox="0 0 48 24">
+<path d="M4 12c8 0 14-6 20-10-2 6-6 10-12 10zm6 3c6 1 10-3 14-6-1 4-4 7-9 7zm8 3c5 1 9-2 12-5-1 3-3 6-7 6zm10 2c4 0 7-2 9-4-1 2-2 4-5 5z" opacity="0.8"></path>
+<path d="M2 12h44" fill="none" stroke="#C9A34E" stroke-linecap="round" stroke-width="1.2"></path>
+</svg>
+</div>
+<p class="text-sm sm:text-base text-[#F4E4BC]/70 font-light mt-3 max-w-xl mx-auto leading-relaxed" style="color: rgb(253, 242, 216);" data-stitch-orig-opacity="0.85">
+      A glimpse into our flour-filled mornings, joyous laughter, and the art of fine baking.
+    </p>
+</div>
+<!-- 3D Coverflow Stage Container -->
+<div class="relative w-full max-w-5xl mx-auto select-none" id="coverflowContainer">
+<!-- Carousel 3D Viewport -->
+<div class="relative w-full overflow-hidden coverflow-perspective coverflow-stage cursor-grab active:cursor-grabbing flex items-center justify-center h-[300px] sm:h-[350px]" id="coverflowStage">
+<!-- 15 Curated Slides rendered via JS with fallback markup -->
+<!-- Slide 0 -->
+<div class="coverflow-item w-[270px] sm:w-[350px] lg:w-[420px] h-[360px] sm:h-[460px] lg:h-[530px] rounded-2xl overflow-hidden border border-[#C9A34E]/60 bg-[#250E10] cursor-pointer rounded-3xl" data-caption="Artisanal sourdough and warm ovens greeting dawn" data-index="0" data-title="Morning Bake, Calicut Main" style="transform: translateX(calc(-50% + 1250px)) translateZ(-420px) rotateY(-25deg) scale(0.68); filter: blur(2.5px); z-index: 20; pointer-events: none; opacity: 0;" data-stitch-orig-opacity="0">
+<img alt="Morning Bake, Calicut Main" class="w-full h-full object-cover transition-transform duration-700 ease-out rounded-3xl" draggable="false" src="https://lh3.googleusercontent.com/aida-public/AB6AXuARMygyGJGRThFDU_V1D6sb14AxgyNZhZJxM2271XJj85aXAbmo9kD3RttGwtIyGFBUOdhQEzmOij2uG9k3rwqDnAWhZxkR6KftAzHjF99s10ppEYKi_gbjRDvOvKMPs-2vXms3LTHpuJfnYB9pdHqpk94w_fdVe0ESWv1KfQTc_5KWc5bEdZUd4-li5byx0KYumqypjUoTNTEP3ZYwMZGrIcMPKs1T5NSspAX-O7M">
+<div class="absolute inset-0 bg-gradient-to-t from-[#1C0B0A]/85 via-transparent to-transparent pointer-events-none"></div>
+</div>
+<!-- Slide 1 -->
+<div class="coverflow-item w-[270px] sm:w-[350px] lg:w-[420px] h-[360px] sm:h-[460px] lg:h-[530px] rounded-2xl overflow-hidden border border-[#C9A34E]/60 bg-[#250E10] cursor-pointer rounded-3xl" data-caption="Hand-piped petals for milestone celebrations" data-index="1" data-title="Master Decorator, Olavanna" style="transform: translateX(calc(-50% + 1500px)) translateZ(-420px) rotateY(-25deg) scale(0.68); filter: blur(2.5px); z-index: 19; pointer-events: none; opacity: 0;" data-stitch-orig-opacity="0">
+<img alt="Master Decorator, Olavanna" class="w-full h-full object-cover transition-transform duration-700 ease-out rounded-3xl" draggable="false" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgMH2dEzVeJvSUoCMr9G0mlsYy9k2sdFl5Kn7lBOf3aEp7QMaaXgknyazT-XidMg3m_BVbW1dStY4TAWY3puTexUGpzlCBcIyS99kkl2xj9LEQ3ioOyvkP2oKy1qyuXNlNxTxYzylrypfqxo2ORYDVLxtTR1ED9ULSHNgcY5EELkzIiXWMeDWW4mgEtKXz1WcoDprmESmLV2WoYh9qQF5HrZgeUSRfJFxMPagJkbc">
+<div class="absolute inset-0 bg-gradient-to-t from-[#1C0B0A]/85 via-transparent to-transparent pointer-events-none"></div>
+</div>
+<!-- Slide 2 -->
+<div class="coverflow-item w-[270px] sm:w-[350px] lg:w-[420px] h-[360px] sm:h-[460px] lg:h-[530px] rounded-2xl overflow-hidden border border-[#C9A34E]/60 bg-[#250E10] cursor-pointer rounded-3xl" data-caption="Freshly pressed espresso paired with warm croissants" data-index="2" data-title="Café Sunshine &amp; Roastery" style="transform: translateX(calc(-50% + 1750px)) translateZ(-420px) rotateY(-25deg) scale(0.68); filter: blur(2.5px); z-index: 18; pointer-events: none; opacity: 0;" data-stitch-orig-opacity="0">
+<img alt="Café Sunshine &amp; Roastery" class="w-full h-full object-cover transition-transform duration-700 ease-out rounded-3xl" draggable="false" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD11sZ5rLu9qF4cANEh4RBkdt0kVQgiLqChg1IJm15XgqepqLkZ94A4rO0pxSgIumhR0Ptl4S7nBiA7ZJxl7KVtjaeWCs8cqfFmFoAkWBMYjl2AjpXi-ZDHbCwNCOUK-74ufil0SkbJx-o7X83DU7jQULU9Y7exF52p7CD1ilviR6qcPVPUnKFZpfFf0kY9AV9zQcjijiYM4c4--kzX9aTTJPPqxjuHB8XY7Huy5RA">
+<div class="absolute inset-0 bg-gradient-to-t from-[#1C0B0A]/85 via-transparent to-transparent pointer-events-none"></div>
+</div>
+<!-- Slide 3 -->
+<div class="coverflow-item w-[270px] sm:w-[350px] lg:w-[420px] h-[360px] sm:h-[460px] lg:h-[530px] rounded-2xl overflow-hidden border border-[#C9A34E]/60 bg-[#250E10] cursor-pointer rounded-3xl" data-caption="Blistered golden crust baked on stone deck hearths" data-index="3" data-title="Artisan Sourdough Crust" style="transform: translateX(calc(-50% - 1750px)) translateZ(-420px) rotateY(25deg) scale(0.68); filter: blur(2.5px); z-index: 18; pointer-events: none; opacity: 0;" data-stitch-orig-opacity="0">
+<img alt="Artisan Sourdough Crust" class="w-full h-full object-cover transition-transform duration-700 ease-out rounded-3xl" draggable="false" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKIIDwHGPn1o2VZYZ1qBkou0rsvunv-KKfDW2F4grudZvRbMsqFqIlsMWsGN_MeOJwJ4vf4IpTgj6P0To1iZ-ZLrgArnU32BO9lkO8Hl_iK3rqRtWxAPTgxnBn9NEP7VagsvAEBi5XgFKhnUMVeJwt7WqAkbSbc0cqhIUo6zB2YfdHLVM10_C9VsRj-j5uTOSv_7weurRUVTCYo0m1caZwJDq5b__3hdbpVEwW3QM">
+<div class="absolute inset-0 bg-gradient-to-t from-[#1C0B0A]/85 via-transparent to-transparent pointer-events-none"></div>
+</div>
+<!-- Slide 4 -->
+<div class="coverflow-item w-[270px] sm:w-[350px] lg:w-[420px] h-[360px] sm:h-[460px] lg:h-[530px] rounded-2xl overflow-hidden border border-[#C9A34E]/60 bg-[#250E10] cursor-pointer rounded-3xl" data-caption="Single-origin dark ganache finished with berry shimmer" data-index="4" data-title="Belgian Chocolate Mirror Glaze" style="transform: translateX(calc(-50% - 1500px)) translateZ(-420px) rotateY(25deg) scale(0.68); filter: blur(2.5px); z-index: 19; pointer-events: none; opacity: 0;" data-stitch-orig-opacity="0">
+<img alt="Belgian Chocolate Mirror Glaze" class="w-full h-full object-cover transition-transform duration-700 ease-out rounded-3xl" draggable="false" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCToG6uSMG3VZem39sGnv-Icps2puX4JcxIYo2exOBZ6LCNT9dzsLqtQdtFzVlqRyXTAK4M9sMB3rRDMPStUjZ0BmX45PYSspYfKSOZVW6jUQDw5TOhyhFxvw-Y8fjJdsCZYUqCb6ugxn-diFFNUrl4N0Tic_NhwxbXueI-AAF1aBSo4Jxc9x0I9C4NCXPz984GTnqFBelp7t03_cltJPA4I-1_kUvzhEfFFon7MTA">
+<div class="absolute inset-0 bg-gradient-to-t from-[#1C0B0A]/85 via-transparent to-transparent pointer-events-none"></div>
+</div>
+<!-- Slide 5 -->
+<div class="coverflow-item w-[270px] sm:w-[350px] lg:w-[420px] h-[360px] sm:h-[460px] lg:h-[530px] rounded-2xl overflow-hidden border border-[#C9A34E]/60 bg-[#250E10] cursor-pointer rounded-3xl" data-caption="72 butter layers shaped with Normandy dairy perfection" data-index="5" data-title="Handcrafted Laminated Croissants" style="transform: translateX(calc(-50% - 1250px)) translateZ(-420px) rotateY(25deg) scale(0.68); filter: blur(2.5px); z-index: 20; pointer-events: none; opacity: 0;" data-stitch-orig-opacity="0.22">
+<img alt="Handcrafted Laminated Croissants" class="w-full h-full object-cover transition-transform duration-700 ease-out rounded-3xl" draggable="false" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUWXytAbAzdPPvTwCDVKuoD680E3RYv5AtWlML-MURdUNrMZn3rMBtqK6-yuRhybzg7WVtAEFf2lS3Jd-vUzYEBcYEoBWJ3U9OxIVQdvsMNXIm7a8uTRpIU5SjMvNs4-_EGdk10iEiJgwof_8EiuSwu2RGO5kAgbD8FjZZnkJhSL-Jyma6AuMs4cHSc2cTNQhhr5HbSHxKRfIwRF_ybk5ycdPjIHWrZTGegxKbqX8">
+<div class="absolute inset-0 bg-gradient-to-t from-[#1C0B0A]/85 via-transparent to-transparent pointer-events-none"></div>
+</div>
+<!-- Slide 6 -->
+<div class="coverflow-item w-[270px] sm:w-[350px] lg:w-[420px] h-[360px] sm:h-[460px] lg:h-[530px] rounded-2xl overflow-hidden border border-[#C9A34E]/60 bg-[#250E10] cursor-pointer rounded-3xl" data-caption="Friends gathering over flaky treats and shared memories" data-index="6" data-title="Warm Table Moments &amp; Coffee" style="transform: translateX(calc(-50% - 1000px)) translateZ(-420px) rotateY(25deg) scale(0.68); filter: blur(2.5px); z-index: 21; pointer-events: none; opacity: 0;" data-stitch-orig-opacity="0.5">
+<img alt="Warm Table Moments &amp; Coffee" class="w-full h-full object-cover transition-transform duration-700 ease-out rounded-3xl" draggable="false" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQG77IUHFimjz_3DXeckt7d4ES6LU2uHNRTkeUEEONRKhYfXu7TtftOoec9972Xro-eFruns8osilIHmKElsnttDB41DHRCwcUUsKvjpx7AAaTeWPO27VqSl13MhnURr_59xaBZPRIllvrc_BPHksOvvcWMSIikXh8VQ290S9Cguc0RlO3V0DVwdgcUMIeBiiThHs5retsUyuhJCjXl09xbv0qlmtg4sAdhehzotU">
+<div class="absolute inset-0 bg-gradient-to-t from-[#1C0B0A]/85 via-transparent to-transparent pointer-events-none"></div>
+</div>
+<!-- Slide 7 -->
+<div class="coverflow-item w-[270px] sm:w-[350px] lg:w-[420px] h-[360px] sm:h-[460px] lg:h-[530px] rounded-2xl overflow-hidden border border-[#C9A34E]/60 bg-[#250E10] cursor-pointer rounded-3xl" data-caption="Artfully styled with delicate edible florals and gold dust" data-index="7" data-title="Bespoke Tiered Celebration Cake" style="transform: translateX(calc(-50% - 750px)) translateZ(-420px) rotateY(25deg) scale(0.68); filter: blur(2.5px); z-index: 22; pointer-events: auto; opacity: 0.22;" data-stitch-orig-opacity="0.78">
+<img alt="Bespoke Tiered Celebration Cake" class="w-full h-full object-cover transition-transform duration-700 ease-out rounded-3xl" draggable="false" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxpBPUn6XiKmyv5NaOX_ooKputR5N0gE25EoKG4EnljmsvgG7OILaYseKgmTlQEBW5rWhvIQxucb-9AWUHcsyqeSwIpc7oUK83Bp_oJLnLIbeauny56516EkxUqOCZw9C5C2j20wKYVxUuumequmzcnl-TgUeq0b02rjN9jovhQDbBDdxlr4rSmtalZDB9XulpdgdWfFkPY4HifX4Fm_JGaGBQg4urKyHwLxw_6qM">
+<div class="absolute inset-0 bg-gradient-to-t from-[#1C0B0A]/85 via-transparent to-transparent pointer-events-none"></div>
+</div>
+<!-- Slide 8 -->
+<div class="coverflow-item w-[270px] sm:w-[350px] lg:w-[420px] h-[360px] sm:h-[460px] lg:h-[530px] rounded-2xl overflow-hidden border border-[#C9A34E]/60 bg-[#250E10] cursor-pointer rounded-3xl" data-caption="Crisp choux pastry filled with praline cream and raspberries" data-index="8" data-title="Pistachio &amp; Berry Paris-Brest" style="transform: translateX(calc(-50% - 500px)) translateZ(-280px) rotateY(25deg) scale(0.72); filter: blur(2.5px); z-index: 23; pointer-events: auto; opacity: 0.5;" data-stitch-orig-opacity="1">
+<img alt="Pistachio &amp; Berry Paris-Brest" class="w-full h-full object-cover transition-transform duration-700 ease-out rounded-3xl" draggable="false" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9JYMw8UlQdJIDLpyaL3y1AkNehg-S7Z2o2ma2Q6JKiyB3eO52U3Ve68QMsl1jfZNur8lXv0mQ9xUaQkItOMKrMvBLv10LzTRF2y3tp4-hAV75gtQT_UHuNAgeI--3RrbW_sMmr8ChId7nkQTC2ObAp-RNvuLHt_CeRSq_jj-zidtgZGPgZFUoWOONW2O7pLyBH8fAyQNhyu1Q8uFS2A8yMY5pAKQgtEwSLgo8XXg">
+<div class="absolute inset-0 bg-gradient-to-t from-[#1C0B0A]/85 via-transparent to-transparent pointer-events-none"></div>
+</div>
+<!-- Slide 9 -->
+<div class="coverflow-item w-[270px] sm:w-[350px] lg:w-[420px] h-[360px] sm:h-[460px] lg:h-[530px] rounded-2xl overflow-hidden border border-[#C9A34E]/60 bg-[#250E10] cursor-pointer rounded-3xl" data-caption="Naturally leavened with 24-hour slow room fermentation" data-index="9" data-title="Stone Hearth Fresh Loaves" style="transform: translateX(calc(-50% - 250px)) translateZ(-140px) rotateY(25deg) scale(0.86); filter: blur(1px); z-index: 24; pointer-events: auto; opacity: 0.78;" data-stitch-orig-opacity="0.78">
+<img alt="Stone Hearth Fresh Loaves" class="w-full h-full object-cover transition-transform duration-700 ease-out rounded-3xl" draggable="false" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYOCJZQkAGtmXpBi2gogDTLNqgankoOTDwVBMuyv2xkjxi4av2ezJQaXmPNdEFDCT5eNnu7zTgE41FVErbZFuqpR4meB-8OdM3fQyznAGIkdw2A2QkZyzPSLLR-Czf6hI3V9_rahh6f7mv4A3B5IjEoF5V68qkThMBi6URWlBYbkz1K0UUIIx3tzoG5ebPo7171T2tkbsINQZMZCXCsfCjVf-FtEWRRg77UcZ-OIs">
+<div class="absolute inset-0 bg-gradient-to-t from-[#1C0B0A]/85 via-transparent to-transparent pointer-events-none"></div>
+</div>
+<!-- Slide 10 -->
+<div class="coverflow-item w-[270px] sm:w-[350px] lg:w-[420px] h-[360px] sm:h-[460px] lg:h-[530px] rounded-2xl overflow-hidden border border-[#C9A34E]/60 bg-[#250E10] cursor-pointer rounded-3xl is-active" data-caption="Handmade patience visible in every glistening fruit slice" data-index="10" data-title="Pastry Chef Plating Gateaux" style="transform: translateX(-50%) translateZ(80px) rotateY(0deg) scale(1); filter: blur(0px); z-index: 30; pointer-events: auto; opacity: 1;" data-stitch-orig-opacity="0.5">
+<img alt="Pastry Chef Plating Gateaux" class="w-full h-full object-cover transition-transform duration-700 ease-out rounded-3xl" draggable="false" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxQwTXsw1yNmSZgt6YiCW0YhTZzQ5PjJ5N9f11mOcAXQ1E93c7jAuTPavF9Xyat3vcTb3LBpv2_eRfLlGb4MwmnLfkDEOxiG6KGSoTVHnYzDrRdEr5SoRZJX-9R7f0zLZNtibY4a3GX08U66WI149mGPP_zKIOiEOfygjqRREZMsYdzxUbuIAwhG6lqdMEFh_eb5vd6ADK-nOaQrvRK9hYtL7MR_t5b4rUq6ZNbRo">
+<div class="absolute inset-0 bg-gradient-to-t from-[#1C0B0A]/85 via-transparent to-transparent pointer-events-none"></div>
+</div>
+<!-- Slide 11 -->
+<div class="coverflow-item w-[270px] sm:w-[350px] lg:w-[420px] h-[360px] sm:h-[460px] lg:h-[530px] rounded-2xl overflow-hidden border border-[#C9A34E]/60 bg-[#250E10] cursor-pointer rounded-3xl" data-caption="Warm ambient lights, fresh tea, and dessert cases" data-index="11" data-title="Evening Ambience at Kattukulangara" style="transform: translateX(calc(-50% + 250px)) translateZ(-140px) rotateY(-25deg) scale(0.86); filter: blur(1px); z-index: 24; pointer-events: auto; opacity: 0.78;" data-stitch-orig-opacity="0.22">
+<img alt="Evening Ambience at Kattukulangara" class="w-full h-full object-cover transition-transform duration-700 ease-out rounded-3xl" draggable="false" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYHCifqi9AmJBmBKqxYwVPaF7e9-WF_Y1jGiqZ2iH35-yKE80nEpeVYT8UPYxX8yE2xNAX-5u6nJ7VmHzNOP0tSG7YrHfHvXT5LyFrcfjq0-tcj9F_LmgK-7782YZPToz40KO1lkHAiZ1ybcfnkaxwpsZ9Gv6i4eR-QZzgk9237AK0fiUoJoE4_t5yuZIIjPuXGxGGFk0I4aV9zhfO-TGbTh0nCOHfncGGEW7w69A">
+<div class="absolute inset-0 bg-gradient-to-t from-[#1C0B0A]/85 via-transparent to-transparent pointer-events-none"></div>
+</div>
+<!-- Slide 12 -->
+<div class="coverflow-item w-[270px] sm:w-[350px] lg:w-[420px] h-[360px] sm:h-[460px] lg:h-[530px] rounded-2xl overflow-hidden border border-[#C9A34E]/60 bg-[#250E10] cursor-pointer rounded-3xl" data-caption="Fluffy enriched dough brushed with pure honey egg wash" data-index="12" data-title="Golden Brioche Buns Sunrise Batch" style="transform: translateX(calc(-50% + 500px)) translateZ(-280px) rotateY(-25deg) scale(0.72); filter: blur(2.5px); z-index: 23; pointer-events: auto; opacity: 0.5;" data-stitch-orig-opacity="0">
+<img alt="Golden Brioche Buns Sunrise Batch" class="w-full h-full object-cover transition-transform duration-700 ease-out rounded-3xl" draggable="false" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJxOUrWfV_9djceQwuEI_LUv2ucYNRLHOHNcm5uhhMztIWAQbBWOGB6_Lf1MuM8ME3P7YsA0N3gzriTn-pJyjpXTkau_9XIzV1qg0_Pl4cAxs0tKyn0lf6Ov6M4ZMi_0JwYTcAUJVGMqv_bJ9S0S5VYODaJ2TfZErKPbpu36C2Ys79QDhIz7qFJe1ltf7iE7Dskg6OphYn0lWdXrollVWiREfNbiihTJwWGS7HEl0">
+<div class="absolute inset-0 bg-gradient-to-t from-[#1C0B0A]/85 via-transparent to-transparent pointer-events-none"></div>
+</div>
+<!-- Slide 13 -->
+<div class="coverflow-item w-[270px] sm:w-[350px] lg:w-[420px] h-[360px] sm:h-[460px] lg:h-[530px] rounded-2xl overflow-hidden border border-[#C9A34E]/60 bg-[#250E10] cursor-pointer rounded-3xl" data-caption="French almond shells filled with Madagascan vanilla ganache" data-index="13" data-title="Signature Macaron Collection" style="transform: translateX(calc(-50% + 750px)) translateZ(-420px) rotateY(-25deg) scale(0.68); filter: blur(2.5px); z-index: 22; pointer-events: auto; opacity: 0.22;" data-stitch-orig-opacity="0">
+<img alt="Signature Macaron Collection" class="w-full h-full object-cover transition-transform duration-700 ease-out rounded-3xl" draggable="false" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaRbd0psu44f0qrZ6hsmeBH7q_DP1joIW9OPZA_vsfuvf7kMA2wplHR9t1nLuJOVe_7HTgTUFBDa2SPcLdmtAMBykvonJ3bphiKn9AJUwFU6ziFBxvuTH3ewhG3Q_M2xhkhpPDS60bZjRK6BxC84a8gs58H9x7OzCLDar54CiKuQq17cSBAiDTvkaHFTRv2xcAE9zeyAXibi76Gh0MrOa7OiD9ZmH-8_fQfis2jJ8">
+<div class="absolute inset-0 bg-gradient-to-t from-[#1C0B0A]/85 via-transparent to-transparent pointer-events-none"></div>
+</div>
+<!-- Slide 14 -->
+<div class="coverflow-item w-[270px] sm:w-[350px] lg:w-[420px] h-[360px] sm:h-[460px] lg:h-[530px] rounded-2xl overflow-hidden border border-[#C9A34E]/60 bg-[#250E10] cursor-pointer rounded-3xl" data-caption="Warm smiles and handcrafted treats ready to take home" data-index="14" data-title="Kulangarapeedika Branch Welcome Counter" style="transform: translateX(calc(-50% + 1000px)) translateZ(-420px) rotateY(-25deg) scale(0.68); filter: blur(2.5px); z-index: 21; pointer-events: none; opacity: 0;" data-stitch-orig-opacity="0">
+<img alt="Kulangarapeedika Branch Welcome Counter" class="w-full h-full object-cover transition-transform duration-700 ease-out rounded-3xl" draggable="false" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXtg38stbJAQqxBsnOSxkJA8Yv_iQ_ruNJplamDdIys9HWkVykijNpFqxR8yCIqYFuFKvR9oU6y-IqBpkmpUNnJPlAwKNiEA818c1SV4dMxNmMy4wLJCQS82HjNILI9FlY1ri6B8F1LWHxmaEqU_PrCFwxRBSoOYk5GJ9nzMFHcMWx6YY3_30Fbjb7lr2pNrptujWw5jzr_yLC473uyiUvvzjzB7Rj_fPSSDfmP0o">
+<div class="absolute inset-0 bg-gradient-to-t from-[#1C0B0A]/85 via-transparent to-transparent pointer-events-none"></div>
+</div>
+</div>
+<!-- Active Caption Area with Dynamic Title & Sub-caption -->
+<div class="text-center min-h-[58px] mt-4">
+<h3 class="font-serif text-xl sm:text-2xl text-[#F4E4BC] font-medium tracking-wide transition-all duration-300" id="coverflowActiveTitle" style="color: rgb(253, 242, 216); opacity: 1;" data-stitch-orig-opacity="1">Pastry Chef Plating Gateaux</h3>
+<p class="text-xs sm:text-sm text-[#C9A34E] font-light mt-1 tracking-wider transition-all duration-300" id="coverflowActiveCaption" style="color: rgb(227, 160, 75); opacity: 1;" data-stitch-orig-opacity="1">Handmade patience visible in every glistening fruit slice</p>
+</div>
+<!-- Controls Row: Previous / Next Buttons + Progress Bar + Counter -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-5 px-4 max-w-3xl mx-auto mt-4">
+<!-- Outlined Gold Pill Navigation: Previous -->
+<button aria-label="Previous slide" class="group flex items-center space-x-2 px-5 py-2.5 rounded-full border border-[#C9A34E] text-[#F4E4BC] hover:text-[#1C0B0A] hover:bg-[#C9A34E] active:scale-95 transition-all duration-300 font-medium text-xs tracking-wider uppercase shadow-md" id="cfPrevBtn" style="border-color: rgb(227, 160, 75); color: rgb(253, 242, 216); background-color: rgba(154, 28, 32, 0.4);">
+<svg class="w-4 h-4 stroke-current transition-transform group-hover:-translate-x-1" fill="none" stroke-width="2.2" viewBox="0 0 24 24">
+<path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span>Previous</span>
+</button>
+<!-- Center Progress Track & Counter -->
+<div class="flex-1 w-full sm:w-auto flex items-center space-x-4 max-w-sm">
+<span class="font-mono text-xs font-semibold text-[#E3A04B] tracking-wider" id="cfCurrentNum">11</span>
+<div class="flex-1 h-1.5 bg-[#3E1A17] rounded-full overflow-hidden relative" style="background-color: rgb(59, 8, 16);">
+<div class="h-full bg-gradient-to-r from-[#C9A34E] to-[#E3A04B] rounded-full transition-all duration-500 ease-out" id="cfProgressBar" style="width: 73.3333%;"></div>
+</div>
+<span class="font-mono text-xs text-[#F4E4BC]/50 tracking-wider">15</span>
+</div>
+<!-- Outlined Gold Pill Navigation: Next -->
+<button aria-label="Next slide" class="group flex items-center space-x-2 px-5 py-2.5 rounded-full border border-[#C9A34E] text-[#F4E4BC] hover:text-[#1C0B0A] hover:bg-[#C9A34E] active:scale-95 transition-all duration-300 font-medium text-xs tracking-wider uppercase shadow-md" id="cfNextBtn" style="border-color: rgb(227, 160, 75); color: rgb(253, 242, 216); background-color: rgba(154, 28, 32, 0.4);">
+<span>Next</span>
+<svg class="w-4 h-4 stroke-current transition-transform group-hover:translate-x-1" fill="none" stroke-width="2.2" viewBox="0 0 24 24">
+<path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</div>
+<!-- 15 Clickable Pagination Dots / Ticks -->
+<div class="flex items-center justify-center space-x-2 flex-wrap gap-y-2 mt-4" id="cfDotsContainer"><button aria-label="Go to photo 1" class="h-2 w-2 rounded-full bg-[#3E1A17] hover:bg-[#C9A34E]/60 transition-all duration-300" style="animation-delay: 1242ms;"></button><button aria-label="Go to photo 2" class="h-2 w-2 rounded-full bg-[#3E1A17] hover:bg-[#C9A34E]/60 transition-all duration-300" style="animation-delay: 1242ms;"></button><button aria-label="Go to photo 3" class="h-2 w-2 rounded-full bg-[#3E1A17] hover:bg-[#C9A34E]/60 transition-all duration-300" style="animation-delay: 1242ms;"></button><button aria-label="Go to photo 4" class="h-2 w-2 rounded-full bg-[#3E1A17] hover:bg-[#C9A34E]/60 transition-all duration-300" style="animation-delay: 1242ms;"></button><button aria-label="Go to photo 5" class="h-2 w-2 rounded-full bg-[#3E1A17] hover:bg-[#C9A34E]/60 transition-all duration-300" style="animation-delay: 1242ms;"></button><button aria-label="Go to photo 6" class="h-2 w-2 rounded-full bg-[#3E1A17] hover:bg-[#C9A34E]/60 transition-all duration-300" style="animation-delay: 1242ms;"></button><button aria-label="Go to photo 7" class="h-2 w-2 rounded-full bg-[#3E1A17] hover:bg-[#C9A34E]/60 transition-all duration-300" style="animation-delay: 1242ms;"></button><button aria-label="Go to photo 8" class="h-2 w-2 rounded-full bg-[#3E1A17] hover:bg-[#C9A34E]/60 transition-all duration-300" style="animation-delay: 1242ms;"></button><button aria-label="Go to photo 9" class="h-2 w-2 rounded-full bg-[#3E1A17] hover:bg-[#C9A34E]/60 transition-all duration-300" style="animation-delay: 1242ms;"></button><button aria-label="Go to photo 10" class="h-2 w-2 rounded-full bg-[#3E1A17] hover:bg-[#C9A34E]/60 transition-all duration-300" style="animation-delay: 1242ms;"></button><button aria-label="Go to photo 11" class="h-2 w-6 rounded-full bg-[#E3A04B] transition-all duration-300" style="animation-delay: 1242ms;"></button><button aria-label="Go to photo 12" class="h-2 w-2 rounded-full bg-[#3E1A17] hover:bg-[#C9A34E]/60 transition-all duration-300" style="animation-delay: 1242ms;"></button><button aria-label="Go to photo 13" class="h-2 w-2 rounded-full bg-[#3E1A17] hover:bg-[#C9A34E]/60 transition-all duration-300" style="animation-delay: 1242ms;"></button><button aria-label="Go to photo 14" class="h-2 w-2 rounded-full bg-[#3E1A17] hover:bg-[#C9A34E]/60 transition-all duration-300" style="animation-delay: 1242ms;"></button><button aria-label="Go to photo 15" class="h-2 w-2 rounded-full bg-[#3E1A17] hover:bg-[#C9A34E]/60 transition-all duration-300" style="animation-delay: 1242ms;"></button></div>
+</div>
+</div>
+</section>
+<!-- END: LifeAtParadiseGallery -->
+<!-- BEGIN: OurBranchesStoreLocator -->
+<section class="py-12 bg-brand-creamSoft" data-purpose="branches-locator" id="branches" style="background-color: rgb(242, 228, 201);"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10"><div><span class="text-[11px] uppercase tracking-[0.25em] text-[#75584d] font-bold block mb-1.5" style="color: rgb(154, 28, 32);">FIND US ACROSS BRANCH</span><h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#2F0211] font-bold tracking-tight" style="color: rgb(92, 3, 2);">Find Us Across Kozhikode</h2><p class="text-xs sm:text-sm text-[#716565] mt-2 max-w-xl font-normal leading-relaxed" style="color: rgb(92, 3, 2);" data-stitch-orig-opacity="0.8">Visit our nearest branch or service center to get in touch with our team across our Kozhikode locations.</p></div><div class="flex items-center"><div class="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white/90 border border-[#E4D7C5] shadow-sm text-xs font-semibold text-[#2F0211]" style="background-color: rgb(253, 242, 216); border-color: rgb(202, 139, 74); color: rgb(92, 3, 2);"><span class="w-2 h-2 rounded-full bg-[#16A34A]"></span><span>Location Search</span></div></div></div><div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8"><article class="bg-white rounded-3xl p-5 sm:p-6 border border-[#E9DFCF] shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between group" style="background-color: rgb(253, 242, 216); border-color: rgba(202, 139, 74, 0.4);"><div class="flex items-start justify-between mb-3"><div class="space-y-1"><h3 class="font-serif text-2xl font-bold text-[#2F0211]">Olavanna Branch</h3></div><div class="w-10 h-10 rounded-xl bg-[#FAF6F0] border border-[#E4D7C5] flex items-center justify-center shrink-0 shadow-sm"><svg class="w-5 h-5 text-[#75584d]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" stroke-linecap="round" stroke-linejoin="round"></path></svg></div></div><div class="relative w-full h-36 rounded-2xl overflow-hidden bg-[#F5ECE1] border border-[#E8DEC9] mb-5 select-none"><svg class="w-full h-full rounded-2xl" viewBox="0 0 320 160" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="-20" y1="80" x2="340" y2="90" stroke="#DECBB6" stroke-width="16"></line><line x1="60" y1="-20" x2="260" y2="180" stroke="#DECBB6" stroke-width="14"></line><line x1="220" y1="-20" x2="80" y2="180" stroke="#DECBB6" stroke-width="14"></line><line x1="-10" y1="140" x2="330" y2="130" stroke="#DECBB6" stroke-width="10"></line><circle cx="155" cy="82" r="26" fill="#D9BFA2" fill-opacity="0.35"></circle><circle cx="155" cy="82" r="6" fill="#2F0211"></circle><circle cx="155" cy="82" r="2" fill="#FFFFFF"></circle><text x="168" y="86" fill="#2F0211" font-size="11" font-family="sans-serif" font-weight="bold">Olavanna</text></svg><div class="absolute top-2.5 left-2.5 bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-full text-[10px] font-medium text-[#2F0211] shadow-sm flex items-center gap-1"><span class="text-[#75584d]">📍</span> Top Maps</div><a href="https://maps.app.goo.gl/49WfTtpBAKszr95N8?g_st=ic" target="_blank" rel="noopener noreferrer" class="absolute bottom-2.5 right-2.5 bg-[#2F0211] text-white px-3 py-1 rounded-full text-[10px] font-semibold tracking-wide shadow hover:bg-[#4a1525] transition" style="background-color: rgb(154, 28, 32); color: rgb(253, 242, 216);">Open Maps</a></div><div class="space-y-3 text-xs text-[#524346] mb-6 flex-1"><div class="flex items-start gap-2.5"><span class="text-[#C9A34E] text-sm shrink-0 leading-none mt-0.5">📍</span><span class="font-normal leading-relaxed text-[#1C1C18]">Near Town Masjid, Main Road, Olavanna, Kozhikode</span></div><div class="flex items-center gap-2.5"><span class="text-[#C9A34E] text-sm shrink-0 leading-none">🕒</span><span class="text-[#1C1C18] font-medium">10:00 AM – 12:00 PM</span></div><div class="flex items-center gap-2.5"><span class="text-[#C9A34E] text-sm shrink-0 leading-none">📞</span><span class="text-[#1C1C18] font-medium">+91 9744242477</span></div></div><a class="w-full py-3 px-4 rounded-full bg-[#2F0211] hover:bg-[#4a1525] text-white text-xs font-semibold tracking-wider uppercase flex items-center justify-center gap-2 transition duration-200 shadow-md active:scale-95" href="https://maps.app.goo.gl/49WfTtpBAKszr95N8?g_st=ic" rel="noopener noreferrer" target="_blank" style="background-color: rgb(92, 3, 2); color: rgb(253, 242, 216);"><svg class="w-3.5 h-3.5 rotate-45" fill="currentColor" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg><span>Get Directions on Maps</span></a></article><article class="bg-white rounded-3xl p-5 sm:p-6 border border-[#E9DFCF] shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between group" style="background-color: rgb(253, 242, 216); border-color: rgba(202, 139, 74, 0.4);"><div class="flex items-start justify-between mb-3"><div class="space-y-1"><h3 class="font-serif text-2xl font-bold text-[#2F0211]">Kattukulangara Branch</h3></div><div class="w-10 h-10 rounded-xl bg-[#FAF6F0] border border-[#E4D7C5] flex items-center justify-center shrink-0 shadow-sm"><svg class="w-5 h-5 text-[#75584d]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" stroke-linecap="round" stroke-linejoin="round"></path></svg></div></div><div class="relative w-full h-36 rounded-2xl overflow-hidden bg-[#F5ECE1] border border-[#E8DEC9] mb-5 select-none"><svg class="w-full h-full rounded-2xl" viewBox="0 0 320 160" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="-20" y1="90" x2="340" y2="75" stroke="#DECBB6" stroke-width="16"></line><line x1="160" y1="-20" x2="160" y2="180" stroke="#DECBB6" stroke-width="15"></line><line x1="40" y1="-20" x2="280" y2="180" stroke="#DECBB6" stroke-width="12"></line><circle cx="160" cy="80" r="26" fill="#D9BFA2" fill-opacity="0.35"></circle><circle cx="160" cy="80" r="6" fill="#2F0211"></circle><circle cx="160" cy="80" r="2" fill="#FFFFFF"></circle><text x="173" y="84" fill="#2F0211" font-size="11" font-family="sans-serif" font-weight="bold">Kattukulangara</text></svg><div class="absolute top-2.5 left-2.5 bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-full text-[10px] font-medium text-[#2F0211] shadow-sm flex items-center gap-1"><span class="text-[#75584d]">📍</span> In-city Maps</div><a href="https://maps.app.goo.gl/HdktFy3z33jXDytF9?g_st=ic" target="_blank" rel="noopener noreferrer" class="absolute bottom-2.5 right-2.5 bg-[#2F0211] text-white px-3 py-1 rounded-full text-[10px] font-semibold tracking-wide shadow hover:bg-[#4a1525] transition" style="background-color: rgb(154, 28, 32); color: rgb(253, 242, 216);">Open Maps</a></div><div class="space-y-3 text-xs text-[#524346] mb-6 flex-1"><div class="flex items-start gap-2.5"><span class="text-[#C9A34E] text-sm shrink-0 leading-none mt-0.5">📍</span><span class="font-normal leading-relaxed text-[#1C1C18]">Junction Arcade, Station Road, Kattukulangara, Kozhikode</span></div><div class="flex items-center gap-2.5"><span class="text-[#C9A34E] text-sm shrink-0 leading-none">🕒</span><span class="text-[#1C1C18] font-medium">10:00 AM – 12:00 PM</span></div><div class="flex items-center gap-2.5"><span class="text-[#C9A34E] text-sm shrink-0 leading-none">📞</span><span class="text-[#1C1C18] font-medium">+91 9846772424</span></div></div><a class="w-full py-3 px-4 rounded-full bg-[#2F0211] hover:bg-[#4a1525] text-white text-xs font-semibold tracking-wider uppercase flex items-center justify-center gap-2 transition duration-200 shadow-md active:scale-95" href="https://maps.app.goo.gl/HdktFy3z33jXDytF9?g_st=ic" rel="noopener noreferrer" target="_blank" style="background-color: rgb(92, 3, 2); color: rgb(253, 242, 216);"><svg class="w-3.5 h-3.5 rotate-45" fill="currentColor" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg><span>Get Directions on Maps</span></a></article><article class="bg-white rounded-3xl p-5 sm:p-6 border border-[#E9DFCF] shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between group" style="background-color: rgb(253, 242, 216); border-color: rgba(202, 139, 74, 0.4);"><div class="flex items-start justify-between mb-3"><div class="space-y-1"><h3 class="font-serif text-2xl font-bold text-[#2F0211]">Kulangarapeedika Branch</h3></div><div class="w-10 h-10 rounded-xl bg-[#FAF6F0] border border-[#E4D7C5] flex items-center justify-center shrink-0 shadow-sm"><svg class="w-5 h-5 text-[#75584d]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" stroke-linecap="round" stroke-linejoin="round"></path></svg></div></div><div class="relative w-full h-36 rounded-2xl overflow-hidden bg-[#F5ECE1] border border-[#E8DEC9] mb-5 select-none"><svg class="w-full h-full rounded-2xl" viewBox="0 0 320 160" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="-20" y1="100" x2="340" y2="65" stroke="#DECBB6" stroke-width="16"></line><line x1="100" y1="-20" x2="280" y2="180" stroke="#DECBB6" stroke-width="14"></line><line x1="290" y1="-20" x2="130" y2="180" stroke="#DECBB6" stroke-width="14"></line><circle cx="205" cy="78" r="26" fill="#D9BFA2" fill-opacity="0.35"></circle><circle cx="205" cy="78" r="6" fill="#2F0211"></circle><circle cx="205" cy="78" r="2" fill="#FFFFFF"></circle><text x="135" y="70" fill="#2F0211" font-size="11" font-family="sans-serif" font-weight="bold">Highway Point</text></svg><div class="absolute top-2.5 left-2.5 bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-full text-[10px] font-medium text-[#2F0211] shadow-sm flex items-center gap-1"><span class="text-[#75584d]">📍</span> Express Maps</div><a href="https://maps.app.goo.gl/QCRyJKBEdF9bmrtv5?g_st=ic" target="_blank" rel="noopener noreferrer" class="absolute bottom-2.5 right-2.5 bg-[#2F0211] text-white px-3 py-1 rounded-full text-[10px] font-semibold tracking-wide shadow hover:bg-[#4a1525] transition" style="background-color: rgb(154, 28, 32); color: rgb(253, 242, 216);">Open Maps</a></div><div class="space-y-3 text-xs text-[#524346] mb-6 flex-1"><div class="flex items-start gap-2.5"><span class="text-[#C9A34E] text-sm shrink-0 leading-none mt-0.5">📍</span><span class="font-normal leading-relaxed text-[#1C1C18]">Heritage Square, Highway Corner, Kulangarapeedika, Kozhikode</span></div><div class="flex items-center gap-2.5"><span class="text-[#C9A34E] text-sm shrink-0 leading-none">🕒</span><span class="text-[#1C1C18] font-medium">10:00 AM – 12:00 PM</span></div><div class="flex items-center gap-2.5"><span class="text-[#C9A34E] text-sm shrink-0 leading-none">📞</span><span class="text-[#1C1C18] font-medium">+91 9946677707</span></div></div><a class="w-full py-3 px-4 rounded-full bg-[#2F0211] hover:bg-[#4a1525] text-white text-xs font-semibold tracking-wider uppercase flex items-center justify-center gap-2 transition duration-200 shadow-md active:scale-95" href="https://maps.app.goo.gl/QCRyJKBEdF9bmrtv5?g_st=ic" rel="noopener noreferrer" target="_blank" style="background-color: rgb(92, 3, 2); color: rgb(253, 242, 216);"><svg class="w-3.5 h-3.5 rotate-45" fill="currentColor" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg><span>Get Directions on Maps</span></a></article></div></div></section><!-- BEGIN: CustomerReviewsSection -->
+<section class="border-t py-10" data-purpose="customer-reviews" id="reviews" style="background-color: rgb(242, 228, 201); border-color: rgba(202, 139, 74, 0.35);">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header / Eyebrow -->
+    <div class="text-center max-w-3xl mx-auto mb-6"><div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full border shadow-sm text-[10px] font-semibold tracking-[0.25em] uppercase mb-2" style="background-color: rgb(253, 242, 216); border-color: rgb(202, 139, 74); color: rgb(154, 28, 32);"><svg class="w-3 h-3 fill-current" style="color: #E3A04B;" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg><span>Kozhikode's Most Loved Bakery &amp; Patisserie</span></div><h2 class="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight leading-tight" style="color: rgb(92, 3, 2);">Loved by Thousands Across Calicut</h2><p class="text-xs mt-1.5 font-normal leading-relaxed" style="color: rgb(92, 3, 2); opacity: 0.85;">Authentic words from our guests across Olavanna, Kattukulangara &amp; Kulangarapeedika branches.</p></div>
+
+    <!-- Google Review Highlight Summary Bar -->
+    <div class="max-w-4xl mx-auto mb-6 p-3 sm:p-4 rounded-2xl border shadow-sm flex flex-col md:flex-row items-center justify-between gap-4" style="background-color: rgb(253, 242, 216); border-color: rgba(202, 139, 74, 0.4);"><div class="flex items-center space-x-3"><div class="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0 border border-[#E8DEC9]"><svg class="w-6 h-6" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.51h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.34z"></path><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"></path><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"></path><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"></path></svg></div><div><div class="flex items-center space-x-2"><span class="font-serif text-base font-bold" style="color: rgb(92, 3, 2);">Google Reviews</span><span class="px-2 py-0.5 rounded-full text-[11px] font-bold shadow-sm" style="background-color: rgb(92, 3, 2); color: rgb(253, 242, 216);">4.8 ★★★★★</span></div><p class="text-[11px] mt-0.5" style="color: rgb(92, 3, 2); opacity: 0.8;">Based on 1,240+ Verified Customer Ratings</p></div></div><div class="flex items-center gap-3 w-full md:w-auto"><a href="https://www.google.com/search?q=Paradise+Bakes+Kozhikode+reviews" target="_blank" rel="noopener noreferrer" class="w-full md:w-auto inline-flex items-center justify-center px-5 py-2 rounded-full text-[11px] font-bold tracking-wider uppercase transition shadow-md active:scale-95 group" style="background-color: rgb(92, 3, 2); color: rgb(253, 242, 216);"><span>Write a Review</span><svg class="w-3 h-3 ml-1.5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round"></path></svg></a></div></div>
+
+    <!-- 3 Customer Review Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8"><article class="rounded-2xl p-4 sm:p-5 border shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between group" style="background-color: rgb(253, 242, 216); border-color: rgba(202, 139, 74, 0.35);"><div class="space-y-2.5"><div class="flex items-center justify-between"><div class="flex items-center space-x-1 text-[#E3A04B]"><svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg><svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg><svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg><svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg><svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg></div><svg class="w-5 h-5 shrink-0 opacity-70" style="color: #9A1C20;" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"></path></svg></div><p class="font-sans text-xs leading-relaxed italic" style="color: rgb(92, 3, 2); opacity: 0.9;">“Paradise Bakes never fails to impress! Their Belgian Chocolate Truffle cake was the highlight of our anniversary. Soft, rich, and truly artisanal. The ambiance in Olavanna is unmatched.”</p></div><div class="pt-3 mt-3 border-t flex items-center justify-between" style="border-color: rgba(202, 139, 74, 0.25);"><div><h3 class="font-serif text-xs font-bold" style="color: rgb(92, 3, 2);">Anjali Menon</h3><p class="text-[10px]" style="color: rgb(92, 3, 2); opacity: 0.75;">Local Guide · Olavanna Branch</p></div><span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-semibold" style="background-color: rgba(154, 28, 32, 0.1); color: rgb(154, 28, 32);"><svg class="w-2.5 h-2.5 text-[#16A34A]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Google</span></div></article><article class="rounded-2xl p-4 sm:p-5 border shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between group" style="background-color: rgb(253, 242, 216); border-color: rgba(202, 139, 74, 0.35);"><div class="space-y-2.5"><div class="flex items-center justify-between"><div class="flex items-center space-x-1 text-[#E3A04B]"><svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg><svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg><svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg><svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg><svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg></div><svg class="w-5 h-5 shrink-0 opacity-70" style="color: #9A1C20;" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"></path></svg></div><p class="font-sans text-xs leading-relaxed italic" style="color: rgb(92, 3, 2); opacity: 0.9;">“Hands down the best buttery croissants and sourdough breads in Kozhikode. We visit the Kattukulangara outlet every Sunday morning. Absolutely fresh and authentic European taste!”</p></div><div class="pt-3 mt-3 border-t flex items-center justify-between" style="border-color: rgba(202, 139, 74, 0.25);"><div><h3 class="font-serif text-xs font-bold" style="color: rgb(92, 3, 2);">Dr. Farhan K.</h3><p class="text-[10px]" style="color: rgb(92, 3, 2); opacity: 0.75;">Regular Guest · Kattukulangara Branch</p></div><span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-semibold" style="background-color: rgba(154, 28, 32, 0.1); color: rgb(154, 28, 32);"><svg class="w-2.5 h-2.5 text-[#16A34A]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Google</span></div></article><article class="rounded-2xl p-4 sm:p-5 border shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between group" style="background-color: rgb(253, 242, 216); border-color: rgba(202, 139, 74, 0.35);"><div class="space-y-2.5"><div class="flex items-center justify-between"><div class="flex items-center space-x-1 text-[#E3A04B]"><svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg><svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg><svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg><svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg><svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg></div><svg class="w-5 h-5 shrink-0 opacity-70" style="color: #9A1C20;" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"></path></svg></div><p class="font-sans text-xs leading-relaxed italic" style="color: rgb(92, 3, 2); opacity: 0.9;">“Ordered a bespoke two-tier berry gateau for my daughter's birthday from Kulangarapeedika. Beautiful presentation, strict hygiene, and incredible sweetness balance!”</p></div><div class="pt-3 mt-3 border-t flex items-center justify-between" style="border-color: rgba(202, 139, 74, 0.25);"><div><h3 class="font-serif text-xs font-bold" style="color: rgb(92, 3, 2);">Sujith Narayanan</h3><p class="text-[10px]" style="color: rgb(92, 3, 2); opacity: 0.75;">Food Enthusiast · Kulangarapeedika</p></div><span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-semibold" style="background-color: rgba(154, 28, 32, 0.1); color: rgb(154, 28, 32);"><svg class="w-2.5 h-2.5 text-[#16A34A]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Google</span></div></article></div>
+  </div>
+</section>
+<!-- END: CustomerReviewsSection -->
+<!-- END: OurBranchesStoreLocator -->
+<!-- BEGIN: FinalCallToAction -->
+<section class="py-20 bg-brand-cream text-center border-t border-[#E8DEC9]" data-purpose="final-cta" id="contact" style="background-color: rgb(242, 228, 201); border-color: rgba(202, 139, 74, 0.4);">
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+<!-- Icon Emblem -->
+<div class="w-14 h-14 mx-auto rounded-full text-brand-gold flex items-center justify-center shadow-lg border border-brand-gold/40 overflow-hidden"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTiGH9DIjhyVRYKc4rLoUfEa0GJdOByDg_UCYLB9DNLLmVxDf6JhnDwF5ZvzBYo5iEy5EI_FGcyz9F0Xi7vxJiLJGh6HDfBwyTuLqkW7Aiprmzs_d2LmGonWMKXSX1lKl0DUaShPIpuwZFaxfsPXCMuBbghZHT5zMUGAEA-6qu2tB5C22ikvIzJfKuFYOPSsQEH6K65gA6fMUbOhXpCbSwRfktYLhNWu_Zpku9dOxHRAcbqUnV_d5Y" alt="Paradise Bakes Logo" class="w-full h-full object-contain rounded-full shadow-md"></div>
+<span class="inline-block text-xs uppercase tracking-[0.3em] text-brand-gold font-bold" style="color: rgb(154, 28, 32);">Bespoke Orders &amp; Daily Delights</span>
+<h2 class="font-serif text-3xl sm:text-5xl text-brand-deepWine font-normal" style="color: rgb(92, 3, 2);">
+        Crafting Sweet Memories
+      </h2>
+<p class="text-sm text-brand-muted max-w-xl mx-auto font-light leading-relaxed" style="color: rgb(92, 3, 2);" data-stitch-orig-opacity="0.85">
+        Planning an intimate birthday, a grand wedding, or just needing your afternoon butter croissant? We're thrilled to bake for you.
+      </p>
+<div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+<a class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-brand-deepWine text-white hover:bg-brand-burgundy transition font-semibold text-xs tracking-wider uppercase shadow-xl" href="tel:+919744242477" style="background-color: rgb(92, 3, 2); color: rgb(253, 242, 216);">
+          Order Online Now
+        </a>
+<a class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-white hover:bg-[#F2EAE0] border border-stone-300 transition font-semibold text-xs tracking-wider uppercase text-brand-deepWine" href="#branches" style="background-color: rgb(253, 242, 216); color: rgb(92, 3, 2); border-color: rgb(202, 139, 74);">
+          Find Nearest Branch
+        </a>
+</div>
+</div>
+</section>
+<!-- END: FinalCallToAction -->
+<!-- BEGIN: MainFooter -->
+<footer class="bg-[#1C050B] text-stone-400 text-xs border-t border-[#3B111A] py-10" style="background-color: rgb(92, 3, 2); border-color: rgb(154, 28, 32); color: rgb(253, 242, 216);">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 border-b border-white/10 pb-8 gap-8">
+<!-- Col 1: Brand Info -->
+<div class="lg:col-span-2 space-y-4">
+<div class="flex items-center space-x-2"><div class="w-10 h-10 rounded-full overflow-hidden shrink-0 bg-[#FAF6F0] p-0.5 shadow-sm"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8An760kP3pYO81SMzxaMZBWz36O1ghlxx9m4-lqTzNxkncpdW8L-4EjY7YJgA64TOQU0tTMazhJmpmBdaY729YOUQQoylFpDBgoCgsT2_HKSGp8siG5dfHcEDZ3Plyl5fEvIQL0iH4AOCrFuEwl8L7qx_LJefsXI2zTFfKNe1z2QjneMbq1mhEfvBF0iy-p8PSwITPpi4sf6Nhn1rORRp6JsuJg6e93cVHWxtzIUPDq9Frme1fzY0" alt="Paradise Bakes Logo" class="w-full h-full object-contain rounded-full"></div><div class="flex items-center space-x-2"><span class="font-cinzel text-xl font-bold tracking-widest text-white">PARADISE</span><span class="text-[9px] uppercase tracking-widest text-brand-gold font-semibold">Bakes</span></div></div>
+<p class="text-xs text-stone-400 max-w-sm leading-relaxed" style="color: rgb(253, 242, 216);" data-stitch-orig-opacity="0.85">
+            Artisanal bakery and gourmet patisserie established with a love for slow doughs, pure European butter, and unforgettable celebration cakes.
+          </p>
+<div class="pt-2 flex items-center space-x-3 text-stone-300"><a aria-label="Instagram" title="Paradise Bakes on Instagram" class="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 border border-[#E3A04B]/30 hover:border-[#E3A04B] hover:scale-105 shadow-sm text-[#FDF2D8] hover:text-[#E3A04B]" style="background-color: rgba(154, 28, 32, 0.25);" href="https://instagram.com" target="_blank" rel="noopener noreferrer"><svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg></a><a aria-label="Facebook" title="Paradise Bakes on Facebook" class="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 border border-[#E3A04B]/30 hover:border-[#E3A04B] hover:scale-105 shadow-sm text-[#FDF2D8] hover:text-[#E3A04B]" style="background-color: rgba(154, 28, 32, 0.25);" href="https://facebook.com" target="_blank" rel="noopener noreferrer"><svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg></a><a aria-label="WhatsApp" title="Chat on WhatsApp" class="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 border border-[#E3A04B]/30 hover:border-[#E3A04B] hover:scale-105 shadow-sm text-[#FDF2D8] hover:text-[#E3A04B]" style="background-color: rgba(154, 28, 32, 0.25);" href="https://wa.me/919744242477" target="_blank" rel="noopener noreferrer"><svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"></path></svg></a></div>
+</div>
+<!-- Col 2: Quick Links -->
+<div class="space-y-3">
+<h4 class="font-serif text-sm text-white font-medium">Quick Links</h4>
+<ul class="space-y-2 text-xs"><li><span class="text-white">Olavanna:</span> <a href="tel:+919744242477" class="hover:text-brand-gold transition-colors">+91 97442 42477</a></li><li><span class="text-white">Kattukulangara:</span> <a href="tel:+919846772424" class="hover:text-brand-gold transition-colors">+91 98467 72424</a></li><li><span class="text-white">Kulangarapeedika:</span> <a href="tel:+919946677707" class="hover:text-brand-gold transition-colors">+91 99466 77707</a></li><li><span class="text-brand-gold">Calicut, Kerala, India</span></li></ul>
+</div>
+<!-- Col 3: Branches -->
+<div class="space-y-3">
+<h4 class="font-serif text-sm text-white font-medium">Locations</h4>
+<ul class="space-y-2 text-xs">
+<li><span class="text-white">Olavanna:</span> Town Center Rd</li>
+<li><span class="text-white">Kattukulangara:</span> Station Junction</li>
+<li><span class="text-white">Kulangarapeedika:</span> Market Corner</li>
+<li><span class="text-brand-gold">Calicut, Kerala, India</span></li>
+</ul>
+</div>
+<!-- Col 4: Newsletter / Hours -->
+<div class="space-y-3">
+<h4 class="font-serif text-sm text-white font-medium">Daily Counter Hours</h4>
+<p class="text-xs text-stone-400 leading-relaxed" style="color: rgb(253, 242, 216);" data-stitch-orig-opacity="0.85">
+            Monday – Sunday<br>
+            08:00 AM – 11:00 PM<br>
+            Hot bakes fresh out at 08:30 AM &amp; 04:30 PM
+          </p>
+<p class="text-[11px] text-brand-gold font-medium pt-1">
+            Delivery available via Swiggy &amp; Zomato
+          </p>
+</div>
+</div>
+<!-- Copyright bottom line -->
+<div class="flex flex-col sm:flex-row items-center justify-between text-[11px] text-stone-500 gap-4 pt-6" style="color: rgb(253, 242, 216); border-color: rgba(154, 28, 32, 0.4);" data-stitch-orig-opacity="0.75">
+<p>© 2026 Paradise Bakes &amp; Patisserie. All rights reserved.</p>
+<div class="flex space-x-6">
+<a class="hover:underline" href="#">Privacy Policy</a>
+<a class="hover:underline" href="#">Terms of Service</a>
+<a class="hover:underline" href="#">FSSAI Compliance</a>
+</div>
+</div>
+</div>
+</footer>
+<!-- END: MainFooter -->
+<!-- Interactive Depth Parallax Engine for Cake World -->
+<script>
+  (function initCakeWorldParallax() {
+    const stage = document.getElementById('cakeStageContainer');
+    if (!stage) return;
+
+    const layers = Array.from(stage.querySelectorAll('.cake-depth-layer'));
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!prefersReducedMotion) {
+      // Smooth Mouse Parallax
+      let targetX = 0;
+      let targetY = 0;
+      let currentX = 0;
+      let currentY = 0;
+      let rafId = null;
+
+      stage.addEventListener('mousemove', (e) => {
+        const rect = stage.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        targetX = e.clientX - centerX;
+        targetY = e.clientY - centerY;
+
+        if (!rafId) {
+          rafId = requestAnimationFrame(animateLayers);
+        }
+      });
+
+      stage.addEventListener('mouseleave', () => {
+        targetX = 0;
+        targetY = 0;
+      });
+
+      function animateLayers() {
+        currentX += (targetX - currentX) * 0.1;
+        currentY += (targetY - currentY) * 0.1;
+
+        layers.forEach((layer) => {
+          const depth = parseFloat(layer.getAttribute('data-depth')) || 0.03;
+          const moveX = currentX * depth * 1.5;
+          const moveY = currentY * depth * 1.5;
+          layer.style.transform = `translate3d(${moveX}px, ${moveY}px, 0)`;
+        });
+
+        if (Math.abs(targetX - currentX) > 0.1 || Math.abs(targetY - currentY) > 0.1) {
+          rafId = requestAnimationFrame(animateLayers);
+        } else {
+          rafId = null;
+        }
+      }
+    }
+
+    // Scroll Reveal Intersection Observer for Smooth Entry
+    if ('IntersectionObserver' in window) {
+      const section = document.getElementById('cake-world');
+      if (section) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              layers.forEach((l, idx) => {
+                l.style.transition = `opacity 0.8s ease-out ${idx * 0.15}s, transform 0.8s ease-out ${idx * 0.15}s`;
+              });
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.2 });
+        observer.observe(section);
+      }
+    }
+  })();
+</script>
+<!-- 3D Coverflow Interactive Engine -->
+<script>
+  (function initCoverflow() {
+    const stage = document.getElementById('coverflowStage');
+    const items = Array.from(document.querySelectorAll('.coverflow-item'));
+    const prevBtn = document.getElementById('cfPrevBtn');
+    const nextBtn = document.getElementById('cfNextBtn');
+    const activeTitle = document.getElementById('coverflowActiveTitle');
+    const activeCaption = document.getElementById('coverflowActiveCaption');
+    const currentNum = document.getElementById('cfCurrentNum');
+    const progressBar = document.getElementById('cfProgressBar');
+    const dotsContainer = document.getElementById('cfDotsContainer');
+    
+    if (!stage || !items.length) return;
+
+    const total = items.length;
+    let currentIndex = 0;
+    let autoplayTimer = null;
+    let isHovered = false;
+    let startX = 0;
+    let currentX = 0;
+    let isDragging = false;
+
+    // Check prefers-reduced-motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Generate 15 pagination dots
+    dotsContainer.innerHTML = '';
+    const dots = [];
+    for (let i = 0; i < total; i++) {
+      const dot = document.createElement('button');
+      dot.setAttribute('aria-label', 'Go to photo ' + (i + 1));
+      dot.className = 'w-2 h-2 rounded-full transition-all duration-300 ' + (i === 0 ? 'w-6 bg-[#E3A04B]' : 'bg-[#3E1A17] hover:bg-[#C9A34E]/60');
+      dot.addEventListener('click', () => {
+        goToIndex(i);
+        restartAutoplay();
+      });
+      dotsContainer.appendChild(dot);
+      dots.push(dot);
+    }
+
+    function updateCoverflow() {
+      const isMobile = window.innerWidth < 640;
+      const isTablet = window.innerWidth < 1024;
+      const spacing = isMobile ? 120 : (isTablet ? 190 : 250);
+
+      items.forEach((item, index) => {
+        let diff = index - currentIndex;
+
+        // Circular wrap for closest distance
+        if (diff > total / 2) diff -= total;
+        if (diff < -total / 2) diff += total;
+
+        const absDiff = Math.abs(diff);
+
+        if (diff === 0) {
+          // Center active photo: Large, sharp, wheat gold glow, zIndex 30
+          item.style.transform = `translateX(-50%) translateZ(80px) rotateY(0deg) scale(1)`;
+          item.style.opacity = '1';
+          item.style.filter = 'blur(0px)';
+          item.style.zIndex = '30';
+          item.style.pointerEvents = 'auto';
+          item.classList.add('is-active');
+        } else {
+          item.classList.remove('is-active');
+          const direction = diff > 0 ? 1 : -1;
+          const rotateAngle = direction > 0 ? -25 : 25;
+          const scale = Math.max(0.68, 1 - absDiff * 0.14);
+          const transX = diff * spacing;
+          const transZ = -Math.min(absDiff * 140, 420);
+          
+          // Dimmer, slight blur, gracefully fading out
+          let opacity = Math.max(0, 0.78 - (absDiff - 1) * 0.28);
+          if (absDiff > 3) opacity = 0;
+
+          item.style.transform = `translateX(calc(-50% + ${transX}px)) translateZ(${transZ}px) rotateY(${rotateAngle}deg) scale(${scale})`;
+          item.style.opacity = opacity.toString();
+          item.style.filter = absDiff === 1 ? 'blur(1px)' : 'blur(2.5px)';
+          item.style.zIndex = (25 - absDiff).toString();
+          item.style.pointerEvents = absDiff > 3 ? 'none' : 'auto';
+        }
+      });
+
+      // Update Active Captions with soft fade
+      const activeEl = items[currentIndex];
+      const title = activeEl.getAttribute('data-title') || '';
+      const caption = activeEl.getAttribute('data-caption') || '';
+      
+      activeTitle.style.opacity = '0';
+      activeCaption.style.opacity = '0';
+      setTimeout(() => {
+        activeTitle.textContent = title;
+        activeCaption.textContent = caption;
+        activeTitle.style.opacity = '1';
+        activeCaption.style.opacity = '1';
+      }, 150);
+
+      // Update Slide Counter & Progress Track
+      const padNum = (currentIndex + 1).toString().padStart(2, '0');
+      currentNum.textContent = padNum;
+      const progressPercent = ((currentIndex + 1) / total) * 100;
+      progressBar.style.width = progressPercent + '%';
+
+      // Update Pagination Dots
+      dots.forEach((dot, idx) => {
+        if (idx === currentIndex) {
+          dot.className = 'h-2 w-6 rounded-full bg-[#E3A04B] transition-all duration-300';
+        } else {
+          dot.className = 'h-2 w-2 rounded-full bg-[#3E1A17] hover:bg-[#C9A34E]/60 transition-all duration-300';
+        }
+      });
+    }
+
+    function goToIndex(index) {
+      currentIndex = (index + total) % total;
+      updateCoverflow();
+    }
+
+    function nextSlide() {
+      goToIndex(currentIndex + 1);
+    }
+
+    function prevSlide() {
+      goToIndex(currentIndex - 1);
+    }
+
+    // Interactive item click: Clicking side photo brings it to front
+    items.forEach((item, index) => {
+      item.addEventListener('click', () => {
+        if (index !== currentIndex) {
+          goToIndex(index);
+          restartAutoplay();
+        }
+      });
+    });
+
+    // Navigation buttons
+    nextBtn.addEventListener('click', () => {
+      nextSlide();
+      restartAutoplay();
+    });
+
+    prevBtn.addEventListener('click', () => {
+      prevSlide();
+      restartAutoplay();
+    });
+
+    // Keyboard Arrow navigation when stage is in focus or viewport
+    window.addEventListener('keydown', (e) => {
+      const rect = stage.getBoundingClientRect();
+      const inView = rect.top < window.innerHeight && rect.bottom > 0;
+      if (!inView) return;
+      if (e.key === 'ArrowRight') {
+        nextSlide();
+        restartAutoplay();
+      } else if (e.key === 'ArrowLeft') {
+        prevSlide();
+        restartAutoplay();
+      }
+    });
+
+    // Touch & Pointer Drag / Swipe Support
+    stage.addEventListener('pointerdown', (e) => {
+      isDragging = true;
+      startX = e.clientX;
+      currentX = e.clientX;
+      stage.setPointerCapture(e.pointerId);
+    });
+
+    stage.addEventListener('pointermove', (e) => {
+      if (!isDragging) return;
+      currentX = e.clientX;
+    });
+
+    stage.addEventListener('pointerup', (e) => {
+      if (!isDragging) return;
+      isDragging = false;
+      const deltaX = currentX - startX;
+      if (Math.abs(deltaX) > 40) {
+        if (deltaX < 0) {
+          nextSlide();
+        } else {
+          prevSlide();
+        }
+        restartAutoplay();
+      }
+    });
+
+    stage.addEventListener('pointercancel', () => {
+      isDragging = false;
+    });
+
+    // Autoplay logic (every 3.5s, paused on hover or reduced-motion)
+    function startAutoplay() {
+      if (prefersReducedMotion) return;
+      stopAutoplay();
+      autoplayTimer = setInterval(() => {
+        if (!isHovered && !isDragging) {
+          nextSlide();
+        }
+      }, 3500);
+    }
+
+    function stopAutoplay() {
+      if (autoplayTimer) {
+        clearInterval(autoplayTimer);
+        autoplayTimer = null;
+      }
+    }
+
+    function restartAutoplay() {
+      stopAutoplay();
+      startAutoplay();
+    }
+
+    // Hover pause and subtle center zoom
+    stage.addEventListener('mouseenter', () => {
+      isHovered = true;
+    });
+
+    stage.addEventListener('mouseleave', () => {
+      isHovered = false;
+    });
+
+    // Window resize handler for responsive coverflow spacing
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(updateCoverflow, 100);
+    });
+
+    // Initial render
+    updateCoverflow();
+    startAutoplay();
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+</body></html>

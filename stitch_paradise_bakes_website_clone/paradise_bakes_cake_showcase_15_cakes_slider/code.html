@@ -1,0 +1,862 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="web_standard" name="shell-type">
+<title>Cake Showcase - Paradise Bakes</title>
+<style>
+    @layer base {
+      html, body { margin:0; padding:0; }
+      body { overscroll-behavior: none; }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+    ::-webkit-scrollbar { display: none; }
+
+    /* Chilled mist keyframe drift */
+    @keyframes mistFlow {
+      0% { transform: translateX(-10%) translateY(0); opacity: 0.25; }
+      50% { transform: translateX(5%) translateY(-4px); opacity: 0.45; }
+      100% { transform: translateX(-10%) translateY(0); opacity: 0.25; }
+    }
+    .animate-mist {
+      animation: mistFlow 12s ease-in-out infinite;
+    }
+
+    /* Vitrine sibling dimming on hover */
+    .vitrine-shelf:hover .cake-card {
+      opacity: 0.48;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .vitrine-shelf .cake-card:hover {
+      opacity: 1 !important;
+      transform: translateY(-8px) scale(1.08);
+      z-index: 30;
+    }
+    .cake-card.is-selected {
+      opacity: 1 !important;
+    }
+
+    /* Gold button shimmer shine */
+    .btn-shimmer {
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-shimmer::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 40%;
+      height: 200%;
+      background: linear-gradient(60deg, transparent, rgba(253, 242, 216, 0.35), transparent);
+      transform: rotate(25deg);
+      transition: all 0.75s ease;
+    }
+    .btn-shimmer:hover::after {
+      left: 120%;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .vitrine-shelf:hover .cake-card,
+      .vitrine-shelf .cake-card:hover,
+      .animate-mist,
+      .btn-shimmer::after {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+      }
+    }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+</head>
+<body class="bg-[#F2E4C9] font-['Inter',sans-serif] text-[#5C0302] antialiased selection:bg-[#E3A04B] selection:text-[#5C0302] overflow-x-hidden">
+<!-- Top Navigation Header -->
+<header class="fixed top-0 w-full z-50 bg-[#F2E4C9]/95 backdrop-blur-md border-b border-[#5C0302]/10 shadow-[0_2px_12px_rgba(92,3,2,0.04)]">
+<div class="h-14 md:h-20 max-w-7xl mx-auto px-4 md:px-6 flex items-center justify-between">
+<div class="flex items-center gap-2.5 md:gap-3">
+<img alt="Paradise Bakes Logo" class="h-7 md:h-9 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbIJQ9q5HItsy5kHpd-U3FaTdlhX8eo3-kV3mvdWE4mIg63fXYENU1EVIk9hDT8nOdBSEQLc_WGtgQfZeBDXNi4hygJRrvBZQtkr8wUs0trGcjfc77MoiCiB9DAsduj7h5J6Q50UB81OuF2KGuMViEGLeOW4lJDTeR7iswAGQXI9SbZVLKIR6HArFvDZm09BjG0zCx1JqON2eyY3_imJFASYc2aqtZfobFtZLAdijcEUsgTob0Sva5">
+<span class="font-['Playfair_Display',serif] text-lg md:text-xl font-bold tracking-wide text-[#5C0302]">Paradise Bakes</span>
+</div>
+<nav class="hidden md:flex items-center gap-7">
+<a class="text-sm font-medium text-[#5C0302]/80 hover:text-[#5C0302] transition-colors" href="#">Home</a>
+
+<a aria-current="page" class="text-sm font-bold bg-[#9A1C20] text-[#FDF2D8] rounded-full px-4 py-1.5 shadow-sm transition-all" href="#">Cakes</a>
+<a class="text-sm font-medium text-[#5C0302]/80 hover:text-[#5C0302] transition-colors" href="#">CUSTOM</a>
+<a class="text-sm font-medium text-[#5C0302]/80 hover:text-[#5C0302] transition-colors" href="#">MADE</a>
+</nav>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 md:w-9 md:h-9 rounded-full bg-[#5C0302] text-[#FDF2D8] flex items-center justify-center shadow-inner cursor-pointer hover:bg-[#9A1C20] transition-colors">
+<span class="material-symbols-outlined text-[17px] md:text-[19px]">person</span>
+</div>
+</div>
+</div>
+</header>
+<main class="w-full pt-14 md:pt-20"><!-- 1. HEADER SECTION -->
+<section class="w-full bg-[#5C0302] text-[#FDF2D8] pt-4 md:pt-8 pb-3 md:pb-7 px-4 md:px-6 border-b border-[#E3A04B]/30 relative overflow-hidden">
+<!-- Subtle atmospheric background glow -->
+<div class="absolute -top-24 right-10 w-96 h-96 bg-[#9A1C20]/40 rounded-full blur-3xl pointer-events-none"></div>
+<div class="max-w-7xl mx-auto flex flex-col gap-3 md:gap-6 relative z-10">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 md:gap-4">
+<div class="h-12 md:h-auto flex flex-col justify-center">
+<a class="inline-flex items-center gap-1.5 text-[#F2E4C9]/75 hover:text-[#E3A04B] text-[10px] md:text-xs uppercase tracking-wider font-semibold transition-colors mb-0.5 md:mb-2.5" href="#">
+<span class="material-symbols-outlined text-sm md:text-base">arrow_back</span> Back to Home
+</a>
+<h1 class="text-2xl md:text-5xl font-['Playfair_Display',serif] font-bold tracking-tight text-[#FDF2D8] leading-tight">
+Cake showcase
+</h1>
+</div>
+<!-- Category Chips and Controls (Sticky Controls: 96px total on mobile) -->
+<div class="flex flex-col gap-2 md:gap-3 w-full sm:w-auto pt-1 sm:pt-0 sticky top-14 md:static z-40 bg-[#5C0302] pb-1.5 md:pb-0">
+<div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 md:gap-3 justify-between sm:justify-end">
+<!-- Row 1: 40px chips bar swipeable -->
+<div class="flex items-center gap-2 overflow-x-auto pb-1 max-w-full sm:max-w-xl scroll-smooth whitespace-nowrap h-10 items-center" id="category-filter-bar" style="scrollbar-width: none; -ms-overflow-style: none;">
+<button class="cat-filter-btn flex-shrink-0 px-3.5 py-2 rounded-full text-xs font-bold tracking-wide transition-all shadow-md bg-[#9A1C20] text-[#FDF2D8] ring-2 ring-[#E3A04B]/50 flex items-center gap-1.5 whitespace-nowrap" onclick="filterShowcase('all', this)" type="button"><span class="w-1.5 h-1.5 rounded-full bg-[#E3A04B]"></span> All cakes (18)</button>
+<button class="cat-filter-btn flex-shrink-0 px-3.5 py-2 rounded-full text-xs font-medium tracking-wide transition-all bg-[#9A1C20]/60 text-[#FDF2D8] hover:bg-[#9A1C20] border border-[#E3A04B]/30 whitespace-nowrap" onclick="filterShowcase('sweet-menu', this)" type="button">Sweet Menu (5)</button>
+<button class="cat-filter-btn flex-shrink-0 px-3.5 py-2 rounded-full text-xs font-medium tracking-wide transition-all bg-[#9A1C20]/60 text-[#FDF2D8] hover:bg-[#9A1C20] border border-[#E3A04B]/30 whitespace-nowrap" onclick="filterShowcase('fresh-joy', this)" type="button">Fresh Joy (4)</button>
+<button class="cat-filter-btn flex-shrink-0 px-3.5 py-2 rounded-full text-xs font-medium tracking-wide transition-all bg-[#9A1C20]/60 text-[#FDF2D8] hover:bg-[#9A1C20] border border-[#E3A04B]/30 whitespace-nowrap" onclick="filterShowcase('chocolate-dreams', this)" type="button">Chocolate Dreams (5)</button>
+<button class="cat-filter-btn flex-shrink-0 px-3.5 py-2 rounded-full text-xs font-medium tracking-wide transition-all bg-[#9A1C20]/60 text-[#FDF2D8] hover:bg-[#9A1C20] border border-[#E3A04B]/30 whitespace-nowrap" onclick="filterShowcase('classic-cakes', this)" type="button">Classic Cakes (4)</button>
+<button class="cat-filter-btn flex-shrink-0 px-3.5 py-2 rounded-full text-xs font-medium tracking-wide transition-all bg-[#9A1C20]/60 text-[#FDF2D8] hover:bg-[#9A1C20] border border-[#E3A04B]/30 whitespace-nowrap" onclick="filterShowcase('gourmet-specials', this)" type="button">Gourmet Specials (3)</button>
+<button class="cat-filter-btn flex-shrink-0 px-3.5 py-2 rounded-full text-xs font-medium tracking-wide transition-all bg-[#9A1C20]/60 text-[#FDF2D8] hover:bg-[#9A1C20] border border-[#E3A04B]/30 whitespace-nowrap" onclick="filterShowcase('signature-pastries', this)" type="button">Signature Pastries (4)</button>
+<button class="cat-filter-btn flex-shrink-0 px-3.5 py-2 rounded-full text-xs font-medium tracking-wide transition-all bg-[#9A1C20]/60 text-[#FDF2D8] hover:bg-[#9A1C20] border border-[#E3A04B]/30 whitespace-nowrap" onclick="filterShowcase('dessert-delights', this)" type="button">Dessert Delights (3)</button>
+</div>
+<!-- Row 2: 44px row with 180px Switch + In-stock toggle -->
+<div class="flex items-center justify-between sm:justify-end gap-2.5 h-11">
+<div class="flex-shrink-0 inline-flex items-center bg-[#240000]/80 p-0.5 rounded-full border border-[#CA8B4A]/60 shadow-inner w-[180px] justify-between">
+<button class="flex-1 px-2.5 py-1 rounded-full text-[11px] font-bold tracking-wide transition-all shadow-sm bg-[#E3A04B] text-[#5C0302] flex items-center justify-center gap-1" id="btn-view-shelf" onclick="setShowcaseView('shelf')" type="button"><span class="material-symbols-outlined text-[13px]">shelves</span><span>Shelf view</span></button>
+<button class="flex-1 px-2.5 py-1 rounded-full text-[11px] font-medium tracking-wide transition-all text-[#FDF2D8] hover:text-[#E3A04B] flex items-center justify-center gap-1" id="btn-view-full" onclick="setShowcaseView('full')" type="button"><span class="material-symbols-outlined text-[13px]">grid_view</span><span>Full view</span></button>
+</div>
+<div class="flex-shrink-0 flex items-center gap-2 pl-2 border-l border-[#E3A04B]/30">
+<label class="cursor-pointer flex items-center gap-2 select-none" for="instock-toggle"><span class="text-[11px] font-semibold text-[#FDF2D8] whitespace-nowrap">In stock only</span><button aria-pressed="false" class="w-9 h-5 rounded-full bg-[#240000]/80 border border-[#CA8B4A]/60 flex items-center p-0.5 transition-colors focus:outline-none" id="instock-toggle" onclick="toggleInStockOnly()" type="button"><span class="w-3.5 h-3.5 rounded-full bg-[#CA8B4A] transition-transform duration-200 transform translate-x-0" id="toggle-thumb"></span></button></label>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between text-xs text-[#F2E4C9]/85 pt-0.5">
+<span class="font-medium italic tracking-wide text-[11px] md:text-xs" id="filter-count-indicator">Showing all 18 cakes across 7 categories</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 2. BAKERY DISPLAY CASE (Deep Cherry #5C0302 background) -->
+<section class="w-full bg-[#5C0302] text-[#FDF2D8] py-6 md:py-10 px-3 sm:px-8 relative overflow-hidden select-none" id="vitrine-showcase-section">
+<!-- Ambient Patisserie Texture Pattern -->
+<div class="absolute inset-0 opacity-15 pointer-events-none bg-[radial-gradient(#E3A04B_1px,transparent_1px)] [background-size:20px_20px]"></div>
+<div class="max-w-7xl mx-auto relative">
+<!-- Real Bakery Glass Display Case Outer Enclosure -->
+<div class="relative rounded-2xl sm:rounded-3xl border-2 border-[#CA8B4A]/80 shadow-[0_30px_70px_rgba(0,0,0,0.85)] bg-gradient-to-b from-[#3E0101] via-[#5C0302] to-[#2B0101] p-3.5 sm:p-8 pt-4 md:pt-6 overflow-hidden">
+<!-- Glass Sheen / Reflection Highlights -->
+<div class="absolute inset-0 pointer-events-none z-20 opacity-30" style="background: linear-gradient(118deg, rgba(253,242,216,0.3) 0%, rgba(253,242,216,0.03) 25%, transparent 45%, rgba(227,160,75,0.18) 65%, transparent 80%);"></div>
+<!-- Top Warm LED Strip Light in Vitrine Ceiling -->
+<div class="absolute top-0 inset-x-0 h-2 md:h-3 bg-gradient-to-b from-[#E3A04B] via-[#E3A04B]/60 to-transparent opacity-90 z-20"></div>
+<!-- CASE TOP HEADER: 28px Temperature readout strip at top -->
+<div class="flex flex-row items-center justify-between pb-3 md:pb-6 gap-2 border-b border-[#E3A04B]/20 relative z-20 h-7 md:h-auto">
+<div class="inline-flex items-center gap-2 md:gap-3 bg-[#240000]/80 border border-[#CA8B4A]/50 px-2.5 md:px-3.5 py-1 md:py-1.5 rounded-full shadow-inner backdrop-blur-sm self-start h-7">
+<span class="inline-flex items-center justify-center w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-[#E3A04B] animate-pulse"></span>
+<span class="font-mono text-xs md:text-sm font-bold text-[#E3A04B] tracking-wider">4°C</span>
+<span class="w-px h-3 md:h-3.5 bg-[#E3A04B]/30"></span>
+<span class="text-[10px] md:text-xs text-[#FDF2D8] font-medium tracking-wide">Kept fresh, baked today</span>
+</div>
+<div class="hidden sm:flex items-center gap-2 text-xs text-[#F2E4C9]/70 italic">
+<span class="material-symbols-outlined text-sm text-[#E3A04B]">touch_app</span>
+<span>Hover to preview price tag • Click to view recipe &amp; order below</span>
+</div>
+</div>
+<!-- CHILLED MIST DRIFTING NEAR GLASS FLOOR -->
+<div class="absolute bottom-12 inset-x-0 h-28 pointer-events-none z-10 overflow-hidden">
+<div class="animate-mist w-[130%] h-full bg-gradient-to-t from-white/10 via-white/5 to-transparent blur-2xl"></div>
+</div>
+<!-- VITRINE SHELF CONTAINER (Shelf View: ~280px high each category with 28px gold plaque, one swipeable row of 150x210px cards) -->
+<div class="relative z-20 pt-4 md:pt-6 pb-4 md:pb-6 space-y-6 md:space-y-10" id="vitrine-shelves-wrapper">
+<!-- SHELF 1: Sweet Menu -->
+<div class="shelf-section" data-category="sweet-menu">
+<div class="flex items-center gap-2.5 md:gap-3 mb-3 md:mb-4 h-7 md:h-auto">
+<div class="h-7 md:h-auto px-3 md:px-3.5 py-0.5 md:py-1 rounded-full bg-gradient-to-r from-[#CA8B4A]/40 via-[#E3A04B]/30 to-[#CA8B4A]/40 border border-[#CA8B4A] shadow-md flex items-center gap-1.5 md:gap-2">
+<span class="material-symbols-outlined text-xs text-[#E3A04B]">bakery_dining</span>
+<span class="text-[11px] md:text-xs font-bold tracking-wider uppercase text-[#FDF2D8]">Sweet Menu</span>
+<span class="text-[9px] md:text-[10px] text-[#E3A04B] font-mono font-semibold">(5 cakes)</span>
+</div>
+<div class="flex-1 h-px bg-gradient-to-r from-[#E3A04B]/40 to-transparent"></div>
+</div>
+<!-- Swipeable shelf row on mobile (150x210px slots, 120px cutout, 13px titles) -->
+<div class="overflow-x-auto scroll-smooth pb-3 md:pb-4 select-none whitespace-nowrap" style="scrollbar-width: none; -ms-overflow-style: none;">
+<div class="flex flex-row flex-nowrap overflow-x-auto snap-x snap-mandatory gap-3 md:gap-8 md:grid md:grid-cols-4 vitrine-shelf min-w-max md:min-w-0 pb-2">
+<!-- Cake 1: Red Velvet Rose (In Stock) -->
+<div class="cake-card group relative flex flex-col items-center cursor-pointer transition-all duration-300 w-[150px] md:w-auto h-[210px] md:h-auto flex-shrink-0 snap-start" data-cake-key="red-velvet" data-category="sweet-menu" data-stock="instock" onclick="selectShowcaseCake('red-velvet', this)">
+<div class="spotlight-layer absolute -top-14 w-32 md:w-36 h-48 md:h-52 bg-gradient-to-b from-[#E3A04B]/40 to-transparent rounded-full blur-2xl pointer-events-none opacity-40 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300"></div>
+<div class="relative flex flex-col items-center pt-2 md:pt-8">
+<div class="w-28 h-28 md:w-44 md:h-44 relative flex items-center justify-center">
+<img alt="Red Velvet Rose" class="w-24 h-24 md:w-40 md:h-40 object-contain drop-shadow-[0_16px_14px_rgba(0,0,0,0.65)] transform transition-transform duration-300 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDplKcAwyL6K9cKEf4IdT_HFv-agCb6r4wBjDSQriIJptVllKicfXj5JeOP9Iya7JWfGluI_beKm1mykqnM-NA16dzcZWclguacsRBnL1NmjTgyZaVm37QzpeZ1ux_KEcPnQ6uazIKFWGo7Vgh52Qyqdzx1I-FBNEJUbfH1SH3LGaALSzO4yqfaHBv1yUZyEvrkqrgdBj9w8vKKD7k_DNeLuuoeXCT0ZoilUeXLY_0">
+</div>
+<div class="w-24 md:w-36 h-2 md:h-3 bg-gradient-to-r from-[#8C5D2C] via-[#E3A04B] to-[#8C5D2C] rounded-full shadow-lg border border-[#FDF2D8]/30 -mt-1 md:-mt-2"></div>
+<div class="w-12 md:w-16 h-1 md:h-1.5 bg-[#CA8B4A] rounded-full mx-auto -mt-0.5 opacity-80"></div>
+</div>
+<div class="text-center mt-2 md:mt-3 w-full px-1">
+<h3 class="font-['Playfair_Display',serif] text-[13px] md:text-base font-bold text-[#FDF2D8] group-hover:text-[#E3A04B] transition-colors truncate">Red Velvet Rose</h3>
+<div class="flex items-center justify-center gap-1.5 mt-1">
+<span class="text-[13px] font-bold text-[#E3A04B]">₹750 <span class="text-[9px] font-normal text-[#F2E4C9]/70">/ kg</span></span>
+<span class="w-1.5 h-1.5 rounded-full bg-[#E3A04B]"></span>
+</div>
+</div>
+</div>
+<!-- Cake 2: Oreo Chocolate (In Stock) -->
+<div class="cake-card group relative flex flex-col items-center cursor-pointer transition-all duration-300 w-[150px] md:w-auto h-[210px] md:h-auto flex-shrink-0 snap-start" data-cake-key="oreo-chocolate" data-category="sweet-menu" data-stock="instock" onclick="selectShowcaseCake('oreo-chocolate', this)">
+<div class="spotlight-layer absolute -top-14 w-32 md:w-36 h-48 md:h-52 bg-gradient-to-b from-[#E3A04B]/30 to-transparent rounded-full blur-2xl pointer-events-none opacity-40 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300"></div>
+<div class="relative flex flex-col items-center pt-2 md:pt-8">
+<div class="w-28 h-28 md:w-44 md:h-44 relative flex items-center justify-center">
+<img alt="Oreo Chocolate" class="w-24 h-24 md:w-40 md:h-40 object-contain drop-shadow-[0_16px_14px_rgba(0,0,0,0.65)] transform transition-transform duration-300 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcesXuTWM8oCkmUQke081RDXp61NMdJvBvYEoADTgtBfgx40WFABA-Ix6KEGAL-2jk67FvINAWsDtptB51E0AP225qYa37kJmIV2b7V1cHWokm6tN5aZqOdfILSzYsNcb3rXjGOeitGWVX_ihNvble8xQi0j_VUrM6V-6DISjBJ5ILFn3Jc7KYag1DXtneRNicfMkMwj9RazGBxoLmNtRUTmdNW9a16yExwajl9Kw">
+</div>
+<div class="w-24 md:w-36 h-2 md:h-3 bg-gradient-to-r from-[#8C5D2C] via-[#E3A04B] to-[#8C5D2C] rounded-full shadow-lg border border-[#FDF2D8]/30 -mt-1 md:-mt-2"></div>
+<div class="w-12 md:w-16 h-1 md:h-1.5 bg-[#CA8B4A] rounded-full mx-auto -mt-0.5 opacity-80"></div>
+</div>
+<div class="text-center mt-2 md:mt-3 w-full px-1">
+<h3 class="font-['Playfair_Display',serif] text-[13px] md:text-base font-bold text-[#FDF2D8] group-hover:text-[#E3A04B] transition-colors truncate">Oreo Chocolate</h3>
+<div class="flex items-center justify-center gap-1.5 mt-1">
+<span class="text-[13px] font-bold text-[#E3A04B]">₹550 <span class="text-[9px] font-normal text-[#F2E4C9]/70">/ kg</span></span>
+<span class="w-1.5 h-1.5 rounded-full bg-[#E3A04B]"></span>
+</div>
+</div>
+</div>
+<!-- Cake 3: Royal Berry Gateau (Few Left - DEFAULT SELECTED) -->
+<div class="cake-card group relative flex flex-col items-center cursor-pointer transition-all duration-300 is-selected w-[150px] md:w-auto h-[210px] md:h-auto flex-shrink-0 snap-start" data-cake-key="royal-berry" data-category="sweet-menu" data-stock="fewleft" onclick="selectShowcaseCake('royal-berry', this)">
+<div class="spotlight-layer absolute -top-14 w-32 md:w-36 h-48 md:h-52 bg-gradient-to-b from-[#E3A04B]/30 to-transparent rounded-full blur-2xl pointer-events-none opacity-90 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300"></div>
+<div class="relative flex flex-col items-center pt-2 md:pt-8">
+<div class="w-28 h-28 md:w-44 md:h-44 relative flex items-center justify-center">
+<img alt="Royal Berry Gateau" class="w-24 h-24 md:w-40 md:h-40 object-contain drop-shadow-[0_16px_14px_rgba(0,0,0,0.65)] transform transition-transform duration-300 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmkwJlOtwpTejVrfn6AOCsRYjXVIHX0EbIcnG-uKHM5jPqZd-E4QEwm2RkO8YIcaP2Bphjrp25pyIdDpsGnanUQHpogmwgOblQN75Dfc83AaY9rSD8TJIgxdbTlen-ePt662k-zCnbwR0WXLOI-jSbAaTyXEyGt43BxzdKQM8029fIkr4phW6k_zoJHlf2vdhkkjX4Ak64K61MOwF2A4JUHDx5RvtOFuQ2uT-15dA">
+</div>
+<div class="w-24 md:w-36 h-2 md:h-3 bg-gradient-to-r from-[#8C5D2C] via-[#E3A04B] to-[#8C5D2C] rounded-full shadow-lg border border-[#FDF2D8]/30 -mt-1 md:-mt-2"></div>
+<div class="w-12 md:w-16 h-1 md:h-1.5 bg-[#CA8B4A] rounded-full mx-auto -mt-0.5 opacity-80"></div>
+</div>
+<div class="text-center mt-2 md:mt-3 w-full px-1">
+<h3 class="font-['Playfair_Display',serif] text-[13px] md:text-base font-bold text-[#FDF2D8] group-hover:text-[#E3A04B] transition-colors truncate">Royal Berry Gateau</h3>
+<div class="flex items-center justify-center gap-1.5 mt-1">
+<span class="text-[13px] font-bold text-[#E3A04B]">₹780 <span class="text-[9px] font-normal text-[#F2E4C9]/70">/ kg</span></span>
+<span class="w-1.5 h-1.5 rounded-full bg-[#9A1C20] animate-pulse"></span>
+</div>
+</div>
+</div>
+<!-- Cake 4: Ferrero Rocher (Sold Out) -->
+<div class="cake-card group relative flex flex-col items-center cursor-pointer transition-all duration-300 opacity-40 hover:opacity-100 w-[150px] md:w-auto h-[210px] md:h-auto flex-shrink-0 snap-start" data-cake-key="ferrero-rocher" data-category="sweet-menu" data-stock="soldout" onclick="selectShowcaseCake('ferrero-rocher', this)">
+<div class="relative flex flex-col items-center pt-2 md:pt-8">
+<div class="w-28 h-28 md:w-44 md:h-44 relative flex items-center justify-center">
+<div class="absolute z-20 px-2 py-0.5 bg-[#FDF2D8] text-[#5C0302] border border-[#CA8B4A] text-[9px] font-bold uppercase tracking-wider rounded shadow-md transform -rotate-12 pointer-events-none">Sold out</div>
+<img alt="Ferrero Rocher" class="w-24 h-24 md:w-40 md:h-40 object-contain drop-shadow-[0_16px_14px_rgba(0,0,0,0.65)] transform transition-transform duration-300 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuATITdLMaM3hyXu4wc63nNN1WYLfJDKGY96WiFvdUA6omMCYSjVn57ASKeCSdyloyvTTkkkWaaW3l7ASXMA-W5WYrGH3jpDTRY6as84hdxX8Zh_UoABYH-Hiz_ADZl5NKroeUfTbx-69UktczD5yIzd9LdFJc_7rcDFGeYFRfpWWcICPk30PosTlz2c6SATCmCpDIJ8bUGimOTzOLCVJxJWjBIjPk9ROee2V2foJ8I">
+</div>
+<div class="w-24 md:w-36 h-2 md:h-3 bg-gradient-to-r from-[#8C5D2C] via-[#E3A04B] to-[#8C5D2C] rounded-full shadow-lg border border-[#FDF2D8]/30 -mt-1 md:-mt-2"></div>
+<div class="w-12 md:w-16 h-1 md:h-1.5 bg-[#CA8B4A] rounded-full mx-auto -mt-0.5 opacity-80"></div>
+</div>
+<div class="text-center mt-2 md:mt-3 w-full px-1">
+<h3 class="font-['Playfair_Display',serif] text-[13px] md:text-base font-bold text-[#FDF2D8] group-hover:text-[#E3A04B] transition-colors truncate">Ferrero Rocher</h3>
+<div class="flex items-center justify-center gap-1.5 mt-1">
+<span class="text-[13px] font-bold text-[#5C0302]/70">Sold out</span>
+<span class="w-1.5 h-1.5 rounded-full border border-[#5C0302]/60"></span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="w-full mt-1.5 md:mt-2 h-2.5 md:h-3.5 border-t-2 border-[#E3A04B] shadow-[0_4px_25px_rgba(227,160,75,0.45)] bg-gradient-to-r from-[#CA8B4A]/40 via-[#E3A04B]/80 to-[#CA8B4A]/40 relative rounded-sm"><div class="absolute -bottom-2 inset-x-0 h-2 bg-black/60 blur-[3px]"></div></div>
+</div>
+<!-- SHELF 2: Chocolate Dreams -->
+<div class="shelf-section" data-category="chocolate-dreams">
+<div class="flex items-center gap-2.5 md:gap-3 mb-3 md:mb-4 h-7 md:h-auto">
+<div class="h-7 md:h-auto px-3 md:px-3.5 py-0.5 md:py-1 rounded-full bg-gradient-to-r from-[#CA8B4A]/40 via-[#E3A04B]/30 to-[#CA8B4A]/40 border border-[#CA8B4A] shadow-md flex items-center gap-1.5 md:gap-2">
+<span class="material-symbols-outlined text-xs text-[#E3A04B]">cookie</span>
+<span class="text-[11px] md:text-xs font-bold tracking-wider uppercase text-[#FDF2D8]">Chocolate Dreams</span>
+<span class="text-[9px] md:text-[10px] text-[#E3A04B] font-mono font-semibold">(5 cakes)</span>
+</div>
+<div class="flex-1 h-px bg-gradient-to-r from-[#E3A04B]/40 to-transparent"></div>
+</div>
+<!-- Swipeable shelf row on mobile -->
+<div class="overflow-x-auto scroll-smooth pb-3 md:pb-4 select-none whitespace-nowrap" style="scrollbar-width: none; -ms-overflow-style: none;">
+<div class="flex flex-row flex-nowrap overflow-x-auto snap-x snap-mandatory gap-3 md:gap-8 md:grid md:grid-cols-4 vitrine-shelf min-w-max md:min-w-0 pb-2">
+<!-- Cake 5: Belgian Truffle -->
+<div class="cake-card group relative flex flex-col items-center cursor-pointer transition-all duration-300 w-[150px] md:w-auto h-[210px] md:h-auto flex-shrink-0 snap-start" data-cake-key="belgian-truffle" data-category="chocolate-dreams" data-stock="instock" onclick="selectShowcaseCake('belgian-truffle', this)">
+<div class="relative flex flex-col items-center pt-2 md:pt-8">
+<div class="w-28 h-28 md:w-44 md:h-44 relative flex items-center justify-center">
+<img alt="Belgian Truffle" class="w-24 h-24 md:w-40 md:h-40 object-contain drop-shadow-[0_16px_14px_rgba(0,0,0,0.65)] transform transition-transform duration-300 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcesXuTWM8oCkmUQke081RDXp61NMdJvBvYEoADTgtBfgx40WFABA-Ix6KEGAL-2jk67FvINAWsDtptB51E0AP225qYa37kJmIV2b7V1cHWokm6tN5aZqOdfILSzYsNcb3rXjGOeitGWVX_ihNvble8xQi0j_VUrM6V-6DISjBJ5ILFn3Jc7KYag1DXtneRNicfMkMwj9RazGBxoLmNtRUTmdNW9a16yExwajl9Kw">
+</div>
+<div class="w-24 md:w-36 h-2 md:h-3 bg-gradient-to-r from-[#8C5D2C] via-[#E3A04B] to-[#8C5D2C] rounded-full shadow-lg border border-[#FDF2D8]/30 -mt-1 md:-mt-2"></div>
+<div class="w-12 md:w-16 h-1 md:h-1.5 bg-[#CA8B4A] rounded-full mx-auto -mt-0.5 opacity-80"></div>
+</div>
+<div class="text-center mt-2 md:mt-3 w-full px-1">
+<h3 class="font-['Playfair_Display',serif] text-[13px] md:text-base font-bold text-[#FDF2D8] group-hover:text-[#E3A04B] transition-colors truncate">Belgian Truffle</h3>
+<div class="flex items-center justify-center gap-1.5 mt-1">
+<span class="text-[13px] font-bold text-[#E3A04B]">₹850 <span class="text-[9px] font-normal text-[#F2E4C9]/70">/ kg</span></span>
+<span class="w-1.5 h-1.5 rounded-full bg-[#E3A04B]"></span>
+</div>
+</div>
+</div>
+<!-- Cake 6: Black Forest -->
+<div class="cake-card group relative flex flex-col items-center cursor-pointer transition-all duration-300 w-[150px] md:w-auto h-[210px] md:h-auto flex-shrink-0 snap-start" data-cake-key="black-forest" data-category="chocolate-dreams" data-stock="fewleft" onclick="selectShowcaseCake('black-forest', this)">
+<div class="relative flex flex-col items-center pt-2 md:pt-8">
+<div class="w-28 h-28 md:w-44 md:h-44 relative flex items-center justify-center">
+<img alt="Black Forest" class="w-24 h-24 md:w-40 md:h-40 object-contain drop-shadow-[0_16px_14px_rgba(0,0,0,0.65)] transform transition-transform duration-300 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmkwJlOtwpTejVrfn6AOCsRYjXVIHX0EbIcnG-uKHM5jPqZd-E4QEwm2RkO8YIcaP2Bphjrp25pyIdDpsGnanUQHpogmwgOblQN75Dfc83AaY9rSD8TJIgxdbTlen-ePt662k-zCnbwR0WXLOI-jSbAaTyXEyGt43BxzdKQM8029fIkr4phW6k_zoJHlf2vdhkkjX4Ak64K61MOwF2A4JUHDx5RvtOFuQ2uT-15dA">
+</div>
+<div class="w-24 md:w-36 h-2 md:h-3 bg-gradient-to-r from-[#8C5D2C] via-[#E3A04B] to-[#8C5D2C] rounded-full shadow-lg border border-[#FDF2D8]/30 -mt-1 md:-mt-2"></div>
+<div class="w-12 md:w-16 h-1 md:h-1.5 bg-[#CA8B4A] rounded-full mx-auto -mt-0.5 opacity-80"></div>
+</div>
+<div class="text-center mt-2 md:mt-3 w-full px-1">
+<h3 class="font-['Playfair_Display',serif] text-[13px] md:text-base font-bold text-[#FDF2D8] group-hover:text-[#E3A04B] transition-colors truncate">Black Forest</h3>
+<div class="flex items-center justify-center gap-1.5 mt-1">
+<span class="text-[13px] font-bold text-[#E3A04B]">₹750 <span class="text-[9px] font-normal text-[#F2E4C9]/70">/ kg</span></span>
+<span class="w-1.5 h-1.5 rounded-full bg-[#9A1C20] animate-pulse"></span>
+</div>
+</div>
+</div>
+<!-- Cake 7: Dark Truffle Noir -->
+<div class="cake-card group relative flex flex-col items-center cursor-pointer transition-all duration-300 w-[150px] md:w-auto h-[210px] md:h-auto flex-shrink-0 snap-start" data-cake-key="dark-truffle" data-category="chocolate-dreams" data-stock="instock" onclick="selectShowcaseCake('belgian-truffle', this)">
+<div class="relative flex flex-col items-center pt-2 md:pt-8">
+<div class="w-28 h-28 md:w-44 md:h-44 relative flex items-center justify-center">
+<img alt="Dark Truffle Noir" class="w-24 h-24 md:w-40 md:h-40 object-contain drop-shadow-[0_16px_14px_rgba(0,0,0,0.65)] transform transition-transform duration-300 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcesXuTWM8oCkmUQke081RDXp61NMdJvBvYEoADTgtBfgx40WFABA-Ix6KEGAL-2jk67FvINAWsDtptB51E0AP225qYa37kJmIV2b7V1cHWokm6tN5aZqOdfILSzYsNcb3rXjGOeitGWVX_ihNvble8xQi0j_VUrM6V-6DISjBJ5ILFn3Jc7KYag1DXtneRNicfMkMwj9RazGBxoLmNtRUTmdNW9a16yExwajl9Kw">
+</div>
+<div class="w-24 md:w-36 h-2 md:h-3 bg-gradient-to-r from-[#8C5D2C] via-[#E3A04B] to-[#8C5D2C] rounded-full shadow-lg border border-[#FDF2D8]/30 -mt-1 md:-mt-2"></div>
+<div class="w-12 md:w-16 h-1 md:h-1.5 bg-[#CA8B4A] rounded-full mx-auto -mt-0.5 opacity-80"></div>
+</div>
+<div class="text-center mt-2 md:mt-3 w-full px-1">
+<h3 class="font-['Playfair_Display',serif] text-[13px] md:text-base font-bold text-[#FDF2D8] group-hover:text-[#E3A04B] transition-colors truncate">Dark Truffle</h3>
+<div class="flex items-center justify-center gap-1.5 mt-1">
+<span class="text-[13px] font-bold text-[#E3A04B]">₹850 <span class="text-[9px] font-normal text-[#F2E4C9]/70">/ kg</span></span>
+<span class="w-1.5 h-1.5 rounded-full bg-[#E3A04B]"></span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="w-full mt-1.5 md:mt-2 h-2.5 md:h-3.5 border-t-2 border-[#E3A04B] shadow-[0_4px_25px_rgba(227,160,75,0.45)] bg-gradient-to-r from-[#CA8B4A]/40 via-[#E3A04B]/80 to-[#CA8B4A]/40 relative rounded-sm"><div class="absolute -bottom-2 inset-x-0 h-2 bg-black/60 blur-[3px]"></div></div>
+</div>
+</div>
+<!-- FULL VIEW: On mobile, ONE swipeable row of mini cards 140x190px (no multi-col grid on mobile) -->
+<div class="hidden relative z-20 pt-4 md:pt-6 pb-4 md:pb-6 space-y-6 md:space-y-10" id="vitrine-full-view">
+<div class="full-view-category" data-category="sweet-menu">
+<div class="flex items-center gap-2.5 md:gap-3 mb-3 md:mb-5 h-7 md:h-auto">
+<div class="h-7 md:h-auto px-3 md:px-4 py-0.5 md:py-1.5 rounded-full bg-gradient-to-r from-[#CA8B4A]/40 via-[#E3A04B]/30 to-[#CA8B4A]/40 border border-[#CA8B4A] shadow-md flex items-center gap-1.5 md:gap-2">
+<span class="material-symbols-outlined text-xs md:text-sm text-[#E3A04B]">bakery_dining</span>
+<span class="text-[11px] md:text-xs font-bold tracking-wider uppercase text-[#FDF2D8]">Sweet Menu &amp; Specials</span>
+<span class="text-[9px] md:text-[11px] text-[#E3A04B] font-mono font-semibold">(5 items)</span>
+</div>
+<div class="flex-1 h-px bg-gradient-to-r from-[#E3A04B]/40 to-transparent"></div>
+</div>
+<div class="overflow-x-auto scroll-smooth pb-3 md:pb-0 select-none whitespace-nowrap md:whitespace-normal" style="scrollbar-width: none; -ms-overflow-style: none;">
+<div class="flex flex-row flex-nowrap overflow-x-auto snap-x gap-3 sm:gap-5 md:grid md:grid-cols-6 min-w-max md:min-w-0 pb-2">
+<div class="cake-card group relative flex flex-col items-center cursor-pointer p-2.5 md:p-3 rounded-2xl bg-[#3E0101]/60 border border-[#CA8B4A]/40 hover:border-[#E3A04B] hover:bg-[#5C0302]/80 transition-all duration-300 w-[140px] md:w-auto h-[190px] md:h-auto flex-shrink-0 snap-start" data-cake-key="red-velvet" data-category="sweet-menu" data-stock="instock" onclick="selectShowcaseCake('red-velvet', this)">
+<div class="w-24 h-24 md:w-28 md:h-28 relative flex items-center justify-center">
+<img alt="Red Velvet Rose" class="w-20 h-20 md:w-24 md:h-24 object-contain drop-shadow-md group-hover:scale-105 transition-transform" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDplKcAwyL6K9cKEf4IdT_HFv-agCb6r4wBjDSQriIJptVllKicfXj5JeOP9Iya7JWfGluI_beKm1mykqnM-NA16dzcZWclguacsRBnL1NmjTgyZaVm37QzpeZ1ux_KEcPnQ6uazIKFWGo7Vgh52Qyqdzx1I-FBNEJUbfH1SH3LGaALSzO4yqfaHBv1yUZyEvrkqrgdBj9w8vKKD7k_DNeLuuoeXCT0ZoilUeXLY_0">
+</div>
+<div class="text-center mt-1.5 md:mt-2 w-full px-1">
+<h4 class="font-['Playfair_Display',serif] text-xs font-bold text-[#FDF2D8] truncate group-hover:text-[#E3A04B]">Red Velvet Rose</h4>
+<span class="text-[10px] text-[#CA8B4A] font-semibold block mt-0.5">₹750 / kg</span>
+<span class="inline-block text-[9px] px-2 py-0.5 mt-1 rounded-full bg-[#9A1C20] text-[#FDF2D8]">In stock</span>
+</div>
+</div>
+<div class="cake-card group relative flex flex-col items-center cursor-pointer p-2.5 md:p-3 rounded-2xl bg-[#3E0101]/60 border border-[#CA8B4A]/40 hover:border-[#E3A04B] hover:bg-[#5C0302]/80 transition-all duration-300 w-[140px] md:w-auto h-[190px] md:h-auto flex-shrink-0 snap-start" data-cake-key="oreo-chocolate" data-category="sweet-menu" data-stock="instock" onclick="selectShowcaseCake('oreo-chocolate', this)">
+<div class="w-24 h-24 md:w-28 md:h-28 relative flex items-center justify-center">
+<img alt="Oreo Chocolate" class="w-20 h-20 md:w-24 md:h-24 object-contain drop-shadow-md group-hover:scale-105 transition-transform" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcesXuTWM8oCkmUQke081RDXp61NMdJvBvYEoADTgtBfgx40WFABA-Ix6KEGAL-2jk67FvINAWsDtptB51E0AP225qYa37kJmIV2b7V1cHWokm6tN5aZqOdfILSzYsNcb3rXjGOeitGWVX_ihNvble8xQi0j_VUrM6V-6DISjBJ5ILFn3Jc7KYag1DXtneRNicfMkMwj9RazGBxoLmNtRUTmdNW9a16yExwajl9Kw">
+</div>
+<div class="text-center mt-1.5 md:mt-2 w-full px-1">
+<h4 class="font-['Playfair_Display',serif] text-xs font-bold text-[#FDF2D8] truncate group-hover:text-[#E3A04B]">Oreo Chocolate</h4>
+<span class="text-[10px] text-[#CA8B4A] font-semibold block mt-0.5">₹550 / kg</span>
+<span class="inline-block text-[9px] px-2 py-0.5 mt-1 rounded-full bg-[#9A1C20] text-[#FDF2D8]">In stock</span>
+</div>
+</div>
+<div class="cake-card group relative flex flex-col items-center cursor-pointer p-2.5 md:p-3 rounded-2xl bg-[#3E0101]/60 border border-[#CA8B4A]/40 hover:border-[#E3A04B] hover:bg-[#5C0302]/80 transition-all duration-300 w-[140px] md:w-auto h-[190px] md:h-auto flex-shrink-0 snap-start" data-cake-key="royal-berry" data-category="sweet-menu" data-stock="fewleft" onclick="selectShowcaseCake('royal-berry', this)">
+<div class="w-24 h-24 md:w-28 md:h-28 relative flex items-center justify-center">
+<img alt="Royal Berry" class="w-20 h-20 md:w-24 md:h-24 object-contain drop-shadow-md group-hover:scale-105 transition-transform" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmkwJlOtwpTejVrfn6AOCsRYjXVIHX0EbIcnG-uKHM5jPqZd-E4QEwm2RkO8YIcaP2Bphjrp25pyIdDpsGnanUQHpogmwgOblQN75Dfc83AaY9rSD8TJIgxdbTlen-ePt662k-zCnbwR0WXLOI-jSbAaTyXEyGt43BxzdKQM8029fIkr4phW6k_zoJHlf2vdhkkjX4Ak64K61MOwF2A4JUHDx5RvtOFuQ2uT-15dA">
+</div>
+<div class="text-center mt-1.5 md:mt-2 w-full px-1">
+<h4 class="font-['Playfair_Display',serif] text-xs font-bold text-[#FDF2D8] truncate group-hover:text-[#E3A04B]">Royal Berry</h4>
+<span class="text-[10px] text-[#CA8B4A] font-semibold block mt-0.5">₹780 / kg</span>
+<span class="inline-block text-[9px] px-2 py-0.5 mt-1 rounded-full bg-[#9A1C20] text-[#FDF2D8]">Few left</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. CAKE DETAIL PANEL (Mobile View: ~640px compact layout with side-by-side branch/flavour & single swipeable rows) -->
+<section class="w-full bg-[#F2E4C9] text-[#5C0302] pt-3 md:pt-4 pb-12 md:pb-16 px-3 sm:px-8 relative border-t-4 border-[#CA8B4A]" id="cake-detail-panel">
+<div class="relative -top-3 md:-top-4 flex justify-center mb-2 md:mb-4">
+<div class="w-7 h-4 bg-[#5C0302] [clip-path:polygon(50%_100%,0_0,100%_0)] shadow-sm"></div>
+</div>
+<div class="max-w-6xl mx-auto bg-[#FDF2D8] rounded-2xl md:rounded-3xl border-2 border-[#CA8B4A]/60 p-4 sm:p-10 shadow-xl">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center">
+<!-- MOBILE ONLY: 200px tall cutout on 180px circle -->
+<div class="block lg:hidden w-full flex flex-col items-center justify-center">
+<div class="relative w-48 h-48 flex items-center justify-center">
+<div class="w-44 h-44 rounded-full bg-[#E5D5B5] shadow-inner absolute"></div>
+<img alt="Red Velvet Rose Cake Cutout" class="relative z-10 w-44 h-44 object-contain drop-shadow-[0_20px_25px_rgba(92,3,2,0.25)]" id="detail-cake-img-mobile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3seR9xSUGBJSL8fsV_JzEM0whsXByN3Y0a-2B2GrMkVGJGgz1edh_YbiKCeod1kp48dRTbZClad53alX6qD0LZ3pGmvyHZFrEvbpyXvVqkvB7O_FSWYNPRdZplCoPF2Vr_f0ADVP_DRS0vYTykH4G5A2wFwFQEnyMNGbf8lBfqfXzAH5d169wU2O08ZqjgRXjZHwngEpo-WgZbw4Y1fncGQcBPKE1QYY_BaEiN3k">
+</div>
+</div>
+<!-- LEFT COLUMN: Cake Details & Order Form (7 Cols) -->
+<div class="lg:col-span-7 space-y-4 md:space-y-6">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<div class="flex text-[#E3A04B]">
+<span class="material-symbols-outlined text-sm md:text-lg fill-current">star</span>
+<span class="material-symbols-outlined text-sm md:text-lg fill-current">star</span>
+<span class="material-symbols-outlined text-sm md:text-lg fill-current">star</span>
+<span class="material-symbols-outlined text-sm md:text-lg fill-current">star</span>
+<span class="material-symbols-outlined text-sm md:text-lg fill-current">star_half</span>
+</div>
+<span class="text-[13px] font-semibold text-[#5C0302]/80">4.8 rating, 126 reviews</span>
+</div>
+<h2 class="text-2xl md:text-4xl font-['Playfair_Display',serif] font-bold text-[#5C0302]" id="detail-cake-name">Red velvet</h2>
+</div>
+<!-- Price: 24px on mobile, 40px on desktop -->
+<div class="flex items-baseline gap-2">
+<span class="text-2xl md:text-4xl font-['Playfair_Display',serif] font-bold text-[#9A1C20]" id="detail-cake-total-price">₹900</span>
+<span class="text-xs uppercase tracking-wider text-[#5C0302]/70 font-semibold">(<span id="detail-cake-rate">₹750</span> / kg)</span>
+</div>
+<div class="flex items-center gap-2" id="detail-stock-indicator-wrap">
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[13px] font-semibold bg-[#CA8B4A]/20 border border-[#CA8B4A] text-[#5C0302]" id="detail-stock-pill"><span class="w-2 h-2 rounded-full bg-[#9A1C20] animate-pulse" id="detail-stock-dot"></span><span id="detail-stock-text">Only a few left</span></div>
+<span class="text-[13px] font-semibold text-[#9A1C20]" id="detail-stock-alert">Only a few left today. Order early.</span>
+</div>
+<!-- Weight Selection: ONE row of 44px pills -->
+<div>
+<label class="block text-xs uppercase tracking-wider font-bold text-[#5C0302] mb-1.5">Select Weight</label>
+<div class="flex items-center gap-3 overflow-x-auto whitespace-nowrap pb-1 flex-nowrap" style="scrollbar-width: none;">
+<button class="weight-pill px-4 py-2 rounded-full border border-[#CA8B4A]/60 bg-[#F2E4C9] text-[#5C0302] font-semibold text-xs transition-all hover:bg-[#E3A04B]/20" onclick="setDetailWeight(0.5, this)" type="button">0.5 kg</button>
+<button class="weight-pill px-4 py-2 rounded-full border border-[#CA8B4A]/60 bg-[#F2E4C9] text-[#5C0302] font-semibold text-xs transition-all hover:bg-[#E3A04B]/20" onclick="setDetailWeight(1.0, this)" type="button">1 kg</button>
+</div>
+</div>
+<!-- Mobile Side-by-side Flavour & Pickup Branch (each ~165x48px on mobile) -->
+<div class="grid grid-cols-2 gap-3">
+<div>
+<label class="block text-[11px] md:text-xs uppercase font-bold tracking-wider text-[#5C0302] mb-1">Flavour</label>
+<select class="w-full h-12 px-2.5 rounded-xl bg-[#FDF2D8] text-[#5C0302] font-medium text-xs border border-[#CA8B4A] focus:ring-2 focus:ring-[#9A1C20] focus:outline-none shadow-sm" id="detail-flavour-select">
+<option selected="" value="Chocolate">Chocolate Ganache</option>
+<option value="Vanilla Bean">Vanilla Bean</option>
+<option value="Cream Cheese">Cream Cheese</option>
+<option value="Berry Coulis">Berry Coulis</option>
+</select>
+</div>
+<div>
+<label class="block text-[11px] md:text-xs uppercase font-bold tracking-wider text-[#5C0302] mb-1">Pickup Branch</label>
+<select class="w-full h-12 px-2.5 rounded-xl bg-[#FDF2D8] text-[#5C0302] font-medium text-xs border border-[#CA8B4A] focus:ring-2 focus:ring-[#9A1C20] focus:outline-none shadow-sm" id="detail-branch-select">
+<option selected="" value="Branch 1">Olavanna Complex</option>
+<option value="Branch 2">Kattukulangara</option>
+<option value="Branch 3">Kulangarapeedika</option>
+</select>
+</div>
+</div>
+<!-- Message on Cake: 48px full width input -->
+<div>
+<label class="block text-[11px] md:text-xs uppercase font-bold tracking-wider text-[#5C0302] mb-1">Message on Cake</label>
+<input class="w-full h-12 px-3 rounded-xl bg-[#FDF2D8] text-[#5C0302] font-medium text-xs border border-[#CA8B4A] focus:ring-2 focus:ring-[#9A1C20] focus:outline-none shadow-sm" id="detail-cake-message" type="text" value="Happy birthday Anu">
+</div>
+<!-- Date & Time Picker: 48px full width input -->
+<div>
+<label class="block text-[11px] md:text-xs uppercase font-bold tracking-wider text-[#5C0302] mb-1">Pickup Date &amp; Time</label>
+<input class="w-full h-12 px-3 rounded-xl bg-[#FDF2D8] text-[#5C0302] font-medium text-xs border border-[#CA8B4A] focus:ring-2 focus:ring-[#9A1C20] focus:outline-none shadow-sm" id="detail-pickup-time" type="text" value="20 Nov, 5:00 PM">
+</div>
+<!-- "What's inside" Row of Outlined Pills in ONE swipeable row (32px) -->
+<div>
+<label class="block text-[11px] md:text-xs uppercase font-bold tracking-wider text-[#5C0302] mb-1.5">What’s inside</label>
+<div class="flex items-center gap-2 overflow-x-auto whitespace-nowrap pb-1 flex-nowrap" style="scrollbar-width: none;">
+<span class="inline-flex items-center h-8 px-3 rounded-full text-xs font-medium bg-[#FDF2D8] border border-[#CA8B4A]/60 text-[#5C0302] whitespace-nowrap shadow-sm gap-1.5 flex-shrink-0"><span class="w-1.5 h-1.5 rounded-full bg-[#CA8B4A]"></span>Fresh cream</span>
+<span class="inline-flex items-center h-8 px-3 rounded-full text-xs font-medium bg-[#FDF2D8] border border-[#CA8B4A]/60 text-[#5C0302] whitespace-nowrap shadow-sm gap-1.5 flex-shrink-0"><span class="w-1.5 h-1.5 rounded-full bg-[#CA8B4A]"></span>Cocoa</span>
+<span class="inline-flex items-center h-8 px-3 rounded-full text-xs font-medium bg-[#FDF2D8] border border-[#CA8B4A]/60 text-[#5C0302] whitespace-nowrap shadow-sm gap-1.5 flex-shrink-0"><span class="w-1.5 h-1.5 rounded-full bg-[#CA8B4A]"></span>Butter</span>
+<span class="inline-flex items-center h-8 px-3 rounded-full text-xs font-medium bg-[#FDF2D8] border border-[#CA8B4A]/60 text-[#5C0302] whitespace-nowrap shadow-sm gap-1.5 flex-shrink-0"><span class="w-1.5 h-1.5 rounded-full bg-[#CA8B4A]"></span>Eggs</span>
+<span class="inline-flex items-center h-8 px-3 rounded-full text-xs font-medium bg-[#FDF2D8] border border-[#CA8B4A]/60 text-[#5C0302] whitespace-nowrap shadow-sm gap-1.5 flex-shrink-0"><span class="w-1.5 h-1.5 rounded-full bg-[#CA8B4A]"></span>Flour</span>
+<span class="inline-flex items-center h-8 px-3 rounded-full text-xs font-medium bg-[#FDF2D8] border border-[#CA8B4A]/60 text-[#5C0302] whitespace-nowrap shadow-sm gap-1.5 flex-shrink-0"><span class="w-1.5 h-1.5 rounded-full bg-[#CA8B4A]"></span>Cherries</span>
+</div>
+</div>
+<button class="hidden sm:flex btn-shimmer w-full py-4 rounded-full font-bold text-sm uppercase tracking-wider bg-[#9A1C20] text-[#FDF2D8] hover:bg-[#801418] transition-all shadow-lg items-center justify-center gap-3" onclick="sendReadyMadeWhatsApp()" type="button">
+<svg class="w-5 h-5 fill-current text-[#FDF2D8]" viewBox="0 0 24 24"><path d="M12.031 0C5.399 0 0 5.399 0 12.031c0 2.119.553 4.185 1.602 6.008L.069 24l6.133-1.609c1.765.962 3.766 1.47 5.829 1.47 6.632 0 12.031-5.399 12.031-12.03C24.062 5.399 18.663 0 12.031 0zm0 22.008c-1.802 0-3.568-.485-5.109-1.401l-.367-.218-3.797.997 1.014-3.702-.239-.381c-1.008-1.605-1.541-3.468-1.541-5.272 0-5.517 4.488-10.005 10.039-10.005 5.551 0 10.039 4.488 10.039 10.005 0 5.517-4.488 10.005-10.039 10.005zm5.503-7.519c-.302-.151-1.785-.88-2.062-.981-.277-.101-.479-.151-.681.151-.202.302-.782.981-.958 1.183-.176.202-.353.227-.655.076-.302-.151-1.275-.47-2.428-1.498-.898-.8-1.503-1.789-1.68-2.091-.176-.302-.019-.465.132-.616.136-.135.302-.353.454-.529.151-.176.202-.302.302-.504.101-.202.05-.378-.025-.529-.076-.151-.681-1.642-.933-2.25-.245-.592-.494-.512-.681-.521l-.579-.01c-.202 0-.529.076-.806.378-.277.302-1.058 1.033-1.058 2.52 0 1.486 1.083 2.922 1.234 3.124.151.202 2.132 3.256 5.166 4.566.721.312 1.284.498 1.723.637.724.23 1.383.197 1.904.12.581-.087 1.785-.73 2.037-1.436.252-.705.252-1.309.176-1.436-.076-.126-.277-.202-.579-.353z"></path></svg>
+<span>Order on WhatsApp</span>
+</button>
+</div>
+<!-- RIGHT COLUMN: Desktop Large Cutout Image -->
+<div class="hidden lg:flex lg:col-span-5 flex-col items-center justify-center">
+<div class="relative w-80 h-80 flex items-center justify-center">
+<div class="w-72 h-72 rounded-full bg-[#E5D5B5] shadow-inner absolute"></div>
+<img alt="Selected Cake Cutout" class="relative z-10 w-64 h-64 object-contain drop-shadow-[0_24px_30px_rgba(92,3,2,0.3)] transition-all duration-300" id="detail-cake-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCoe0RkhLL8ZsHCUYT1cMsJ7jOG54EWltw3e0S846IJj7NOhDezDsxOLNiDXO1u9HjLPYAuyZiybpP-MwCyoYTog79XtMJR9IYfOuKZ5q9rZJB43Mr6vh7z0PXXSeND7sjenu_ZH5rMLmUhLU5Nt7tNHY5RAX_IEhPgRJvQHPqKOYoIe2TsG2rAA6s1tMd7DZvlWjrCGdai2l49ImxmKKp49bdW4LomBHwACSiqdn0">
+</div>
+<p class="text-xs text-[#5C0302]/70 italic mt-3">Daily artisanal batch • Certified pure Normandy dairy</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. CUSTOM CAKE BUILDER (~600px mobile: Option groups with 12px label + ONE swipeable row of 36px pills, 36px swatches, 48px message, 350x72px upload) -->
+<section class="w-full bg-[#F2E4C9] text-[#5C0302] py-10 md:py-16 px-3 sm:px-8 border-t-2 border-[#CA8B4A]/60 relative overflow-hidden" id="custom-builder"><div class="absolute -bottom-20 -left-20 w-96 h-96 bg-[#9A1C20]/10 rounded-full blur-3xl pointer-events-none"></div><div class="max-w-6xl mx-auto relative z-10"><div class="text-center mb-8 md:mb-12"><h2 class="text-2xl md:text-5xl font-['Playfair_Display',serif] font-bold text-[#5C0302]">Design a custom cake</h2><p class="text-xs md:text-base text-[#5C0302]/80 mt-1.5 md:mt-2 max-w-xl mx-auto">Pick your options, and your order goes to WhatsApp.</p></div><div class="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-start"><div class="lg:col-span-7 bg-[#FDF2D8] text-[#5C0302] rounded-2xl md:rounded-3xl p-4 sm:p-8 border-2 border-[#CA8B4A] shadow-2xl space-y-4 md:space-y-6"><div><label class="block text-xs uppercase font-bold tracking-wider text-[#5C0302] mb-1.5">Shape</label><div class="flex items-center gap-2 overflow-x-auto whitespace-nowrap pb-1 flex-nowrap" style="scrollbar-width: none;"><button class="custom-shape-btn h-9 px-4 rounded-xl border-2 border-[#5C0302] bg-[#5C0302] text-[#FDF2D8] font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm transition-all flex-shrink-0" onclick="setCustomShape('Round', this)" type="button"><span class="material-symbols-outlined text-sm text-[#E3A04B]">circle</span> Round</button><button class="custom-shape-btn h-9 px-4 rounded-xl border border-[#CA8B4A]/60 bg-[#F2E4C9] text-[#5C0302] font-semibold text-xs flex items-center justify-center gap-1.5 transition-all hover:bg-[#E3A04B]/20 flex-shrink-0" onclick="setCustomShape('Square', this)" type="button"><span class="material-symbols-outlined text-sm text-[#CA8B4A]">square</span> Square</button><button class="custom-shape-btn h-9 px-4 rounded-xl border border-[#CA8B4A]/60 bg-[#F2E4C9] text-[#5C0302] font-semibold text-xs flex items-center justify-center gap-1.5 transition-all hover:bg-[#E3A04B]/20 flex-shrink-0" onclick="setCustomShape('Heart', this)" type="button"><span class="material-symbols-outlined text-sm text-[#9A1C20]">favorite</span> Heart</button></div></div><div><label class="block text-xs uppercase font-bold tracking-wider text-[#5C0302] mb-1.5">Flavour</label><div class="flex items-center gap-2 overflow-x-auto whitespace-nowrap pb-1 flex-nowrap" style="scrollbar-width: none;"><button class="custom-flavour-btn h-9 px-4 rounded-xl border border-[#CA8B4A]/60 bg-[#F2E4C9] text-[#5C0302] font-medium text-xs text-center transition-all hover:bg-[#E3A04B]/20 flex-shrink-0" onclick="setCustomFlavour('Vanilla', this)" type="button">Vanilla</button><button class="custom-flavour-btn h-9 px-4 rounded-xl border-2 border-[#5C0302] bg-[#5C0302] text-[#FDF2D8] font-bold text-xs text-center shadow-sm transition-all flex-shrink-0" onclick="setCustomFlavour('Chocolate', this)" type="button">Chocolate</button><button class="custom-flavour-btn h-9 px-4 rounded-xl border border-[#CA8B4A]/60 bg-[#F2E4C9] text-[#5C0302] font-medium text-xs text-center transition-all hover:bg-[#E3A04B]/20 flex-shrink-0" onclick="setCustomFlavour('Red velvet', this)" type="button">Red velvet</button><button class="custom-flavour-btn h-9 px-4 rounded-xl border border-[#CA8B4A]/60 bg-[#F2E4C9] text-[#5C0302] font-medium text-xs text-center transition-all hover:bg-[#E3A04B]/20 flex-shrink-0" onclick="setCustomFlavour('Butterscotch', this)" type="button">Butterscotch</button></div></div><div><label class="block text-xs uppercase font-bold tracking-wider text-[#5C0302] mb-1.5">Layers</label><div class="flex items-center gap-2 overflow-x-auto whitespace-nowrap pb-1 flex-nowrap" style="scrollbar-width: none;"><button class="custom-layer-btn h-9 px-5 rounded-xl border border-[#CA8B4A]/60 bg-[#F2E4C9] text-[#5C0302] font-semibold text-xs text-center transition-all hover:bg-[#E3A04B]/20 flex-shrink-0" onclick="setCustomLayers('1', this)" type="button">1 layer</button><button class="custom-layer-btn h-9 px-5 rounded-xl border-2 border-[#5C0302] bg-[#5C0302] text-[#FDF2D8] font-bold text-xs text-center shadow-sm transition-all flex-shrink-0" onclick="setCustomLayers('2', this)" type="button">2 layers</button><button class="custom-layer-btn h-9 px-5 rounded-xl border border-[#CA8B4A]/60 bg-[#F2E4C9] text-[#5C0302] font-semibold text-xs text-center transition-all hover:bg-[#E3A04B]/20 flex-shrink-0" onclick="setCustomLayers('3', this)" type="button">3 layers</button></div></div><div><label class="block text-xs uppercase font-bold tracking-wider text-[#5C0302] mb-1.5">Size</label><div class="flex items-center gap-2 overflow-x-auto whitespace-nowrap pb-1 flex-nowrap" style="scrollbar-width: none;"><button class="custom-size-btn h-9 px-4 rounded-xl border border-[#CA8B4A]/60 bg-[#F2E4C9] text-[#5C0302] font-medium text-xs text-center transition-all hover:bg-[#E3A04B]/20 flex-shrink-0" onclick="setCustomSize('0.5 kg', this)" type="button">0.5 kg</button><button class="custom-size-btn h-9 px-4 rounded-xl border-2 border-[#5C0302] bg-[#5C0302] text-[#FDF2D8] font-bold text-xs text-center shadow-sm transition-all flex-shrink-0" onclick="setCustomSize('1 kg', this)" type="button">1 kg</button><button class="custom-size-btn h-9 px-4 rounded-xl border border-[#CA8B4A]/60 bg-[#F2E4C9] text-[#5C0302] font-medium text-xs text-center transition-all hover:bg-[#E3A04B]/20 flex-shrink-0" onclick="setCustomSize('2 kg', this)" type="button">2 kg</button><button class="custom-size-btn h-9 px-4 rounded-xl border border-[#CA8B4A]/60 bg-[#F2E4C9] text-[#5C0302] font-medium text-xs text-center transition-all hover:bg-[#E3A04B]/20 flex-shrink-0" onclick="setCustomSize('3 kg', this)" type="button">3 kg</button></div></div><div><label class="block text-xs uppercase font-bold tracking-wider text-[#5C0302] mb-1.5">Colour Theme</label><div class="flex items-center gap-4 overflow-x-auto whitespace-nowrap pb-1 flex-nowrap" style="scrollbar-width: none;"><button class="theme-swatch group relative flex flex-col items-center gap-1 flex-shrink-0" onclick="setCustomTheme('Cherry', this)" title="Cherry Red" type="button"><span class="w-9 h-9 rounded-full bg-[#9A1C20] border-2 border-[#5C0302] shadow-sm flex items-center justify-center text-[#FDF2D8]"></span><span class="text-[10px] font-bold text-[#5C0302]">Cherry</span></button><button class="theme-swatch group relative flex flex-col items-center gap-1 flex-shrink-0" onclick="setCustomTheme('Cream / Gold', this)" title="Cream / Gold" type="button"><span class="w-9 h-9 rounded-full bg-[#E3A04B] border-2 border-[#5C0302] shadow-sm flex items-center justify-center text-[#5C0302]"></span><span class="text-[10px] font-medium text-[#5C0302]">Gold</span></button><button class="theme-swatch group relative flex flex-col items-center gap-1 flex-shrink-0" onclick="setCustomTheme('Dark Chocolate', this)" title="Dark Chocolate" type="button"><span class="w-9 h-9 rounded-full bg-[#3B1E16] border-2 border-[#5C0302] shadow-sm flex items-center justify-center text-[#FDF2D8]"></span><span class="text-[10px] font-medium text-[#5C0302]">Choco</span></button><button class="theme-swatch group relative flex flex-col items-center gap-1 flex-shrink-0" onclick="setCustomTheme('Pastel Rose', this)" title="Pastel Rose" type="button"><span class="w-9 h-9 rounded-full bg-[#E8A5A5] border-2 border-[#5C0302] shadow-sm flex items-center justify-center text-[#5C0302] ring-2 ring-[#9A1C20] ring-offset-2 ring-offset-[#F2E4C9]"><span class="material-symbols-outlined text-sm font-bold">check</span></span><span class="text-[10px] font-medium text-[#5C0302]">Rose</span></button></div></div><div><label class="block text-xs uppercase font-bold tracking-wider text-[#5C0302] mb-1.5">Topper</label><div class="flex items-center gap-2 overflow-x-auto whitespace-nowrap pb-1 flex-nowrap" style="scrollbar-width: none;"><button class="custom-topper-btn h-9 px-4 rounded-xl border border-[#CA8B4A]/60 bg-[#F2E4C9] text-[#5C0302] font-medium text-xs text-center transition-all hover:bg-[#E3A04B]/20 flex-shrink-0" onclick="setCustomTopper('None', this)" type="button">None</button><button class="custom-topper-btn h-9 px-4 rounded-xl border border-[#CA8B4A]/60 bg-[#F2E4C9] text-[#5C0302] font-medium text-xs text-center transition-all hover:bg-[#E3A04B]/20 flex-shrink-0" onclick="setCustomTopper('Candles', this)" type="button">Candles</button><button class="custom-topper-btn h-9 px-4 rounded-xl border border-[#CA8B4A]/60 bg-[#F2E4C9] text-[#5C0302] font-medium text-xs text-center transition-all hover:bg-[#E3A04B]/20 flex-shrink-0" onclick="setCustomTopper('Flowers', this)" type="button">Flowers</button><button class="custom-topper-btn h-9 px-4 rounded-xl border-2 border-[#5C0302] bg-[#5C0302] text-[#FDF2D8] font-bold text-xs text-center shadow-sm transition-all flex-shrink-0" onclick="setCustomTopper('Name board', this)" type="button">Name board</button></div></div><div><label class="block text-xs uppercase font-bold tracking-wider text-[#5C0302] mb-1">Message on Cake</label><input class="w-full h-12 px-3 rounded-xl bg-[#F2E4C9] text-[#5C0302] font-medium text-xs border border-[#CA8B4A] focus:ring-2 focus:ring-[#9A1C20] focus:outline-none shadow-sm" id="custom-message-input" oninput="updateCustomSummary()" type="text" value="Happy birthday Anu"></div><div><label class="block text-xs uppercase font-bold tracking-wider text-[#5C0302] mb-1">Reference photo upload</label><div class="w-full max-w-[350px] h-[72px] mx-auto border-2 border-dashed border-[#CA8B4A] rounded-2xl px-3 py-2 text-center bg-[#F2E4C9]/50 hover:bg-[#F2E4C9] transition-colors cursor-pointer flex flex-row items-center justify-center gap-2.5"><span class="material-symbols-outlined text-xl text-[#9A1C20]">add_photo_alternate</span><div class="text-left"><span class="text-[11px] font-semibold text-[#5C0302] block leading-tight">Add a photo of the design you like</span><span class="text-[9px] text-[#5C0302]/70 block">PNG, JPG up to 10MB</span></div></div></div></div><div class="lg:col-span-5 sticky top-24"><div class="bg-[#FDF2D8] text-[#5C0302] rounded-2xl md:rounded-3xl p-5 sm:p-8 border-2 border-[#CA8B4A] shadow-2xl relative"><div class="flex items-center justify-between pb-3 md:pb-4 border-b border-[#CA8B4A]/40 mb-4 md:mb-6"><div class="flex items-center gap-2"><span class="material-symbols-outlined text-[#9A1C20] text-xl">auto_fix_high</span><h3 class="font-['Playfair_Display',serif] font-bold text-lg md:text-xl text-[#5C0302]">Live preview</h3></div><span class="px-2.5 py-0.5 md:py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#E3A04B] text-[#5C0302]">Custom Craft</span></div><div class="flex flex-col items-center justify-center mb-4 md:mb-6"><div class="relative w-44 h-44 md:w-56 md:h-56 flex items-center justify-center"><div class="w-36 h-36 md:w-48 md:h-48 rounded-full bg-[#E5D5B5] shadow-inner absolute"></div><div class="absolute top-2 right-2 md:right-4 z-20 bg-[#5C0302] text-[#FDF2D8] text-[9px] md:text-[10px] font-bold px-2 py-0.5 rounded-full shadow-md flex items-center gap-1" id="preview-topper-badge"><span class="material-symbols-outlined text-xs text-[#E3A04B]">celebration</span> Name board</div></div></div><div class="bg-[#F2E4C9] rounded-xl md:rounded-2xl p-3 md:p-4 border border-[#CA8B4A]/50 space-y-1.5 md:space-y-2 text-xs mb-4 md:mb-5"><div class="flex justify-between"><span class="text-[#5C0302]/70">Shape:</span><span class="font-bold text-[#5C0302]" id="sum-shape">Round</span></div><div class="flex justify-between"><span class="text-[#5C0302]/70">Flavour:</span><span class="font-bold text-[#5C0302]" id="sum-flavour">Chocolate</span></div><div class="flex justify-between"><span class="text-[#5C0302]/70">Layers:</span><span class="font-bold text-[#5C0302]" id="sum-layers">2</span></div><div class="flex justify-between"><span class="text-[#5C0302]/70">Size:</span><span class="font-bold text-[#5C0302]" id="sum-size">1 kg</span></div><div class="flex justify-between"><span class="text-[#5C0302]/70">Theme:</span><span class="font-bold text-[#5C0302]" id="sum-theme">Pastel Rose</span></div><div class="flex justify-between"><span class="text-[#5C0302]/70">Topper:</span><span class="font-bold text-[#5C0302]" id="sum-topper">Name board</span></div><div class="flex justify-between"><span class="text-[#5C0302]/70">Message:</span><span class="font-bold text-[#9A1C20] truncate max-w-[180px]" id="sum-message">Happy birthday Anu</span></div></div><p class="text-xs text-center text-[#5C0302]/80 font-medium italic mb-3 md:mb-4">We’ll confirm the price on WhatsApp</p><button class="btn-shimmer w-full py-3.5 md:py-4 rounded-full font-bold text-xs uppercase tracking-wider bg-[#9A1C20] text-[#FDF2D8] hover:bg-[#801418] transition-all shadow-xl flex items-center justify-center gap-2.5" onclick="sendCustomWhatsApp()" type="button"><svg class="w-4 h-4 fill-current text-[#FDF2D8]" viewBox="0 0 24 24"><path d="M12.031 0C5.399 0 0 5.399 0 12.031c0 2.119.553 4.185 1.602 6.008L.069 24l6.133-1.609c1.765.962 3.766 1.47 5.829 1.47 6.632 0 12.031-5.399 12.031-12.03C24.062 5.399 18.663 0 12.031 0zm0 22.008c-1.802 0-3.568-.485-5.109-1.401l-.367-.218-3.797.997 1.014-3.702-.239-.381c-1.008-1.605-1.541-3.468-1.541-5.272 0-5.517 4.488-10.005 10.039-10.005 5.551 0 10.039 4.488 10.039 10.005 0 5.517-4.488 10.005-10.039 10.005zm5.503-7.519c-.302-.151-1.785-.88-2.062-.981-.277-.101-.479-.151-.681.151-.202.302-.782.981-.958 1.183-.176.202-.353.227-.655.076-.302-.151-1.275-.47-2.428-1.498-.898-.8-1.503-1.789-1.68-2.091-.176-.302-.019-.465.132-.616.136-.135.302-.353.454-.529.151-.176.202-.302.302-.504.101-.202.05-.378-.025-.529-.076-.151-.681-1.642-.933-2.25-.245-.592-.494-.512-.681-.521l-.579-.01c-.202 0-.529.076-.806.378-.277.302-1.058 1.033-1.058 2.52 0 1.486 1.083 2.922 1.234 3.124.151.202 2.132 3.256 5.166 4.566.721.312 1.284.498 1.723.637.724.23 1.383.197 1.904.12.581-.087 1.785-.73 2.037-1.436.252-.705.252-1.309.176-1.436-.076-.126-.277-.202-.579-.353z"></path></svg><span>Order on WhatsApp</span></button></div></div></div></div></section>
+<!-- MOBILE STICKY BOTTOM BAR (68px high with live price and 190x48px Order on WhatsApp button) -->
+<div class="fixed bottom-0 inset-x-0 h-[68px] bg-[#5C0302]/95 border-t-2 border-[#E3A04B] px-4 z-50 flex items-center justify-between sm:hidden backdrop-blur-md shadow-2xl">
+<div class="flex flex-col justify-center">
+<div class="text-[10px] text-[#F2E4C9] uppercase tracking-wider font-semibold leading-tight">Total Price</div>
+<div class="text-xl font-['Playfair_Display',serif] font-bold text-[#E3A04B] leading-tight" id="sticky-mobile-price">₹1500</div>
+</div>
+<button class="w-[190px] h-12 rounded-full font-bold text-xs uppercase tracking-wider bg-[#9A1C20] text-[#FDF2D8] shadow-md flex items-center justify-center gap-2" onclick="sendReadyMadeWhatsApp()" type="button">
+<svg class="w-4 h-4 fill-current text-[#FDF2D8]" viewBox="0 0 24 24"><path d="M12.031 0C5.399 0 0 5.399 0 12.031c0 2.119.553 4.185 1.602 6.008L.069 24l6.133-1.609c1.765.962 3.766 1.47 5.829 1.47 6.632 0 12.031-5.399 12.031-12.03C24.062 5.399 18.663 0 12.031 0zm0 22.008c-1.802 0-3.568-.485-5.109-1.401l-.367-.218-3.797.997 1.014-3.702-.239-.381c-1.008-1.605-1.541-3.468-1.541-5.272 0-5.517 4.488-10.005 10.039-10.005 5.551 0 10.039 4.488 10.039 10.005 0 5.517-4.488 10.005-10.039 10.005zm5.503-7.519c-.302-.151-1.785-.88-2.062-.981-.277-.101-.479-.151-.681.151-.202.302-.782.981-.958 1.183-.176.202-.353.227-.655.076-.302-.151-1.275-.47-2.428-1.498-.898-.8-1.503-1.789-1.68-2.091-.176-.302-.019-.465.132-.616.136-.135.302-.353.454-.529.151-.176.202-.302.302-.504.101-.202.05-.378-.025-.529-.076-.151-.681-1.642-.933-2.25-.245-.592-.494-.512-.681-.521l-.579-.01c-.202 0-.529.076-.806.378-.277.302-1.058 1.033-1.058 2.52 0 1.486 1.083 2.922 1.234 3.124.151.202 2.132 3.256 5.166 4.566.721.312 1.284.498 1.723.637.724.23 1.383.197 1.904.12.581-.087 1.785-.73 2.037-1.436.252-.705.252-1.309.176-1.436-.076-.126-.277-.202-.579-.353z"></path></svg>
+<span>Order on WhatsApp</span>
+</button>
+</div>
+</main>
+<!-- FOOTER -->
+<!-- 5. CAKES WE'VE MADE GALLERY SECTION -->
+<section class="w-full bg-[#F2E4C9] text-[#5C0302] py-8 sm:py-20 border-t-2 border-[#CA8B4A]/60 relative overflow-hidden min-h-[330px]" id="cakes-we-have-made">
+<!-- Section Header -->
+<div class="max-w-4xl mx-auto text-center px-4 mb-6 sm:mb-12 relative z-10">
+<h2 class="text-2xl sm:text-4xl md:text-5xl font-['Playfair_Display',serif] font-bold text-[#5C0302] tracking-tight mb-1.5 sm:mb-3">
+      Cakes we’ve made
+    </h2>
+<p class="text-xs sm:text-base font-semibold text-[#9A1C20] tracking-wide">
+      Real cakes from our ovens, made for real celebrations.
+    </p>
+<div class="w-12 sm:w-16 h-0.5 bg-[#CA8B4A] mx-auto mt-2 sm:mt-4 rounded-full"></div>
+</div>
+<!-- Mobile swipeable arch photo cards: 150x200px, 12px captions -->
+<div class="relative w-full max-w-7xl mx-auto px-3 sm:px-8 py-2" id="gallery-carousel-container">
+<div class="hidden sm:block absolute left-4 top-1/2 -translate-y-1/2 z-30">
+<button aria-label="Previous cakes" class="w-11 h-11 rounded-full bg-[#5C0302] border-2 border-[#E3A04B] text-[#E3A04B] shadow-xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:bg-[#9A1C20] hover:text-[#FDF2D8]" id="gallery-prev-btn" onclick="slideGallery(-1)" type="button"><span class="material-symbols-outlined text-2xl font-bold">chevron_left</span></button>
+</div>
+<div class="hidden sm:block absolute right-4 top-1/2 -translate-y-1/2 z-30">
+<button aria-label="Next cakes" class="w-11 h-11 rounded-full bg-[#5C0302] border-2 border-[#E3A04B] text-[#E3A04B] shadow-xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:bg-[#9A1C20] hover:text-[#FDF2D8]" id="gallery-next-btn" onclick="slideGallery(1)" type="button"><span class="material-symbols-outlined text-2xl font-bold">chevron_right</span></button>
+</div>
+<div class="overflow-x-auto scroll-smooth py-2 px-1 select-none" id="gallery-track" style="scrollbar-width: none; -ms-overflow-style: none;">
+<div class="items-end gap-3 sm:gap-8 flex w-max snap-x snap-mandatory flex-nowrap" id="gallery-row-1"><div class="gallery-card group flex-shrink-0 w-[150px] sm:w-auto snap-center cursor-pointer flex flex-col items-center" onclick="openCakeLightbox('Salted Caramel Crunch', '1 kg • ₹720', 'Real celebration order #PB-284', 'https://lh3.googleusercontent.com/aida-public/AB6AXuAd7-7ocmbChhPNwMMhwrxko-iORhWM_hiEfytvT8TbpWon9taKSdOgO5xm1fYYkC_tkBgA1bTOuhnRUHx6YgxeHg7AArht0tKiDLB0YJdNRu6DT-G3PuWynYYtpNCoPiC3vQtMd-uN9qJtUjgjekhRSCDuyGJUpI1K8dascwauqAiyUm8QzjWTKauu1k1WoaVUntVYNZCqi6hJbgK_LA9sDfo9Qbswq0w0g0sJH2E')"><div class="w-[150px] sm:w-44 h-[200px] sm:h-56 rounded-t-full rounded-b-2xl border-[1.5px] border-[#CA8B4A] overflow-hidden shadow-lg relative bg-[#FDF2D8] transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 group-hover:border-[#E3A04B]"><img alt="Salted Caramel" class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAd7-7ocmbChhPNwMMhwrxko-iORhWM_hiEfytvT8TbpWon9taKSdOgO5xm1fYYkC_tkBgA1bTOuhnRUHx6YgxeHg7AArht0tKiDLB0YJdNRu6DT-G3PuWynYYtpNCoPiC3vQtMd-uN9qJtUjgjekhRSCDuyGJUpI1K8dascwauqAiyUm8QzjWTKauu1k1WoaVUntVYNZCqi6hJbgK_LA9sDfo9Qbswq0w0g0sJH2E"></div><div class="mt-2 text-center w-full px-1"><h4 class="font-['Playfair_Display',serif] font-bold text-xs sm:text-sm text-[#5C0302] truncate">Salted Caramel</h4><p class="text-[11px] font-medium text-[#9A1C20]">1 kg • ₹720</p></div></div><div class="gallery-card group flex-shrink-0 w-[150px] sm:w-auto snap-center cursor-pointer flex flex-col items-center" onclick="openCakeLightbox('Royal Berry Gateau', '1.5 kg • ₹780', 'Real celebration order #PB-285', 'https://lh3.googleusercontent.com/aida-public/AB6AXuDmkwJlOtwpTejVrfn6AOCsRYjXVIHX0EbIcnG-uKHM5jPqZd-E4QEwm2RkO8YIcaP2Bphjrp25pyIdDpsGnanUQHpogmwgOblQN75Dfc83AaY9rSD8TJIgxdbTlen-ePt662k-zCnbwR0WXLOI-jSbAaTyXEyGt43BxzdKQM8029fIkr4phW6k_zoJHlf2vdhkkjX4Ak64K61MOwF2A4JUHDx5RvtOFuQ2uT-15dA')"><div class="w-[150px] sm:w-44 h-[200px] sm:h-56 rounded-t-full rounded-b-2xl border-[1.5px] border-[#CA8B4A] overflow-hidden shadow-lg relative bg-[#FDF2D8] transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 group-hover:border-[#E3A04B]"><img alt="Royal Berry Gateau" class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmkwJlOtwpTejVrfn6AOCsRYjXVIHX0EbIcnG-uKHM5jPqZd-E4QEwm2RkO8YIcaP2Bphjrp25pyIdDpsGnanUQHpogmwgOblQN75Dfc83AaY9rSD8TJIgxdbTlen-ePt662k-zCnbwR0WXLOI-jSbAaTyXEyGt43BxzdKQM8029fIkr4phW6k_zoJHlf2vdhkkjX4Ak64K61MOwF2A4JUHDx5RvtOFuQ2uT-15dA"></div><div class="mt-2 text-center w-full px-1"><h4 class="font-['Playfair_Display',serif] font-bold text-xs sm:text-sm text-[#5C0302] truncate">Royal Berry Gateau</h4><p class="text-[11px] font-medium text-[#9A1C20]">1.5 kg • ₹780</p></div></div><div class="gallery-card group flex-shrink-0 w-[150px] sm:w-auto snap-center cursor-pointer flex flex-col items-center" onclick="openCakeLightbox('Belgian Dark Truffle', '1 kg • ₹850', 'Real celebration order #PB-286', 'https://lh3.googleusercontent.com/aida-public/AB6AXuDcesXuTWM8oCkmUQke081RDXp61NMdJvBvYEoADTgtBfgx40WFABA-Ix6KEGAL-2jk67FvINAWsDtptB51E0AP225qYa37kJmIV2b7V1cHWokm6tN5aZqOdfILSzYsNcb3rXjGOeitGWVX_ihNvble8xQi0j_VUrM6V-6DISjBJ5ILFn3Jc7KYag1DXtneRNicfMkMwj9RazGBxoLmNtRUTmdNW9a16yExwajl9Kw')"><div class="w-[150px] sm:w-44 h-[200px] sm:h-56 rounded-t-full rounded-b-2xl border-[1.5px] border-[#CA8B4A] overflow-hidden shadow-lg relative bg-[#FDF2D8] transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 group-hover:border-[#E3A04B]"><img alt="Belgian Dark Truffle" class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcesXuTWM8oCkmUQke081RDXp61NMdJvBvYEoADTgtBfgx40WFABA-Ix6KEGAL-2jk67FvINAWsDtptB51E0AP225qYa37kJmIV2b7V1cHWokm6tN5aZqOdfILSzYsNcb3rXjGOeitGWVX_ihNvble8xQi0j_VUrM6V-6DISjBJ5ILFn3Jc7KYag1DXtneRNicfMkMwj9RazGBxoLmNtRUTmdNW9a16yExwajl9Kw"></div><div class="mt-2 text-center w-full px-1"><h4 class="font-['Playfair_Display',serif] font-bold text-xs sm:text-sm text-[#5C0302] truncate">Belgian Dark Truffle</h4><p class="text-[11px] font-medium text-[#9A1C20]">1 kg • ₹850</p></div></div><div class="gallery-card group flex-shrink-0 w-[150px] sm:w-auto snap-center cursor-pointer flex flex-col items-center" onclick="openCakeLightbox('Butterscotch Praline', '1 kg • ₹680', 'Real celebration order #PB-287', 'https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&amp;fit=crop&amp;w=700&amp;q=80')"><div class="w-[150px] sm:w-44 h-[200px] sm:h-56 rounded-t-full rounded-b-2xl border-[1.5px] border-[#CA8B4A] overflow-hidden shadow-lg relative bg-[#FDF2D8] transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 group-hover:border-[#E3A04B]"><img alt="Butterscotch Praline" class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6ZgdjbRHd00azo2QU_GUCN2jXgmrHHHH0KpICxYroBMkHqvo2BdezRIjpP6it5q_OltftWGNZP5gDpwAKXwRBBiecmzebe7TBaIDgqCpD_KC6XSiACmB0U2k92zVSs58tx0DQZhcu-SAVi5GMK-nlRSHXHNZoRyqxHTVO4Qu1e0Al33D7qdjc7ry0elW71iPeIUXHvR95bcCk-cr-IIPWF3-qRNUIPfwgngfIK2M"></div><div class="mt-2 text-center w-full px-1"><h4 class="font-['Playfair_Display',serif] font-bold text-xs sm:text-sm text-[#5C0302] truncate">Butterscotch Praline</h4><p class="text-[11px] font-medium text-[#9A1C20]">1 kg • ₹680</p></div></div><div class="gallery-card group flex-shrink-0 w-[150px] sm:w-auto snap-center cursor-pointer flex flex-col items-center" onclick="openCakeLightbox('White Choco Rose', '2 kg • ₹1200', 'Real celebration order #PB-288', 'https://images.unsplash.com/photo-1535254973040-607b474cb50d?auto=format&amp;fit=crop&amp;w=800&amp;q=80')"><div class="w-[150px] sm:w-44 h-[200px] sm:h-56 rounded-t-full rounded-b-2xl border-[1.5px] border-[#CA8B4A] overflow-hidden shadow-lg relative bg-[#FDF2D8] transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 group-hover:border-[#E3A04B]"><img alt="White Choco Rose" class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDr16didSxpZglgEBDAu49QDXuu6pPhactZPVs37UdT2-GMLsz5fxZd5sBeynL0JLMo5ip3PqButXbl0aSJQu9fhiumnbC0wLACmDfZTRl2ouaj26MAkGDWysz_kvHfiBEPkq3ioEIDdL3h1G2HN9x9fqPIunhTVi_-gMAF4sVLgNbJVeIMGVByv-U_2cZ_V2iL8-Dl2f5U4uPhkfQWuIjog8EiHrGbgFzl_3qSjew"></div><div class="mt-2 text-center w-full px-1"><h4 class="font-['Playfair_Display',serif] font-bold text-xs sm:text-sm text-[#5C0302] truncate">White Choco Rose</h4><p class="text-[11px] font-medium text-[#9A1C20]">2 kg • ₹1200</p></div></div><div class="gallery-card group flex-shrink-0 w-[150px] sm:w-auto snap-center cursor-pointer flex flex-col items-center" onclick="openCakeLightbox('Fresh Strawberry Fraisier', '1.2 kg • ₹820', 'Real celebration order #PB-289', 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&amp;fit=crop&amp;w=700&amp;q=80')"><div class="w-[150px] sm:w-44 h-[200px] sm:h-56 rounded-t-full rounded-b-2xl border-[1.5px] border-[#CA8B4A] overflow-hidden shadow-lg relative bg-[#FDF2D8] transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 group-hover:border-[#E3A04B]"><img alt="Fresh Strawberry Fraisier" class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfgj--7Rwkzc74K_wTEMoNn5FpXMilVx9oRSnvbsO-syAAXkwgMh6RKKgiWrB0C3lBl1pH7RcJoWYhjKJEr9i6MqH3BvwWAodtpTX-964T0DL9PbKmDl9FVQ5iHUlX0hJqsYFbA3r3z3LTjs77PFVNqeYvf09Nt3_WraavL1-cZ8wH9t3OZpXStehyLsw7C_ktK5z4qO__ADVPrAHFRhtMMz4t1We2FV_C5JdTWk8"></div><div class="mt-2 text-center w-full px-1"><h4 class="font-['Playfair_Display',serif] font-bold text-xs sm:text-sm text-[#5C0302] truncate">Strawberry Fraisier</h4><p class="text-[11px] font-medium text-[#9A1C20]">1.2 kg • ₹820</p></div></div><div class="gallery-card group flex-shrink-0 w-[150px] sm:w-auto snap-center cursor-pointer flex flex-col items-center" onclick="openCakeLightbox('Pistachio Berry Paris-Brest', '1 kg • ₹890', 'Real celebration order #PB-290', 'https://images.unsplash.com/photo-1542826438-bd32f43d626f?auto=format&amp;fit=crop&amp;w=700&amp;q=80')"><div class="w-[150px] sm:w-44 h-[200px] sm:h-56 rounded-t-full rounded-b-2xl border-[1.5px] border-[#CA8B4A] overflow-hidden shadow-lg relative bg-[#FDF2D8] transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 group-hover:border-[#E3A04B]"><img alt="Pistachio Berry Paris-Brest" class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBL2r9f86h-iQHp_VPqWF44kIS8aijkzQ_AB-gYUhdA_tFcW0CL-hNNKr_Ajw9XHNLGkvTbrcAimLGWFQiWMgAuBk0uT_Bj73I0pZJkKnXLr-JebPCC8bfutWwWrl3P7Xnz_iLWNpPvlqC-nn6MqvsXosp5StDDqDxZUD95fTGL76DFhKHYK2M0Z2-FCfyj9OsxFtf7U-80Zu7TUxQLh_VSeEJ67SH5HrhqOA-vl3c"></div><div class="mt-2 text-center w-full px-1"><h4 class="font-['Playfair_Display',serif] font-bold text-xs sm:text-sm text-[#5C0302] truncate">Pistachio Paris-Brest</h4><p class="text-[11px] font-medium text-[#9A1C20]">1 kg • ₹890</p></div></div><div class="gallery-card group flex-shrink-0 w-[150px] sm:w-auto snap-center cursor-pointer flex flex-col items-center" onclick="openCakeLightbox('Lotus Biscoff Crunch', '1.5 kg • ₹950', 'Real celebration order #PB-291', 'https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?auto=format&amp;fit=crop&amp;w=700&amp;q=80')"><div class="w-[150px] sm:w-44 h-[200px] sm:h-56 rounded-t-full rounded-b-2xl border-[1.5px] border-[#CA8B4A] overflow-hidden shadow-lg relative bg-[#FDF2D8] transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 group-hover:border-[#E3A04B]"><img alt="Lotus Biscoff Crunch" class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD__69QRCD_hN1fEkrEgm6DzMKi3MbTTsJmGkUplVrFd_QhsmW7GNRehvYAfsbj0kq4doz95kd10zXZ2KDB7PLIKBxFGnm86Q7lYGZJf_mE8z6fAMQi2Ry_wkA0JTfJkcqt6s4U8VJiAmOg-4EDJEZ0R1iaEub6DvF8uz4qOe_XZic0Dr2PjLLxqqZofe8hRqz1lU-0aXzKFIShAHfRFZ_R3EL-6koongt21yd8sNM"></div><div class="mt-2 text-center w-full px-1"><h4 class="font-['Playfair_Display',serif] font-bold text-xs sm:text-sm text-[#5C0302] truncate">Lotus Biscoff</h4><p class="text-[11px] font-medium text-[#9A1C20]">1.5 kg • ₹950</p></div></div><div class="gallery-card group flex-shrink-0 w-[150px] sm:w-auto snap-center cursor-pointer flex flex-col items-center" onclick="openCakeLightbox('Black Forest Classic', '1 kg • ₹750', 'Real celebration order #PB-292', 'https://lh3.googleusercontent.com/aida-public/AB6AXuDmkwJlOtwpTejVrfn6AOCsRYjXVIHX0EbIcnG-uKHM5jPqZd-E4QEwm2RkO8YIcaP2Bphjrp25pyIdDpsGnanUQHpogmwgOblQN75Dfc83AaY9rSD8TJIgxdbTlen-ePt662k-zCnbwR0WXLOI-jSbAaTyXEyGt43BxzdKQM8029fIkr4phW6k_zoJHlf2vdhkkjX4Ak64K61MOwF2A4JUHDx5RvtOFuQ2uT-15dA')"><div class="w-[150px] sm:w-44 h-[200px] sm:h-56 rounded-t-full rounded-b-2xl border-[1.5px] border-[#CA8B4A] overflow-hidden shadow-lg relative bg-[#FDF2D8] transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 group-hover:border-[#E3A04B]"><img alt="Black Forest Classic" class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmkwJlOtwpTejVrfn6AOCsRYjXVIHX0EbIcnG-uKHM5jPqZd-E4QEwm2RkO8YIcaP2Bphjrp25pyIdDpsGnanUQHpogmwgOblQN75Dfc83AaY9rSD8TJIgxdbTlen-ePt662k-zCnbwR0WXLOI-jSbAaTyXEyGt43BxzdKQM8029fIkr4phW6k_zoJHlf2vdhkkjX4Ak64K61MOwF2A4JUHDx5RvtOFuQ2uT-15dA"></div><div class="mt-2 text-center w-full px-1"><h4 class="font-['Playfair_Display',serif] font-bold text-xs sm:text-sm text-[#5C0302] truncate">Black Forest Classic</h4><p class="text-[11px] font-medium text-[#9A1C20]">1 kg • ₹750</p></div></div><div class="gallery-card group flex-shrink-0 w-[150px] sm:w-auto snap-center cursor-pointer flex flex-col items-center" onclick="openCakeLightbox('Mango Mascarpone Bliss', '1 kg • ₹820', 'Real celebration order #PB-293', 'https://images.unsplash.com/photo-1535141192574-5d4897c13136?auto=format&amp;fit=crop&amp;w=700&amp;q=80')"><div class="w-[150px] sm:w-44 h-[200px] sm:h-56 rounded-t-full rounded-b-2xl border-[1.5px] border-[#CA8B4A] overflow-hidden shadow-lg relative bg-[#FDF2D8] transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 group-hover:border-[#E3A04B]"><img alt="Mango Mascarpone Bliss" class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBquuVBtB3Uk9gzsTLfrHvJOX_xB57h_nH1YFHBDZOHf7z8eKJpC1_o4eRY_9-7N0T2toZdilkqY3EaZYT6FMyh7osezVBv-M1neVDjyxWvwWJRdReP3eV9JNzvNkmR4pbg14byYETP976K2WyWtNYXCwvCgnO1o6Mzr3KJ1QQnQnKGePBUG5_MBzSYQDE0xXabNjpMXsEp3HtzVhouGjRRz3hO8PlX_1D6uT4q2J4"></div><div class="mt-2 text-center w-full px-1"><h4 class="font-['Playfair_Display',serif] font-bold text-xs sm:text-sm text-[#5C0302] truncate">Mango Mascarpone</h4><p class="text-[11px] font-medium text-[#9A1C20]">1 kg • ₹820</p></div></div><div class="gallery-card group flex-shrink-0 w-[150px] sm:w-auto snap-center cursor-pointer flex flex-col items-center" onclick="openCakeLightbox('Hazelnut Ferrero Supreme', '1.5 kg • ₹1100', 'Real celebration order #PB-294', 'https://lh3.googleusercontent.com/aida-public/AB6AXuATITdLMaM3hyXu4wc63nNN1WYLfJDKGY96WiFvdUA6omMCYSjVn57ASKeCSdyloyvTTkkkWaaW3l7ASXMA-W5WYrGH3jpDTRY6as84hdxX8Zh_UoABYH-Hiz_ADZl5NKroeUfTbx-69UktczD5yIzd9LdFJc_7rcDFGeYFRfpWWcICPk30PosTlz2c6SATCmCpDIJ8bUGimOTzOLCVJxJWjBIjPk9ROee2V2foJ8I')"><div class="w-[150px] sm:w-44 h-[200px] sm:h-56 rounded-t-full rounded-b-2xl border-[1.5px] border-[#CA8B4A] overflow-hidden shadow-lg relative bg-[#FDF2D8] transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 group-hover:border-[#E3A04B]"><img alt="Hazelnut Ferrero Supreme" class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuATITdLMaM3hyXu4wc63nNN1WYLfJDKGY96WiFvdUA6omMCYSjVn57ASKeCSdyloyvTTkkkWaaW3l7ASXMA-W5WYrGH3jpDTRY6as84hdxX8Zh_UoABYH-Hiz_ADZl5NKroeUfTbx-69UktczD5yIzd9LdFJc_7rcDFGeYFRfpWWcICPk30PosTlz2c6SATCmCpDIJ8bUGimOTzOLCVJxJWjBIjPk9ROee2V2foJ8I"></div><div class="mt-2 text-center w-full px-1"><h4 class="font-['Playfair_Display',serif] font-bold text-xs sm:text-sm text-[#5C0302] truncate">Hazelnut Ferrero</h4><p class="text-[11px] font-medium text-[#9A1C20]">1.5 kg • ₹1100</p></div></div><div class="gallery-card group flex-shrink-0 w-[150px] sm:w-auto snap-center cursor-pointer flex flex-col items-center" onclick="openCakeLightbox('Tiramisu Velvet Gateau', '1 kg • ₹840', 'Real celebration order #PB-295', 'https://images.unsplash.com/photo-1571115177098-24ec42ed204d?auto=format&amp;fit=crop&amp;w=700&amp;q=80')"><div class="w-[150px] sm:w-44 h-[200px] sm:h-56 rounded-t-full rounded-b-2xl border-[1.5px] border-[#CA8B4A] overflow-hidden shadow-lg relative bg-[#FDF2D8] transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 group-hover:border-[#E3A04B]"><img alt="Tiramisu Velvet Gateau" class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcORkmRchBqCQ637VNtuhjF3MgMZVJQLrPIsTpsYC2ZdFnJgKJ7A4r9TtQu6FumG5c6oSh5jgo6CWnHH9hVYMhYSgn30_mGPp76o6ZfTvGayJleE_Nq9K39gj-h5a89sVKI-rFLdXeyOLrsJnrgRmiNKGxrY-5sYpxRsWj3GdjYCDFhIdjCB0qLDogiEddiBfQ1CreOvUm_76Gjjc6aqy6RKlxfr7Yi18_8XrkyWA"></div><div class="mt-2 text-center w-full px-1"><h4 class="font-['Playfair_Display',serif] font-bold text-xs sm:text-sm text-[#5C0302] truncate">Tiramisu Velvet</h4><p class="text-[11px] font-medium text-[#9A1C20]">1 kg • ₹840</p></div></div><div class="gallery-card group flex-shrink-0 w-[150px] sm:w-auto snap-center cursor-pointer flex flex-col items-center" onclick="openCakeLightbox('Red Velvet Romance', '1.5 kg • ₹900', 'Real celebration order #PB-296', 'https://lh3.googleusercontent.com/aida-public/AB6AXuDplKcAwyL6K9cKEf4IdT_HFv-agCb6r4wBjDSQriIJptVllKicfXj5JeOP9Iya7JWfGluI_beKm1mykqnM-NA16dzcZWclguacsRBnL1NmjTgyZaVm37QzpeZ1ux_KEcPnQ6uazIKFWGo7Vgh52Qyqdzx1I-FBNEJUbfH1SH3LGaALSzO4yqfaHBv1yUZyEvrkqrgdBj9w8vKKD7k_DNeLuuoeXCT0ZoilUeXLY_0')"><div class="w-[150px] sm:w-44 h-[200px] sm:h-56 rounded-t-full rounded-b-2xl border-[1.5px] border-[#CA8B4A] overflow-hidden shadow-lg relative bg-[#FDF2D8] transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 group-hover:border-[#E3A04B]"><img alt="Red Velvet Romance" class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDplKcAwyL6K9cKEf4IdT_HFv-agCb6r4wBjDSQriIJptVllKicfXj5JeOP9Iya7JWfGluI_beKm1mykqnM-NA16dzcZWclguacsRBnL1NmjTgyZaVm37QzpeZ1ux_KEcPnQ6uazIKFWGo7Vgh52Qyqdzx1I-FBNEJUbfH1SH3LGaALSzO4yqfaHBv1yUZyEvrkqrgdBj9w8vKKD7k_DNeLuuoeXCT0ZoilUeXLY_0"></div><div class="mt-2 text-center w-full px-1"><h4 class="font-['Playfair_Display',serif] font-bold text-xs sm:text-sm text-[#5C0302] truncate">Red Velvet Romance</h4><p class="text-[11px] font-medium text-[#9A1C20]">1.5 kg • ₹900</p></div></div><div class="gallery-card group flex-shrink-0 w-[150px] sm:w-auto snap-center cursor-pointer flex flex-col items-center" onclick="openCakeLightbox('Dark Chocolate Opera', '1 kg • ₹980', 'Real celebration order #PB-297', 'https://lh3.googleusercontent.com/aida-public/AB6AXuBuRinQauLcOunev2Vv8FPwj_JYvP6FRUwb087T6nEJnv713Db5r5m-CgfdPXcxTr9mc5m8BBp7B65tXKBcHxTGIfcXd9fragnV80-TEPWXL8hf2MnhXjZ8sP2-r82p7rtv_DYDo9GDdxyQ1t7I4mxh-mve94RWHVsFAn0zm2krgmXa7o6J2ip2sQZT-PrIb6FSFn3g0LDWFRmVB76pe_ctrhUBjo_Do5YoDSKtiaI')"><div class="w-[150px] sm:w-44 h-[200px] sm:h-56 rounded-t-full rounded-b-2xl border-[1.5px] border-[#CA8B4A] overflow-hidden shadow-lg relative bg-[#FDF2D8] transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 group-hover:border-[#E3A04B]"><img alt="Dark Chocolate Opera" class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBuRinQauLcOunev2Vv8FPwj_JYvP6FRUwb087T6nEJnv713Db5r5m-CgfdPXcxTr9mc5m8BBp7B65tXKBcHxTGIfcXd9fragnV80-TEPWXL8hf2MnhXjZ8sP2-r82p7rtv_DYDo9GDdxyQ1t7I4mxh-mve94RWHVsFAn0zm2krgmXa7o6J2ip2sQZT-PrIb6FSFn3g0LDWFRmVB76pe_ctrhUBjo_Do5YoDSKtiaI"></div><div class="mt-2 text-center w-full px-1"><h4 class="font-['Playfair_Display',serif] font-bold text-xs sm:text-sm text-[#5C0302] truncate">Dark Chocolate Opera</h4><p class="text-[11px] font-medium text-[#9A1C20]">1 kg • ₹980</p></div></div><div class="gallery-card group flex-shrink-0 w-[150px] sm:w-auto snap-center cursor-pointer flex flex-col items-center" onclick="openCakeLightbox('Golden Honey Almond', '1.2 kg • ₹760', 'Real celebration order #PB-298', 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&amp;fit=crop&amp;w=700&amp;q=80')"><div class="w-[150px] sm:w-44 h-[200px] sm:h-56 rounded-t-full rounded-b-2xl border-[1.5px] border-[#CA8B4A] overflow-hidden shadow-lg relative bg-[#FDF2D8] transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 group-hover:border-[#E3A04B]"><img alt="Golden Honey Almond" class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDy1in9b-sSDnS6arSUVCAMc0ragFeFLHH_CZh5mAD5ZPB6PogfmlpXjf-cTuoy6Lw6Ze9rIdlBE9qjMnVhW0s1aeECvCmh3HZKUNx9rLwk3Nb6b3fMeWPv5GewRljZk_7k7mJO-1njkcQlXcAWaxLw1FMpEC9ZNDhadFYdonpHMN00DCqVyi9mh6Hsh-Kdz_LWR5168u4m88ISHS2Ic6k82BPbfALZ0RMT8o5u7g8"></div><div class="mt-2 text-center w-full px-1"><h4 class="font-['Playfair_Display',serif] font-bold text-xs sm:text-sm text-[#5C0302] truncate">Golden Honey Almond</h4><p class="text-[11px] font-medium text-[#9A1C20]">1.2 kg • ₹760</p></div></div></div>
+</div>
+<div class="flex items-center justify-center gap-2 mt-4 sm:mt-6" id="gallery-dots-container"><button aria-label="Cake 1" class="w-2.5 h-2.5 rounded-full bg-[#5C0302]/30 border border-[#CA8B4A] transition-all duration-300" onclick="scrollToGalleryDot(0)" type="button" style="animation-delay: 1242ms;"></button><button aria-label="Cake 2" class="w-2.5 h-2.5 rounded-full bg-[#5C0302]/30 border border-[#CA8B4A] transition-all duration-300" onclick="scrollToGalleryDot(1)" type="button" style="animation-delay: 1242ms;"></button><button aria-label="Cake 3" class="w-2.5 h-2.5 rounded-full bg-[#5C0302]/30 border border-[#CA8B4A] transition-all duration-300" onclick="scrollToGalleryDot(2)" type="button" style="animation-delay: 1242ms;"></button><button aria-label="Cake 4" class="w-2.5 h-2.5 rounded-full bg-[#5C0302]/30 border border-[#CA8B4A] transition-all duration-300" onclick="scrollToGalleryDot(3)" type="button" style="animation-delay: 1242ms;"></button><button aria-label="Cake 5" class="w-2.5 h-2.5 rounded-full bg-[#5C0302]/30 border border-[#CA8B4A] transition-all duration-300" onclick="scrollToGalleryDot(4)" type="button" style="animation-delay: 1242ms;"></button><button aria-label="Cake 6" class="w-2.5 h-2.5 rounded-full bg-[#5C0302]/30 border border-[#CA8B4A] transition-all duration-300" onclick="scrollToGalleryDot(5)" type="button" style="animation-delay: 1242ms;"></button><button aria-label="Cake 7" class="w-2.5 h-2.5 rounded-full bg-[#5C0302]/30 border border-[#CA8B4A] transition-all duration-300" onclick="scrollToGalleryDot(6)" type="button" style="animation-delay: 1242ms;"></button><button aria-label="Cake 8" class="w-6 h-2.5 rounded-full bg-[#5C0302] border border-[#CA8B4A] transition-all duration-300" onclick="scrollToGalleryDot(7)" type="button" style="animation-delay: 1242ms;"></button><button aria-label="Cake 9" class="w-2.5 h-2.5 rounded-full bg-[#5C0302]/30 border border-[#CA8B4A] transition-all duration-300" onclick="scrollToGalleryDot(8)" type="button" style="animation-delay: 1242ms;"></button><button aria-label="Cake 10" class="w-2.5 h-2.5 rounded-full bg-[#5C0302]/30 border border-[#CA8B4A] transition-all duration-300" onclick="scrollToGalleryDot(9)" type="button" style="animation-delay: 1242ms;"></button><button aria-label="Cake 11" class="w-2.5 h-2.5 rounded-full bg-[#5C0302]/30 border border-[#CA8B4A] transition-all duration-300" onclick="scrollToGalleryDot(10)" type="button" style="animation-delay: 1242ms;"></button><button aria-label="Cake 12" class="w-2.5 h-2.5 rounded-full bg-[#5C0302]/30 border border-[#CA8B4A] transition-all duration-300" onclick="scrollToGalleryDot(11)" type="button" style="animation-delay: 1242ms;"></button><button aria-label="Cake 13" class="w-2.5 h-2.5 rounded-full bg-[#5C0302]/30 border border-[#CA8B4A] transition-all duration-300" onclick="scrollToGalleryDot(12)" type="button" style="animation-delay: 1242ms;"></button><button aria-label="Cake 14" class="w-2.5 h-2.5 rounded-full bg-[#5C0302]/30 border border-[#CA8B4A] transition-all duration-300" onclick="scrollToGalleryDot(13)" type="button" style="animation-delay: 1242ms;"></button><button aria-label="Cake 15" class="w-2.5 h-2.5 rounded-full bg-[#5C0302]/30 border border-[#CA8B4A] transition-all duration-300" onclick="scrollToGalleryDot(14)" type="button" style="animation-delay: 1242ms;"></button></div>
+</div>
+<!-- Lightbox Modal -->
+<div class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-[#5C0302]/90 backdrop-blur-md transition-opacity duration-300" id="cake-lightbox" onclick="handleLightboxBackdropClick(event)">
+<div class="relative max-w-lg w-full bg-[#FDF2D8] border-2 border-[#CA8B4A] rounded-3xl p-6 sm:p-8 shadow-2xl flex flex-col items-center text-center transform transition-transform duration-300 scale-95" id="lightbox-card" onclick="event.stopPropagation()">
+<button aria-label="Close lightbox" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-[#5C0302] text-[#FDF2D8] hover:bg-[#9A1C20] flex items-center justify-center transition-colors shadow-md" onclick="closeCakeLightbox()" type="button">
+<span class="material-symbols-outlined text-xl">close</span>
+</button>
+<div class="w-56 h-72 sm:w-64 sm:h-80 rounded-t-full rounded-b-2xl border-[1.5px] border-[#CA8B4A] overflow-hidden shadow-2xl relative mb-5 bg-[#5C0302]/10 ring-4 ring-[#E3A04B]/30">
+<img alt="" class="w-full h-full object-cover object-center" id="lightbox-img" src="">
+</div>
+<h3 class="text-2xl sm:text-3xl font-['Playfair_Display',serif] font-bold text-[#5C0302] mb-1.5" id="lightbox-title"></h3>
+<p class="text-xs sm:text-sm text-[#5C0302]/80 font-medium mb-1" id="lightbox-desc"></p>
+<p class="text-[11px] font-mono uppercase tracking-wider text-[#9A1C20] mb-5 font-semibold" id="lightbox-ref"></p>
+<div class="w-full flex items-center justify-between gap-3 pt-2 border-t border-[#CA8B4A]/40">
+<button aria-label="Close" class="w-9 h-9 rounded-full border border-[#CA8B4A] bg-[#F2E4C9] text-[#5C0302] hover:bg-[#E3A04B]/30 flex items-center justify-center transition-colors shadow-sm" onclick="closeCakeLightbox()" type="button">
+<span class="material-symbols-outlined text-base">close</span>
+</button>
+<button class="btn-shimmer flex-1 py-3 px-5 rounded-full font-bold text-xs sm:text-sm uppercase tracking-wider bg-[#9A1C20] text-[#FDF2D8] hover:bg-[#801418] transition-all shadow-lg flex items-center justify-center gap-2" onclick="closeCakeLightbox()" type="button">
+<svg class="w-4 h-4 fill-current text-[#FDF2D8]" viewBox="0 0 24 24"><path d="M12.031 0C5.399 0 0 5.399 0 12.031c0 2.119.553 4.185 1.602 6.008L.069 24l6.133-1.609c1.765.962 3.766 1.47 5.829 1.47 6.632 0 12.031-5.399 12.031-12.03C24.062 5.399 18.663 0 12.031 0zm0 22.008c-1.802 0-3.568-.485-5.109-1.401l-.367-.218-3.797.997 1.014-3.702-.239-.381c-1.008-1.605-1.541-3.468-1.541-5.272 0-5.517 4.488-10.005 10.039-10.005 5.551 0 10.039 4.488 10.039 10.005 0 5.517-4.488 10.005-10.039 10.005zm5.503-7.519c-.302-.151-1.785-.88-2.062-.981-.277-.101-.479-.151-.681.151-.202.302-.782.981-.958 1.183-.176.202-.353.227-.655.076-.302-.151-1.275-.47-2.428-1.498-.898-.8-1.503-1.789-1.68-2.091-.176-.302-.019-.465.132-.616.136-.135.302-.353.454-.529.151-.176.202-.302.302-.504.101-.202.05-.378-.025-.529-.076-.151-.681-1.642-.933-2.25-.245-.592-.494-.512-.681-.521l-.579-.01c-.202 0-.529.076-.806.378-.277.302-1.058 1.033-1.058 2.52 0 1.486 1.083 2.922 1.234 3.124.151.202 2.132 3.256 5.166 4.566.721.312 1.284.498 1.723.637.724.23 1.383.197 1.904.12.581-.087 1.785-.73 2.037-1.436.252-.705.252-1.309.176-1.436-.076-.126-.277-.202-.579-.353z"></path></svg>
+<span>Order a cake like this</span>
+</button>
+</div>
+</div>
+</div>
+</section><footer class="w-full bg-[#5C0302] text-[#FDF2D8] py-12 border-t border-[#E3A04B]/30 pb-20 sm:pb-12">
+<div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-3">
+<img alt="Paradise Bakes Logo" class="h-7 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC13_ykJiL_2E3uyosMHzqz2UXmZ0A60KimO_iEOYNfpNuWLMbfrYmL9IMWV4y8mEsTdYIyHDxwa5UjzsPwadOvmtT-gjbq4XlsnL8JZD25n1IoPE9qR-qNNB4pZdQHYnkYRdu1ga-HKFZWKJCuovAvXOCHrMnF-oDa1EtFlQDhf1yWInTCKLlRJS_6QLnGTxXkhptzaHDFpMWfMh7BcizxRnUVPLhRJw06t7fYU2FLf99v9BNAs_lA">
+<span class="font-['Playfair_Display',serif] text-lg font-bold text-[#FDF2D8]">Paradise Bakes</span>
+</div>
+<p class="text-xs text-[#F2E4C9]/70 text-center">
+        © 2024 Paradise Bakes. All rights reserved. Artisanal Pâtisserie &amp; Café.
+      </p>
+<div class="flex items-center gap-4 text-xs text-[#E3A04B]"><div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-[#E3A04B] text-center"><span><strong>Olavanna:</strong> Paradise Complex, Main Road | +91 97442 42477 | 10:00 AM - 12:00 PM Daily</span><span class="hidden md:inline">•</span><span><strong>Kattukulangara:</strong> Junction Arcade, Station Road | +91 98467 72424 | 10:00 AM - 12:00 PM Daily</span><span class="hidden md:inline">•</span><span><strong>Kulangarapeedika:</strong> Heritage Square, Highway Corner | +91 99466 77707 | 10:00 AM - 12:00 PM Daily</span></div></div>
+</div>
+</footer>
+<!-- SCRIPT FOR STATE & WHATSAPP ORDERS -->
+<script>
+    // Ready-Made Cake Showcase Data
+    const showcaseCakes = {
+      'red-velvet': {
+        name: 'Red velvet',
+        displayName: 'Red Velvet Rose',
+        pricePerKg: 750,
+        img: 'https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?auto=format&fit=crop&w=600&q=80',
+        flavourDefault: 'Chocolate'
+      },
+      'belgian-truffle': {
+        name: 'Belgian truffle',
+        displayName: 'Belgian Chocolate Truffle',
+        pricePerKg: 850,
+        img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDcesXuTWM8oCkmUQke081RDXp61NMdJvBvYEoADTgtBfgx40WFABA-Ix6KEGAL-2jk67FvINAWsDtptB51E0AP225qYa37kJmIV2b7V1cHWokm6tN5aZqOdfILSzYsNcb3rXjGOeitGWVX_ihNvble8xQi0j_VUrM6V-6DISjBJ5ILFn3Jc7KYag1DXtneRNicfMkMwj9RazGBxoLmNtRUTmdNW9a16yExwajl9Kw',
+        flavourDefault: 'Chocolate'
+      },
+      'royal-berry': {
+        name: 'Royal berry',
+        displayName: 'Royal Berry Gateau',
+        pricePerKg: 780,
+        img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDmkwJlOtwpTejVrfn6AOCsRYjXVIHX0EbIcnG-uKHM5jPqZd-E4QEwm2RkO8YIcaP2Bphjrp25pyIdDpsGnanUQHpogmwgOblQN75Dfc83AaY9rSD8TJIgxdbTlen-ePt662k-zCnbwR0WXLOI-jSbAaTyXEyGt43BxzdKQM8029fIkr4phW6k_zoJHlf2vdhkkjX4Ak64K61MOwF2A4JUHDx5RvtOFuQ2uT-15dA',
+        flavourDefault: 'Berry Coulis'
+      },
+      'salted-caramel': {
+        name: 'Salted caramel crunch',
+        displayName: 'Salted Caramel Crunch',
+        pricePerKg: 720,
+        img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuATITdLMaM3hyXu4wc63nNN1WYLfJDKGY96WiFvdUA6omMCYSjVn57ASKeCSdyloyvTTkkkWaaW3l7ASXMA-W5WYrGH3jpDTRY6as84hdxX8Zh_UoABYH-Hiz_ADZl5NKroeUfTbx-69UktczD5yIzd9LdFJc_7rcDFGeYFRfpWWcICPk30PosTlz2c6SATCmCpDIJ8bUGimOTzOLCVJxJWjBIjPk9ROee2V2foJ8I',
+        flavourDefault: 'Vanilla Bean'
+      }
+    };
+
+    // Current State for Ready-Made Showcase Selection
+    let currentCakeKey = 'red-velvet';
+    let currentWeight = 1.0;
+
+    function selectShowcaseCake(cakeKey, cardEl) {
+      currentCakeKey = cakeKey;
+      const cake = showcaseCakes[cakeKey];
+
+      // Update Showcase Selection marker and styling
+      document.querySelectorAll('.cake-card').forEach(card => {
+        card.classList.remove('is-selected');
+        const marker = card.querySelector('.selection-marker');
+        if (marker) marker.classList.add('hidden');
+        const cone = card.querySelector('.spotlight-layer');
+        if (cone) cone.classList.replace('opacity-90', 'opacity-40');
+      });
+
+      cardEl.classList.add('is-selected');
+      const activeMarker = cardEl.querySelector('.selection-marker');
+      if (activeMarker) activeMarker.classList.remove('hidden');
+      const activeCone = cardEl.querySelector('.spotlight-layer');
+      if (activeCone) activeCone.classList.replace('opacity-40', 'opacity-90');
+
+      // Update Cake Detail Panel below
+      document.getElementById('detail-cake-name').innerText = cake.name;
+      document.getElementById('detail-cake-rate').innerText = '₹' + cake.pricePerKg;
+      document.getElementById('detail-cake-img').src = cake.img;
+      document.getElementById('detail-cake-img-mobile').src = cake.img;
+
+      updateReadyMadePrice();
+
+      // Smooth scroll to detail panel
+      const detailSec = document.getElementById('cake-detail-panel');
+      if (detailSec) {
+        detailSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function setDetailWeight(wt, btn) {
+      currentWeight = wt;
+      document.querySelectorAll('.weight-pill').forEach(b => {
+        b.className = 'weight-pill px-4 py-2 rounded-full border border-[#CA8B4A]/60 bg-[#F2E4C9] text-[#5C0302] font-semibold text-xs transition-all hover:bg-[#E3A04B]/20';
+      });
+      btn.className = 'weight-pill px-4 py-2 rounded-full border-2 border-[#5C0302] bg-[#5C0302] text-[#FDF2D8] font-bold text-xs shadow-sm transition-all';
+      updateReadyMadePrice();
+    }
+
+    function updateReadyMadePrice() {
+      const cake = showcaseCakes[currentCakeKey];
+      const total = Math.round(cake.pricePerKg * currentWeight);
+      document.getElementById('detail-cake-total-price').innerText = '₹' + total;
+      const mobPrice = document.getElementById('sticky-mobile-price');
+      if (mobPrice) mobPrice.innerText = '₹' + total;
+    }
+
+    // Submit Ready-Made WhatsApp Order
+    function sendReadyMadeWhatsApp() {
+      const cake = showcaseCakes[currentCakeKey];
+      const total = Math.round(cake.pricePerKg * currentWeight);
+      const flavour = document.getElementById('detail-flavour-select').value;
+      const messageOnCake = document.getElementById('detail-cake-message').value || 'None';
+      const dateTime = document.getElementById('detail-pickup-time').value || '20 Nov, 5:00 PM';
+      const branch = document.getElementById('detail-branch-select').value;
+
+      const waText = `Hi Paradise Bakes, I’d like to order this cake:\nCake: ${cake.name}\nWeight: ${currentWeight} kg\nFlavour: ${flavour}\nMessage on cake: ${messageOnCake}\nDate and time: ${dateTime}\nPickup branch: ${branch}\nTotal: ₹${total}\nPlease confirm availability. Thank you!`;
+
+      window.open('https://wa.me/?text=' + encodeURIComponent(waText), '_blank');
+    }
+
+    // Custom Cake Builder State
+    let customState = {
+      shape: 'Round',
+      flavour: 'Chocolate',
+      layers: '2',
+      size: '1 kg',
+      theme: 'Cherry',
+      topper: 'Candles',
+      message: 'Happy birthday Anu'
+    };
+
+    function setCustomShape(val, btn) {
+      customState.shape = val;
+      document.querySelectorAll('.custom-shape-btn').forEach(b => {
+        b.className = 'custom-shape-btn p-2.5 rounded-xl border border-[#CA8B4A]/60 bg-[#FDF2D8] text-[#5C0302] font-semibold text-xs flex items-center justify-center gap-1.5 transition-all hover:bg-[#E3A04B]/20';
+      });
+      btn.className = 'custom-shape-btn p-2.5 rounded-xl border-2 border-[#5C0302] bg-[#5C0302] text-[#FDF2D8] font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm transition-all';
+      updateCustomSummary();
+    }
+
+    function setCustomFlavour(val, btn) {
+      customState.flavour = val;
+      document.querySelectorAll('.custom-flavour-btn').forEach(b => {
+        b.className = 'custom-flavour-btn p-2 rounded-xl border border-[#CA8B4A]/60 bg-[#FDF2D8] text-[#5C0302] font-medium text-xs text-center transition-all hover:bg-[#E3A04B]/20';
+      });
+      btn.className = 'custom-flavour-btn p-2 rounded-xl border-2 border-[#5C0302] bg-[#5C0302] text-[#FDF2D8] font-bold text-xs text-center shadow-sm transition-all';
+
+      // Switch cutout preview picture to reflect flavour
+      const imgEl = document.getElementById('custom-preview-img');
+      if (val === 'Vanilla') {
+        imgEl.src = 'https://lh3.googleusercontent.com/aida-public/AB6AXuBuRinQauLcOunev2Vv8FPwj_JYvP6FRUwb087T6nEJnv713Db5r5m-CgfdPXcxTr9mc5m8BBp7B65tXKBcHxTGIfcXd9fragnV80-TEPWXL8hf2MnhXjZ8sP2-r82p7rtv_DYDo9GDdxyQ1t7I4mxh-mve94RWHVsFAn0zm2krgmXa7o6J2ip2sQZT-PrIb6FSFn3g0LDWFRmVB76pe_ctrhUBjo_Do5YoDSKtiaI';
+      } else if (val === 'Red velvet') {
+        imgEl.src = 'https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?auto=format&fit=crop&w=600&q=80';
+      } else if (val === 'Butterscotch') {
+        imgEl.src = 'https://lh3.googleusercontent.com/aida-public/AB6AXuATITdLMaM3hyXu4wc63nNN1WYLfJDKGY96WiFvdUA6omMCYSjVn57ASKeCSdyloyvTTkkkWaaW3l7ASXMA-W5WYrGH3jpDTRY6as84hdxX8Zh_UoABYH-Hiz_ADZl5NKroeUfTbx-69UktczD5yIzd9LdFJc_7rcDFGeYFRfpWWcICPk30PosTlz2c6SATCmCpDIJ8bUGimOTzOLCVJxJWjBIjPk9ROee2V2foJ8I';
+      } else {
+        imgEl.src = 'https://lh3.googleusercontent.com/aida-public/AB6AXuDcesXuTWM8oCkmUQke081RDXp61NMdJvBvYEoADTgtBfgx40WFABA-Ix6KEGAL-2jk67FvINAWsDtptB51E0AP225qYa37kJmIV2b7V1cHWokm6tN5aZqOdfILSzYsNcb3rXjGOeitGWVX_ihNvble8xQi0j_VUrM6V-6DISjBJ5ILFn3Jc7KYag1DXtneRNicfMkMwj9RazGBxoLmNtRUTmdNW9a16yExwajl9Kw';
+      }
+      updateCustomSummary();
+    }
+
+    function setCustomLayers(val, btn) {
+      customState.layers = val;
+      document.querySelectorAll('.custom-layer-btn').forEach(b => {
+        b.className = 'custom-layer-btn p-2 rounded-xl border border-[#CA8B4A]/60 bg-[#FDF2D8] text-[#5C0302] font-semibold text-xs text-center transition-all hover:bg-[#E3A04B]/20';
+      });
+      btn.className = 'custom-layer-btn p-2 rounded-xl border-2 border-[#5C0302] bg-[#5C0302] text-[#FDF2D8] font-bold text-xs text-center shadow-sm transition-all';
+      updateCustomSummary();
+    }
+
+    function setCustomSize(val, btn) {
+      customState.size = val;
+      document.querySelectorAll('.custom-size-btn').forEach(b => {
+        b.className = 'custom-size-btn p-2 rounded-xl border border-[#CA8B4A]/60 bg-[#FDF2D8] text-[#5C0302] font-medium text-xs text-center transition-all hover:bg-[#E3A04B]/20';
+      });
+      btn.className = 'custom-size-btn p-2 rounded-xl border-2 border-[#5C0302] bg-[#5C0302] text-[#FDF2D8] font-bold text-xs text-center shadow-sm transition-all';
+      updateCustomSummary();
+    }
+
+    function setCustomTheme(val, btn) {
+      customState.theme = val;
+      document.querySelectorAll('.theme-swatch').forEach(sw => {
+        const ring = sw.querySelector('span');
+        if (ring) {
+          ring.className = ring.className.replace('ring-2 ring-[#9A1C20] ring-offset-2 ring-offset-[#F2E4C9]', '');
+          ring.innerHTML = '';
+        }
+      });
+      const activeSpan = btn.querySelector('span');
+      if (activeSpan) {
+        activeSpan.classList.add('ring-2', 'ring-[#9A1C20]', 'ring-offset-2', 'ring-offset-[#F2E4C9]');
+        activeSpan.innerHTML = '<span class="material-symbols-outlined text-sm font-bold">check</span>';
+      }
+      updateCustomSummary();
+    }
+
+    function setCustomTopper(val, btn) {
+      customState.topper = val;
+      document.querySelectorAll('.custom-topper-btn').forEach(b => {
+        b.className = 'custom-topper-btn p-2 rounded-xl border border-[#CA8B4A]/60 bg-[#FDF2D8] text-[#5C0302] font-medium text-xs text-center transition-all hover:bg-[#E3A04B]/20';
+      });
+      btn.className = 'custom-topper-btn p-2 rounded-xl border-2 border-[#5C0302] bg-[#5C0302] text-[#FDF2D8] font-bold text-xs text-center shadow-sm transition-all';
+
+      // Update Topper Tag badge on Preview
+      const badge = document.getElementById('preview-topper-badge');
+      if (badge) {
+        if (val === 'None') {
+          badge.classList.add('hidden');
+        } else {
+          badge.classList.remove('hidden');
+          badge.innerHTML = `<span class="material-symbols-outlined text-xs text-[#E3A04B]">celebration</span> ${val}`;
+        }
+      }
+      updateCustomSummary();
+    }
+
+    function updateCustomSummary() {
+      const msg = document.getElementById('custom-message-input').value || 'None';
+      customState.message = msg;
+
+      document.getElementById('sum-shape').innerText = customState.shape;
+      document.getElementById('sum-flavour').innerText = customState.flavour;
+      document.getElementById('sum-layers').innerText = customState.layers;
+      document.getElementById('sum-size').innerText = customState.size;
+      document.getElementById('sum-theme').innerText = customState.theme;
+      document.getElementById('sum-topper').innerText = customState.topper;
+      document.getElementById('sum-message').innerText = customState.message;
+    }
+
+    // Submit Custom Cake WhatsApp Order
+    function sendCustomWhatsApp() {
+      updateCustomSummary();
+      const waCustomText = `Hi Paradise Bakes, I’d like a custom cake:\nShape: ${customState.shape}\nFlavour: ${customState.flavour}\nLayers: ${customState.layers}\nSize: ${customState.size}\nTheme: ${customState.theme}\nTopper: ${customState.topper}\nMessage on cake: ${customState.message}\nReference photo: I’ll send it here\nPlease confirm the price and availability. Thank you!`;
+
+      window.open('https://wa.me/?text=' + encodeURIComponent(waCustomText), '_blank');
+    }
+  </script>
+<script>
+  (function() {
+    const track = document.getElementById('gallery-track');
+    const container = document.getElementById('gallery-carousel-container');
+    const dotsContainer = document.getElementById('gallery-dots-container');
+    if (!track) return;
+
+    const step = 300;
+    let autoSlideInterval = null;
+
+    window.slideGallery = function(direction) {
+      if (!track) return;
+      const maxScroll = track.scrollWidth - track.clientWidth;
+      if (direction === 1 && track.scrollLeft >= maxScroll - 10) {
+        track.scrollTo({ left: 0, behavior: 'smooth' });
+      } else if (direction === -1 && track.scrollLeft <= 10) {
+        track.scrollTo({ left: maxScroll, behavior: 'smooth' });
+      } else {
+        track.scrollBy({ left: direction * step, behavior: 'smooth' });
+      }
+    };
+
+    window.scrollToGalleryDot = function(index) {
+      if (!track) return;
+      const maxScroll = track.scrollWidth - track.clientWidth;
+      const dots = dotsContainer ? dotsContainer.querySelectorAll('button') : [];
+      const count = dots.length > 1 ? dots.length - 1 : 1;
+      const targetLeft = (maxScroll * index) / count;
+      track.scrollTo({ left: targetLeft, behavior: 'smooth' });
+    };
+
+    function updateDots() {
+      if (!track || !dotsContainer) return;
+      const dots = dotsContainer.querySelectorAll('button');
+      if (!dots.length) return;
+      const maxScroll = track.scrollWidth - track.clientWidth;
+      const scrollRatio = maxScroll > 0 ? track.scrollLeft / maxScroll : 0;
+      const activeIndex = Math.min(dots.length - 1, Math.max(0, Math.round(scrollRatio * (dots.length - 1))));
+      dots.forEach((dot, idx) => {
+        if (idx === activeIndex) {
+          dot.className = 'w-6 h-2.5 rounded-full bg-[#5C0302] border border-[#CA8B4A] transition-all duration-300';
+        } else {
+          dot.className = 'w-2.5 h-2.5 rounded-full bg-[#5C0302]/30 border border-[#CA8B4A] transition-all duration-300';
+        }
+      });
+    }
+
+    function startAutoSlide() {
+      stopAutoSlide();
+      autoSlideInterval = setInterval(() => {
+        slideGallery(1);
+      }, 3500);
+    }
+
+    function stopAutoSlide() {
+      if (autoSlideInterval) {
+        clearInterval(autoSlideInterval);
+        autoSlideInterval = null;
+      }
+    }
+
+    track.addEventListener('scroll', updateDots, { passive: true });
+
+    if (container) {
+      container.addEventListener('mouseenter', stopAutoSlide);
+      container.addEventListener('mouseleave', startAutoSlide);
+    } else {
+      track.addEventListener('mouseenter', stopAutoSlide);
+      track.addEventListener('mouseleave', startAutoSlide);
+    }
+
+    startAutoSlide();
+    updateDots();
+  })();
+</script>
+
+
+
+
+
+
+</body></html>
